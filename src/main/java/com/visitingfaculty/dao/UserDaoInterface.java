@@ -39,5 +39,7 @@ public interface UserDaoInterface {
 
     Object updateBankDetails(String bankDetailsData);
 
+    Object insertWorkExperience(String workExperienceData);
+
 
 }

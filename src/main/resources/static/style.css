@@ -163,6 +163,17 @@ body {
   right: 0;
   left: 100%;
 }
+
+.delete_btn_workExperience_symbol {
+  width: 100px;
+  height: 100%;
+  background-color: #FFFFFF;
+  border-radius: 0 15px 15px 0;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 100%;
+}
 .certification-edit-box {
   width: 100px;
   height: 100%;

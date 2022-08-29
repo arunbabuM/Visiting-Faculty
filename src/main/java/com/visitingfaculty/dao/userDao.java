@@ -135,4 +135,12 @@ public class userDao implements UserDaoInterface {
 
     }
 
+    @Override
+    public Object insertWorkExperience(String workExperienceData) {
+        SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
+        .withFunctionName("insert_work_experience");
+
+        return jdbcCall.executeFunction(Object.class, workExperienceData);
+    }
+
 }

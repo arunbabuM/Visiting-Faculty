@@ -5,12 +5,16 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.visitingfaculty.dao.UserDaoInterface;
 import com.visitingfaculty.dto.Designation;
 import com.visitingfaculty.dto.WorkExperience;
 import com.visitingfaculty.service.faculty_service.WorkExperienceService;
@@ -25,6 +29,8 @@ public class FacultyControllerForWorkExperience {
 	@Autowired
 	WorkExperienceService workExperienceService;
 
+	@Autowired
+	UserDaoInterface userDaoInterface;
 	
 
 	@RequestMapping(value = "/fetchDesignationValue" ,method=RequestMethod.POST)
@@ -45,10 +51,8 @@ public class FacultyControllerForWorkExperience {
 	
 	@PostMapping(value = "/insertWorkExperience")
 	@ResponseBody
-	public String insertWorkExperience(@RequestBody String workExperienceData) throws ParseException {
+	public ResponseEntity<?> insertWorkExperience(@RequestBody String workExperienceData) throws ParseException {
 		System.out.println(workExperienceData);
-		Map<String, String> validationValue = validationOfJson.validationOfJson(workExperienceData);
-
 		/*
 		 * for(int i=0;i<validationValue.size();i++)
 		 * System.out.println(validationValue.get(i)); String errorKey[] =
@@ -59,7 +63,9 @@ public class FacultyControllerForWorkExperience {
 		 */
 
 		System.out.println(workExperienceData);
-		return workExperienceData;
+		Object insertWorkExperience = userDaoInterface.insertWorkExperience(workExperienceData);
+		System.out.println(insertWorkExperience);
+		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 
 }
