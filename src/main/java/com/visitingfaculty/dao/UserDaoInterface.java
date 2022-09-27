@@ -16,6 +16,10 @@ import com.visitingfaculty.model.user_workexperience_detail.UserWorkexperienceTy
 @Service
 public interface UserDaoInterface {
 
+    boolean resetPassword(String emailValue);
+
+    int resetPassword1(String email);
+
     Object insertPersonalDetails(String personalDetailsData);
 
     Object updatePersonalDetails(String personalDetailsData);

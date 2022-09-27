@@ -2,6 +2,9 @@ package com.visitingfaculty.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpSession;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.visitingfaculty.dao.UserDaoInterface;
+import com.visitingfaculty.dao.userDao;
 import com.visitingfaculty.dto.UserDto;
+import com.visitingfaculty.model.ResetPassword;
 import com.visitingfaculty.model.Resume;
 import com.visitingfaculty.model.User;
 import com.visitingfaculty.model.user_skills.UserSkillsFromDB;
@@ -39,6 +44,38 @@ public class UserRestController {
     UserDaoInterface userDaoInterface;
 
     String password;
+
+
+    @PostMapping("/reset-password-pancard")
+    public ResponseEntity<?>  verifyEmail(@RequestBody String data,ResetPassword rp){
+    // String pancard = (String) userDaoInterface.resetPassword(email);
+
+
+     if(userDaoInterface.resetPassword(data)) {
+
+        return ResponseEntity.status(HttpStatus.OK).build();
+     }
+     return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+
+    }
+
+    @PostMapping("/reset-success")
+    public ResponseEntity<?>  resetpassword(@RequestBody String rp,HttpSession httpSession)
+    {
+        System.out.println(rp);
+        JSONObject jsonString = new JSONObject(rp);
+        JSONArray resetData = jsonString.getJSONArray("object");
+        String tokenJson = resetData.getJSONObject(0).getString("token");
+        String passwordJson = resetData.getJSONObject(0).getString("password");
+        int token = (int) httpSession.getAttribute("token");
+        if(Integer.parseInt(tokenJson) == token)
+        {
+           userDaoInterface.resetPassword1(passwordJson);
+           return ResponseEntity.status(HttpStatus.OK).build();
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+
+    }
 
     @PostMapping(value = "/insert-personal-details")
     public ResponseEntity<?> insertPersonalDetails(@RequestBody String personalDetailsData) {

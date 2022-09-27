@@ -7,6 +7,8 @@ import java.sql.Statement;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,16 +28,48 @@ import com.visitingfaculty.model.user_qualification.UserQualificationType;
 import com.visitingfaculty.model.user_skills.UserSkillsFromDB;
 import com.visitingfaculty.model.user_workexperience_detail.UserWorkexperienceDesignation;
 import com.visitingfaculty.model.user_workexperience_detail.UserWorkexperienceType;
+import com.visitingfaculty.service.PasswordService;
 import com.visitingfaculty.service.faculty_service.UserService;
 
 @Repository
 public class userDao implements UserDaoInterface {
 
     @Autowired
+    HttpSession httpSession;
+
+    @Autowired
     JdbcTemplate jdbcTemplate;
 
     @Autowired
+    PasswordService passwordService;
+
+    @Autowired
     UserService userService;
+
+    @Override
+    public boolean resetPassword(String emailValue) {
+     String sql="select id from public.user where email = ?";
+     int id =(int)jdbcTemplate.queryForObject(sql,Integer.class,emailValue);
+        System.out.println( "ID>>>>>>>" + id);
+     if(id != 0) {
+        int tokenGenerated = (int) Math.floor(100000 + Math.random() * 900000);
+        httpSession.setAttribute("token", tokenGenerated);
+        httpSession.setAttribute("email", emailValue);
+        userService.sendEmail("Please Enter This Token to Reset Password : " + tokenGenerated , emailValue, 3);
+        return true;
+     }
+     return false;
+    
+    }
+
+    public int resetPassword1(String password)
+    {
+        String SQL = "update public.user set password_hash = ? where email = ?";
+        String email = (String) httpSession.getAttribute("email");
+        String encodedPassword = passwordService.encodePassword(password);
+        return jdbcTemplate.update(SQL,encodedPassword ,email);
+    }
+
 
     @Override
     public Object insertPersonalDetails(String personalDetailsData) {
