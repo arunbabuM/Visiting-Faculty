@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.visitingfaculty.dto.UserDto;
 import com.visitingfaculty.model.Resume;
+import com.visitingfaculty.model.SchoolList;
 import com.visitingfaculty.model.User;
 import com.visitingfaculty.model.user_bank_details.UserBankAccountType;
 import com.visitingfaculty.model.user_qualification.UserQualificationType;
@@ -115,4 +116,6 @@ public interface UserDaoInterface {
     Object getQualPerformer(String data);
 
     Object updateApplication(String data);
+
+    List<SchoolList> getAllSchools(int user_lid);
 }

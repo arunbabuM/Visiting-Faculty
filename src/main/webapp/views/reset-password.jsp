@@ -431,77 +431,51 @@
   
         let tokenToVerify = document.getElementById('verify-token-input').value;
         let password  = document.getElementById('password1').value;
+        let password2  = document.getElementById('password2').value;
   
-        console.log(tokenToVerify)
-
-        let obj = {}
-        obj.token = tokenToVerify,
-        obj.password = password
+        if(password == password2)
+        {
+              let obj = {}
+              obj.token = tokenToVerify,
+              obj.password = password
+              
+              let dataObject = {"object" : []}
+              dataObject.object.push(obj)
         
-        let dataObject = {"object" : []}
-        dataObject.object.push(obj)
-  
-        fetch('${pageContext.request.contextPath}/reset-success', {
-            method: "POST",
-            body: JSON.stringify(dataObject),
-            headers: {
-              "Content-Type": "application/json; charset=UTF-8",
-  
-            }
-          })
-          .then(response => status = response.status)
-          .then(response => {
-            if (status === 200) {
-              console.log("success")
-              location.href = '${pageContext.request.contextPath}/login#password-reset-success'
-              document.getElementById('main-loader').classList.add('d-none');
-            } else {
-              document.getElementById('main-loader').classList.add('d-none');
-              alert("Wrong OTP")
-            }
-          })
-          .catch(function (error) {
-            document.getElementById('main-loader').classList.add('d-none');
-            alert("error in fetch api")
-          })
+              fetch('${pageContext.request.contextPath}/reset-success', {
+                  method: "POST",
+                  body: JSON.stringify(dataObject),
+                  headers: {
+                    "Content-Type": "application/json; charset=UTF-8",
+        
+                  }
+                })
+                .then(response => status = response.status)
+                .then(response => {
+                  if (status === 200) {
+                    console.log("success")
+                    location.href = '${pageContext.request.contextPath}/login#password-reset-success'
+                    document.getElementById('main-loader').classList.add('d-none');
+                  } else {
+                    document.getElementById('main-loader').classList.add('d-none');
+                    alert("Wrong OTP")
+                  }
+                })
+                .catch(function (error) {
+                  document.getElementById('main-loader').classList.add('d-none');
+                  alert("error in fetch api")
+                })
+        }
+        else
+        {
+          alert('PassWord does not Match');
+          document.getElementById('main-loader').classList.add('d-none');
+        }
+
       })
   
   
-      
-  
-      /////////////
-      
-      // document.querySelector('.register-btn').addEventListener('click',function(){
-      //   let email_value =document.querySelector('#email').value;
-      //   console.log(email_value);
-      //   $.ajax({
-      //       url: '${pageContext.request.contextPath}/reset-password-pancard',
-      //       type: 'POST',
-      //       data :email_value,
-      //       contentType : false,
-            
-      //       success: function (response) {
-      //         console.log("response values is"+  status);
-      //         if(response.status == 200) {
-                
-      //       //  location.href = '${pageContext.request.contextPath}/login#success'
-      //       document.getElementById('main-loader').classList.add('d-none');
-      //         document.getElementById('token-div').classList.remove('d-none');
-      //         document.getElementById('password1').classList.remove('d-none');
-      //         document.getElementById('password2').classList.remove('d-none');
-      //         document.querySelector('.register-btn').classList.add('d-none');
-      //         document.querySelector('.alert-success').classList.remove('d-none');
-      //         let div = document.querySelectorAll('.removing-input')
-      //         div.forEach(div => div.classList.add('d-none'))
-      //         document.querySelector('.verify-button').classList.remove('d-none');
-      //         }
-      //       },
-      //       error: function (error) {
-      //         console.log("Error::::::::::::", error);
-      //       }
-      //     })
-      // });
-
+    
 
       document.querySelector('.register-btn').addEventListener('click',function(){
         document.getElementById('main-loader').classList.remove('d-none')

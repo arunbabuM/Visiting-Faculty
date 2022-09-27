@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.visitingfaculty.dao.UserDaoInterface;
-import com.visitingfaculty.dao.userDao;
 import com.visitingfaculty.dto.UserDto;
 import com.visitingfaculty.model.ResetPassword;
 import com.visitingfaculty.model.Resume;
+import com.visitingfaculty.model.SchoolList;
 import com.visitingfaculty.model.User;
 import com.visitingfaculty.model.user_skills.UserSkillsFromDB;
 import com.visitingfaculty.service.PasswordService;
@@ -49,7 +49,6 @@ public class UserRestController {
     @PostMapping("/reset-password-pancard")
     public ResponseEntity<?>  verifyEmail(@RequestBody String data,ResetPassword rp){
     // String pancard = (String) userDaoInterface.resetPassword(email);
-
 
      if(userDaoInterface.resetPassword(data)) {
 
@@ -314,6 +313,16 @@ public class UserRestController {
         System.out.println("Performa"+data);
         userDaoInterface.createProforma(data);
         return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @PostMapping("/get-schools-list")
+    public List<SchoolList> getSchoolList(HttpSession httpSession) {
+
+        int user_lid = (int) httpSession.getAttribute("user_lid");
+        
+        List<SchoolList> schoolLists = userDaoInterface.getAllSchools(user_lid);
+
+        return schoolLists;
     }
 
 }

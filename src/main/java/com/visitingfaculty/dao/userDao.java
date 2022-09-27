@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.visitingfaculty.dto.UserDto;
 import com.visitingfaculty.model.Resume;
+import com.visitingfaculty.model.SchoolList;
 import com.visitingfaculty.model.User;
 import com.visitingfaculty.model.user_bank_details.UserBankAccountType;
 import com.visitingfaculty.model.user_qualification.UserQualificationType;
@@ -49,8 +50,12 @@ public class userDao implements UserDaoInterface {
     @Override
     public boolean resetPassword(String emailValue) {
      String sql="select id from public.user where email = ?";
-     int id =(int)jdbcTemplate.queryForObject(sql,Integer.class,emailValue);
-        System.out.println( "ID>>>>>>>" + id);
+     int id = 0;
+     try{
+        id = (int)jdbcTemplate.queryForObject(sql,Integer.class,emailValue);
+     } catch(Exception e) {
+       return false;
+     }
      if(id != 0) {
         int tokenGenerated = (int) Math.floor(100000 + Math.random() * 900000);
         httpSession.setAttribute("token", tokenGenerated);
@@ -505,6 +510,19 @@ public class userDao implements UserDaoInterface {
                 .withFunctionName("update_application");
 
         return jdbcCall.executeFunction(Object.class, user_id);
+    }
+
+    @Override
+    public List<SchoolList> getAllSchools(int user_lid) {
+     
+        
+        String sql = "SELECT o.organization_id,o.name FROM public.user pu INNER JOIN admin_organization ao ON pu.id = ao.user_lid INNER JOIN organization o ON o.organization_id = ao.organization_lid WHERE ao.user_lid = ?";
+
+        List<SchoolList>  schoolsList = jdbcTemplate.query(sql,(rs,rownum) -> {
+            return new SchoolList(rs.getString("organization_id"),rs.getString("name"));
+        },user_lid);
+
+        return schoolsList;
     }
 
 }

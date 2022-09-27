@@ -8037,14 +8037,16 @@
 
       if (schoolList == 1) {
         $.ajax({
-          url: 'https://dev-portal.svkm.ac.in:8080/vfApi/getSchoolsList',
-          type: 'get',
+          url: '${pageContext.request.contextPath}/get-schools-list',
+          type: 'POST',
           dataType: 'json',
           success: function (response) {
+            console.log(response)
+            console.log(response.value)
             for (let desig of response) {
               schoolType +=
                 `<li>     
-                    <div class="school-type-li col-md-10 col-sm-10 col-12" data-name="\${desig.collegeName}" data-id="\${desig.schoolObjId}" ><a>\${desig.collegeName}</a></div>
+                    <div class="school-type-li col-md-10 col-sm-10 col-12" data-name="\${desig.name}" data-id="\${desig.organization_lid}" ><a>\${desig.name}</a></div>
                 </li>`
             }
             document.querySelector('#school-list').insertAdjacentHTML('beforeend', schoolType);
