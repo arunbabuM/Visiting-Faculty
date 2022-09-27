@@ -202,6 +202,11 @@
     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
   </div>
 
+  <div class="password-reset-alert alert alert-success alert-dismissible fade show d-flex justify-content-center align-items-center d-none">
+    <strong>Password Reset Successfull!</strong>&nbsp &nbsp You Can Now Login
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+  </div>
+
   <div class="login-error-alert alert alert-danger alert-dismissible fade show d-flex justify-content-center align-items-center d-none">
     <strong>Error!</strong>&nbsp &nbsp Invalid Credentials
     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
@@ -248,7 +253,7 @@
             <input type="checkbox" name="is_trusted" id="is_trusted"> -->
             <button class="btn btn-dark login-btn"><i class="fas fa-sign-in-alt"></i> Sign In</button>
             <div class="py-2">New User?<a style="text-decoration: none;" href="${pageContext.request.contextPath}/register"> Sign Up</a> </div>
-            <div id="forgot-password" class="d-none"><a class="text-danger" href="${pageContext.request.contextPath}/reset-password">Forgot your password?</a> </div>
+            <div id="forgot-password" class=""><a class="text-danger" href="${pageContext.request.contextPath}/reset-password">Forgot your password?</a> </div>
             <!-- <button type="button" class="btn btn-dark test-btn"><i class="fas fa-sign-in-alt"></i> Test Btn</button> -->
           </form>
 
@@ -305,6 +310,12 @@
       document.querySelector('.login-success-alert').classList.remove('d-none')
     } else {
       document.querySelector('.login-success-alert').classList.add('d-none')
+
+    }
+    if(window.location.hash == '#password-reset-success') {
+      document.querySelector('.password-reset-alert').classList.remove('d-none')
+    } else {
+      document.querySelector('.password-reset-alert').classList.add('d-none')
 
     }
 
