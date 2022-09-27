@@ -224,12 +224,10 @@ public class UserRestController {
         String role = (String) httpSession.getAttribute("role");
         System.out.println(role);
         if(role.equals("USER")){
-            System.out.println("Controller methode executed by user<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
-            dataFromDb = userDaoInterface.createJobApplication(data);
+            dataFromDb = userDaoInterface.updateApplication(data);
         } else { 
-            System.out.println("Controller methode executed by Admin>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
             // dataFromDb = userDaoInterface.createJobApplicationByAdmin(data);
-            dataFromDb = userDaoInterface.createJobApplication(data);
+            dataFromDb = userDaoInterface.createJobApplicationByAdmin(data);
         }
         if (dataFromDb == null) {
 

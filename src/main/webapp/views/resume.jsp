@@ -982,7 +982,7 @@
 
 
     <!-- ************************************************************************Create Application Modal Div******************************************************************************************** -->
-    <div id="create-application-modal" style="height: calc(100vh - 140px); margin-top: 150px;" class="d-none">
+    <div id="create-application-modal" style="height: calc(100vh - 150px); margin-top: 150px;" class="d-none">
       <div id="bank-form-area" >
         <div class="container" style="min-height: 300px;">
           <div class="d-flex justify-content-center align-items-center my-4">
@@ -1021,7 +1021,7 @@
           </div>
 
           <div class="row">
-            <div class="col-md-12 col-sm-12 d-flex justify-content-center">
+            <div class="col-md-12 col-sm-12 d-flex justify-content-center" style="max-height: 50vh;">
               <img alt="image-uploaded" id="image-uploaded" class="image-uploaded"
                 style="width:100%;">
             </div>
@@ -7995,7 +7995,7 @@
         let object = {}
         object.resume_lid = resume_lid
         // object.organization_lid = '${organization_lid}'
-        object.organization_lid = org_ID
+        object.organization_lid = 1
         object.active = organizationStatus
         data.create_job_application.push(object)
 
@@ -8142,7 +8142,7 @@
         object.resume_lid = resume_lid
         object.application_lid = application_lid
         // object.organization_lid = '${organization_lid}'
-        object.organization_lid = organization_lid
+        object.organization_lid = '1'
         object.active = true
         data.create_job_application.push(object)
 

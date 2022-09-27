@@ -243,7 +243,6 @@
       });
 
     document.querySelector('#performa-creation-div').addEventListener('click', function (e) {
-      console.log(e.target);
 
       if (e.target.classList.contains('qualification-certificate-display') || e.target.classList.contains(
           'award-certificate-display') || e.target.classList.contains('publication-certificate-display') || e.target
@@ -314,6 +313,8 @@
      let jobApllicationData = document.querySelectorAll('.job-tr');
      for(let i=0 ; i<jobApllicationData.length;i++)
      {
+    
+        let proforma_id = jobApllicationData[i].dataset.proforma
       let program = jobApllicationData[i].querySelector('.job-program').value;
       let session = jobApllicationData[i].querySelector('.job-session').value;
       let subject = jobApllicationData[i].querySelector('.job-subject').value;
@@ -326,7 +327,8 @@
       let process = jobApllicationData[i].querySelector('.job-process').value;
       
       obj = {
-        application_lid:'${application_lid}',       
+        application_lid:'${application_lid}',
+        proforma_id : proforma_id,    
         module:subject,        
         teaching_hours:hours,
         program_id: "1111",
@@ -339,6 +341,7 @@
         aol_obe:process,
         level : 1,
         status_lid : 1,
+
 
       }
       jobArrar.insert_proforma.push(obj);
@@ -384,13 +387,59 @@
       }
     });
     console.log('Outside Ajax : ',resumeinfo)
+let proformaTable = ``
+if(resumeinfo.proforma_details != null) {
+let data = resumeinfo.proforma_details
 
+    for(let i = 0 ; i< data.length ; i++) {
+        
+        proformaTable += `
+        <tr class='job-tr' data-proforma = \${data[i].proforma_id}>
+                        <td class="custom-select-div"><input class="form-control job-program" value = "\${data[i].program_id}" type="text">
+                            <ul class="form-control d-none" id="job-program-list">
+                            </ul>
+                        </td>
+                        <td class="custom-select-div" ><input class="form-control job-session" value="\${data[i].acad_session}" type="text"> 
+                            <ul class="form-control d-none" id="job-session-list">
+                                
+                            </ul>
+                        </td>
+                        <!-- <td><input class="form-control" type="text"> </td> -->
+                        <td class="custom-select-div" ><input class="form-control job-subject" value="\${data[i].module}" type="text"> 
+                            <ul class="form-control d-none" id="job-subject-list">
+                              
+                            </ul>
+                        </td>
+                        <td><input class="form-control job-date" type="date" value="\${data[i].commencement_date_of_program}"> </td>
+                        <td><input class="form-control job-hours" type="text" value="\${data[i].teaching_hours}"> </td>
+                        <td><input class="form-control job-rate" type="text" value="\${data[i].rate_per_hours}"> </td>
+                        <td><input class="form-control job-total-hours" type="text" value="\${data[i].total_no_of_hrs_alloted}"> </td>
+                        <td><input class="form-control job-division" type="text" value="\${data[i].no_of_division}"> </td>
+                        <td><input class="form-control job-count" type="text" value="\${data[i].student_count_per_division}"> </td>
+                        <td><select class="form-control job-process">
+                                <option value="0">-Select-</option>
+                                <option value="AOL">AOL</option>
+                                <option value="OBL">OBE</option>
+                            </select> 
+                        </td>
+                    </tr>`
+                                let element = document.querySelector('.job-application-body')
+                                element.innerHTML = proformaTable
 
-let resumetable =`
-<div class="card">
+                                element.querySelector('.job-process').value = data[i].aol_obe
+
+            
+    }
+}
+
+let resumetable =``
+if(resumeinfo.personal_details != null)
+{
+resumetable+=`<div class="card">
     <h2 align="center">\${resumeinfo.personal_details[0].f_name} \${resumeinfo.personal_details[0].l_name}</h2>
-</div>
-    <!-------------------------------------------------------Qualification Table----------------------------------------------------->
+</div>`
+}
+resumetable+=  `<!-------------------------------------------------------Qualification Table----------------------------------------------------->
     <div class="card card-table">
         <div
             class="card-header table-card-header text-uppercase d-flex align-items-center justify-content-between">
