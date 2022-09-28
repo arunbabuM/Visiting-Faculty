@@ -142,6 +142,22 @@
 
 // ------------------------function fro search which will be used for all 3 dropdowns-----------
 
+let resumeinfo;
+
+    $.ajax({
+      url: '${pageContext.request.contextPath}/performer-resume?application_lid=${application_lid}',
+      type: 'POST',
+      async : false,
+      success: function (response) {
+        let data = JSON.parse(response.value)
+        resumeinfo = data;
+      },
+      error: function (error) {
+        console.log("error", error)
+      }
+    });
+
+
 let apiTimeout = null;
 
 
@@ -149,11 +165,15 @@ function searchProgramApi(query, targetProgramSearch) {
 
     let jobPorformaProgramUl = findClosest(targetProgramSearch, 'job-tr').querySelector(".job-program-list");
     let selectProgramList = '';
+    let organization_lid = resumeinfo.organization_id[0].organization_lid
+    
 
     $.ajax({
-        url: `http://localhost:8084/getProgramName?characters=\${query}&programId=0&schoolObjId=00004537`,
+        
+        url: 'https://dev-portal.svkm.ac.in:8080/vfApi/getProgramName?characters=' + query  + '&programId=0&schoolObjId=' + organization_lid ,
         type: 'GET',
         success: function (response) {
+            console.log("organization_id>>>>>>>>>>" , organization_lid)
             console.log("response>>> ", response)
             let resResult = JSON.parse(response).results;
 
@@ -178,22 +198,26 @@ function searchProgramApi(query, targetProgramSearch) {
 }
 
 
-function searchSessionApi(targetSessionList) {
+function searchSessionApi(targetSessionList,programId) {
 
     let selectSessionList = '';
 
+    targetSessionList.innerHTML = "";
+    /* targetSessionList.closest('div').firstElementChild.value = "" */
+
     $.ajax({
-        url: `http://localhost:8084/getacadSession?programId=50008774`,
+        url: 'https://dev-portal.svkm.ac.in:8080/vfApi/getacadSession?programId=' + programId,
         type: 'GET',
         success: function (response) {
             console.log("response>>> ", response)
             let resResult = JSON.parse(response).data;
 
             for (let session of resResult) {
-            selectSessionList +=
-                `<li class="cust-single single-session job-session-item" data-value="\${session.acadSession}">     
-                    \${session.acadSession}
-                </li>`
+
+                selectSessionList +=
+                    `<li class="cust-single single-session job-session-item" data-value="\${session.acadSession}">     
+                        \${session.acadSession}
+                    </li>`
             }
 
             targetSessionList.innerHTML = selectSessionList;
@@ -208,12 +232,15 @@ function searchSessionApi(targetSessionList) {
 }
 
 
-function searchSubjectApi(targetSubjectList) {
+function searchSubjectApi(targetSubjectList,programId,sessionName) {
 
     let selectSubjectList = '';
 
+    targetSubjectList.innerHTML = "";
+    /* targetSubjectList.closest('div').firstElementChild.value = ""; */
+
     $.ajax({
-        url: `http://localhost:8084/getSubjectName?programId=50002935&semester=Semester II`,
+        url: 'https://dev-portal.svkm.ac.in:8080/vfApi/getSubjectName?programId=' + programId + '&semester=' + sessionName ,
         type: 'GET',
         success: function (response) {
             console.log("response>>> ", response)
@@ -221,10 +248,13 @@ function searchSubjectApi(targetSubjectList) {
 
 
             for (let sub of resResult) {
-            selectSubjectList +=
-                `<li class="cust-single single-subject job-subject-item" data-value="\${sub.moduleName}" data-id="\${sub.moduleId}">     
-                    \${sub.moduleName}
-                </li>`
+                if(sub.moduleName != null) {
+
+                    selectSubjectList +=
+                    `<li class="cust-single single-subject job-subject-item" data-value="\${sub.moduleName}" data-id="\${sub.moduleId}">     
+                        \${sub.moduleName}
+                        </li>`
+                 }
             }
 
             targetSubjectList.innerHTML = selectSubjectList;
@@ -311,31 +341,42 @@ document.addEventListener('click', function(e) {
 
     document.querySelector('#performa-creation-div').addEventListener('click', function(e) {
 
-        // if(e.target.classList.contains('job-program')) { 
-        //     let targetInput = findClosest(e.target, 'job-tr').querySelector(".job-program-list");
-        //     targetInput.classList.remove('d-none');
-        // }
-
-        // if(e.target.classList.contains('job-session')) { 
-        //     let targetInput = findClosest(e.target, 'job-tr').querySelector(".job-session-list");
-        //     targetInput.classList.remove('d-none');
-        // }
-
-        // if(e.target.classList.contains('job-subject')) { 
-        //     let targetInput = findClosest(e.target, 'job-tr').querySelector(".job-subject-list");
-        //     targetInput.classList.remove('d-none');
-        // }
 
         if(e.target.classList.contains('single-program')) {
-            console.log("SEARCHING SESSION")
+            findClosest(e.target, 'job-tr').querySelector(".job-session").value = "";
+            findClosest(e.target, 'job-tr').querySelector(".job-subject").value = "";
             let trSession = findClosest(e.target, 'job-tr').querySelector(".job-session-list");
-            searchSessionApi(trSession);
+            let programId = null;
+            let dropDownData = findClosest(e.target, 'job-tr').querySelectorAll(`li[selected=true]`).forEach(data => {
+                if(data.classList.contains('job-program-item')) {
+
+                    programId += data.dataset.id
+
+                } 
+
+            })
+
+
+            searchSessionApi(trSession,programId);
         }
+        let programId = null;
 
         if(e.target.classList.contains('single-session')) {
-            console.log("SEARCHING SUBJECT")
+            findClosest(e.target, 'job-tr').querySelector(".job-subject").value = "";
             let trSubject = findClosest(e.target, 'job-tr').querySelector(".job-subject-list");
-            searchSubjectApi(trSubject);
+            let sessionName=  null;
+            let dropDownData = findClosest(e.target, 'job-tr').querySelectorAll(`li[selected=true]`).forEach(data => {
+                if(data.classList.contains('job-program-item')) {
+
+                    programId = data.dataset.id
+
+                } 
+                if(data.classList.contains('job-session-item')) {
+                    sessionName = data.dataset.value
+                }
+
+            })
+            searchSubjectApi(trSubject,programId,sessionName);
         }
 
     })
@@ -366,7 +407,6 @@ document.addEventListener('click', function(e) {
     })
 
 
-    //************************************Function's for Job Application Table***************************************************
 
     //Job Application Table Add Button
     document.querySelector('.add-btn').addEventListener('click',function(){     
@@ -403,6 +443,7 @@ document.addEventListener('click', function(e) {
                                 <option value="OBL">OBE</option>
                             </select> 
                         </td>
+                        <td><i class="fa-solid text-danger fa-trash delete-row"></i></td>
                     </tr>`
 
         document.querySelector('.job-application-body').insertAdjacentHTML('beforeend',row);
@@ -422,7 +463,7 @@ document.addEventListener('click', function(e) {
         let confurm = confirm('Do you really want to cancel');
         if(confurm)
         {
-        location.href = '${pageContext.request.contextPath}/job-performer-page';
+        location.href = '${pageContext.request.contextPath}/job-proforma-page';
         }
     })
 
@@ -430,12 +471,32 @@ document.addEventListener('click', function(e) {
      
      let jobArrar = {"insert_proforma" : []};
      let jobApllicationData = document.querySelectorAll('.job-tr');
+     let programName = '';
+     let programId = '';
+     let subjectName = '';
+     let subjectId = '';
      for(let i=0 ; i<jobApllicationData.length;i++)
      {
-      let program = jobApllicationData[i].querySelector('.job-program').value;
-      let programId = jobApllicationData[i].querySelector('.job-program').dataset.id;
+
+      let dropDownData = jobApllicationData[i].querySelectorAll(`li[selected=true]`).forEach(data => {
+
+        if(data.classList.contains('job-program-item')) {
+
+            programName += data.dataset.value
+            programId += data.dataset.id
+
+        } 
+
+        if(data.classList.contains('job-subject-item')) {
+
+            subjectName += data.dataset.value
+            subjectId += data.dataset.id
+
+        }
+
+      })
+
       let session = jobApllicationData[i].querySelector('.job-session').value;
-      let subject = jobApllicationData[i].querySelector('.job-subject').value;
       let date = jobApllicationData[i].querySelector('.job-date').value;
       let hours = jobApllicationData[i].querySelector('.job-hours').value;
       let rate = jobApllicationData[i].querySelector('.job-rate').value;
@@ -445,9 +506,11 @@ document.addEventListener('click', function(e) {
       let process = jobApllicationData[i].querySelector('.job-process').value;
       
       obj = {
-        application_lid:'${application_lid}',       
-        module:subject,        
+        application_lid:'${application_lid}',  
+        module_id:  subjectId,    
+        module: subjectName,        
         teaching_hours:hours,
+        program_name: programName,
         program_id: programId,
         acad_session:session,
         commencement_date_of_program:date,
@@ -456,7 +519,7 @@ document.addEventListener('click', function(e) {
         no_of_division:division,
         student_count_per_division:count,
         aol_obe:process,
-        level : 1,
+        level : '${level}',
         status_lid : 1,
 
       }
@@ -489,20 +552,53 @@ document.addEventListener('click', function(e) {
      
 //------------------------------------------------------Appending Tables-------------------------------------------------------------
 
-    let resumeinfo;
-    $.ajax({
-      url: '${pageContext.request.contextPath}/performer-resume?application_lid=${application_lid}',
-      type: 'POST',
-      async : false,
-      success: function (response) {
-        let data = JSON.parse(response.value)
-        resumeinfo = data;
-      },
-      error: function (error) {
-        console.log("error", error)
-      }
-    });
+
     console.log('Outside Ajax : ',resumeinfo)
+let proformaData = ``
+if( resumeinfo.proforma_details != null){
+for(let proforma of resumeinfo.proforma_details) {
+
+    console.log(proforma)
+    proformaData += `
+                            <tr class='job-tr'>
+                                    <td>
+                                        <div class="custom-select-div">
+                                            <input class="form-control job-program cust-input" value = "\${proforma.program_name == null ? '' : proforma.program_name}"  data-id="" data-name="" type="text">
+                                            <ul class="form-control d-none job-program-list custom-select-div-ul"></ul>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="custom-select-div">
+                                            <input class="form-control job-session cust-input" data-name=""  value = "\${proforma.acad_session}" type="text"> 
+                                            <ul class="form-control d-none job-session-list custom-select-div-ul"></ul>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="custom-select-div">
+                                            <input class="form-control job-subject cust-input" data-id="" value = "\${proforma.module}" data-name="" type="text"> 
+                                            <ul class="form-control d-none job-subject-list custom-select-div-ul"></ul>
+                                        </div>
+                                    </td>
+                                    <td><input class="form-control job-date" type="date" value = "\${proforma.commencement_date_of_program}"> </td>
+                                    <td><input class="form-control job-hours" type="text" value = "\${proforma.teaching_hours}"> </td>
+                                    <td><input class="form-control job-rate" type="text" value = "\${proforma.rate_per_hours}"> </td>
+                                    <td><input class="form-control job-total-hours" type="text" value = "\${proforma.total_no_of_hrs_alloted}"> </td>
+                                    <td><input class="form-control job-division" type="text" value = "\${proforma.no_of_division}"> </td>
+                                    <td><input class="form-control job-count" type="text" value = "\${proforma.student_count_per_division}" > </td>
+                                    <td><select class="form-control job-process">
+                                            <option value="0">-Select-</option>
+                                            <option value="AOL">AOL</option>
+                                            <option value="OBL">OBE</option>
+                                        </select> 
+                                    </td>
+                                </tr>
+                                        `
+
+            document.querySelector('.job-application-body').innerHTML =  proformaData;
+            
+}
+}
+
 
 
 let resumetable =`

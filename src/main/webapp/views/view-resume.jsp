@@ -462,7 +462,7 @@
                             <div class="col-6 ps-lg-5 col-md-6 ps-md-0 ps-0 ps-sm-0 col-lg-6 col-sm-6">
                               <p class="h5 py-1">Start Date </p>
                               <p class="h5 py-1">End date</p>
-                              <p class="h5 py-1">Duration </p>
+                              <p class="h5 py-1">Duration in Year </p>
                             </div>
                             <div class="col-6 ps-md-0 ps-0 col-md-6 col-lg-6 col-sm-6">
                               <p id="" class="">\${exp.start_date}</p>

@@ -217,7 +217,7 @@
           <div class="container">
             <div id="left-fourth-row" class="row">
               <div class="col-md-4 col-sm-12">
-                <label for="aadhar-number">Aadhar Card Number <span class="required">*</span></label>
+                <label for="aadhar-number">Aadhar Card Number <span class="required"></span></label>
                 <span id="aadhar-number-message" style="color: red;" class="error"></span>
                 <input type="text" class="form-control" name="aadhar_number" id="aadhar-number" />
               </div>
@@ -225,7 +225,7 @@
               <div class="col-md-4 col-sm-12">
                 <input type="checkbox" class="adhar-check-box" id="pan-check-box">
                 <span id="aadhar-photo-message" style="color: red;" class="error"></span>
-                <label for="aadhar-photo">Update Aadhar Card Photo? <span class="required">*</span></label>
+                <label for="aadhar-photo">Update Aadhar Card Photo? <span class="required"></span></label>
                 <input type="file" class="form-control d-none aadhar-photo" id="aadhar-photo"
                   onchange="document.getElementById('aadhar-photo-preview-1').src = window.URL.createObjectURL(this.files[0])">
               </div>
@@ -411,13 +411,13 @@
           <div class="container">
             <div id="left-fourth-row" class="row">
               <div class="col-md-4 col-sm-12">
-                <label for="aadhar-number">Aadhar Card Number <span class="required">*</span></label>
+                <label for="aadhar-number">Aadhar Card Number <span class="required"></span></label>
                 <span id="aadhar-number-message-insert" style="color: red;" class="error"></span>
                 <input type="text" class="form-control" name="aadhar_number_insert" id="aadhar-number-insert" />
               </div>
 
               <div class="col-md-4 col-sm-12">
-                <label for="aadhar-photo">Aadhar Card Photo <span class="required">*</span></label>
+                <label for="aadhar-photo">Aadhar Card Photo <span class="required"></span></label>
                 <span id="aadhar-photo-message-insert" style="color: red;" class="error"></span>
                 <input type="file" class="form-control" id="aadhar-photo-insert"
                   onchange="document.getElementById('aadhar-photo-preview_insert').src = window.URL.createObjectURL(this.files[0])">
@@ -1465,7 +1465,7 @@
                             <div class="col-6 ps-lg-5 col-md-6 ps-md-0 ps-0 ps-sm-0 col-lg-6 col-sm-6">
                               <p class="h5 py-1">Start Date </p>
                               <p class="h5 py-1">End date</p>
-                              <p class="h5 py-1">Duration </p>
+                              <p class="h5 py-1">Duration in Year </p>
                               <p class="h5 py-1">Padagogy </p>
                             </div>
                             <div class="col-6 ps-md-0 ps-0 col-md-6 col-lg-6 col-sm-6">
@@ -1511,7 +1511,7 @@
                             <div class="col-6 ps-lg-5 col-md-6 ps-md-0 ps-0 ps-sm-0 col-lg-6 col-sm-6">
                               <p class="h5 py-1">Start Date </p>
                               <p class="h5 py-1">End date</p>
-                              <p class="h5 py-1">Duration </p>
+                              <p class="h5 py-1">Duration in Year</p>
                             </div>
                             <div class="col-6 ps-md-0 ps-0 col-md-6 col-lg-6 col-sm-6">
                               <p id="" class="">\${exp.start_date}</p>
@@ -2068,16 +2068,14 @@
             document.getElementById('last-name').value = editPersonalDetailsForm.get('editLastName')
             document.getElementById('date-of-birth').value = editPersonalDetailsForm.get('editDateOfBirth')
             document.getElementById('pan-number').value = editPersonalDetailsForm.get('editPancardNumber')
-            document.getElementById('aadhar-number').value = editPersonalDetailsForm.get(
-              'editAadharCardNumber')
+            document.getElementById('aadhar-number').value =  resumeinfo.personal_details[0].aadhar_card_no == null ? '' : resumeinfo.personal_details[0].aadhar_card_no;
             document.getElementById('contact-number').value = editPersonalDetailsForm.get('editContactNumber')
             document.getElementById('email').value = editPersonalDetailsForm.get('editEmail')
             document.getElementById('address').value = editPersonalDetailsForm.get('editAddress')
             document.getElementById('city').value = editPersonalDetailsForm.get('editCity')
             document.getElementById('pincode').value = editPersonalDetailsForm.get('editPincode')
             document.getElementById('temp_email').value = (personal_details[0].temp_email)
-            document.getElementById('temporary-address').value = editPersonalDetailsForm.get(
-              'editTemporaryAddress')
+            document.getElementById('temporary-address').value = resumeinfo.personal_details[1].address == null ? '' : resumeinfo.personal_details[1].address;
             document.getElementById('country').value = editPersonalDetailsForm.get('editCountry')
 
             if (resumeinfo.personal_details[0].gender_lid == 1) {
@@ -2394,14 +2392,14 @@
                       </div>
                       <div class="row p-3">
                         <div class="col-md-2">
-                          <p class="h6">Percentage<span class="required">*</span></p>
+                          <p class="h6">Percentage</p>
                         </div>
                         <div class="col-md-10"><input class="form-control qualification-percentile"
                             id="bachelors-degree-percentile" type="text"></div>
                       </div>
                       <div class="row p-3">
                         <div class="col-md-2 ">
-                          <p class="h6">Certificate<span class="required">*</span></p>
+                          <p class="h6">Certificate</p>
                         </div>
                         <div class="col-md-10"><input class="form-control qualification-certificate"
                             onchange="this.nextElementSibling.firstElementChild.src = window.URL.createObjectURL(this.files[0])"
@@ -2488,14 +2486,14 @@
       </div>
       <div class="row p-3">
         <div class="col-md-2">
-          <p class="h6">Percentage<span class="required">*</span></p>
+          <p class="h6">Percentage</p>
         </div>
         <div class="col-md-10"><input class="form-control qualification-percentile"
             id="bachelors-degree-percentile" type="text"></div>
       </div>
       <div class="row p-3">
         <div class="col-md-2 ">
-          <p class="h6">Certificate<span class="required">*</span></p>
+          <p class="h6">Certificate</p>
         </div>
         <div class="col-md-10"><input class="form-control qualification-certificate"
             onchange="this.nextElementSibling.firstElementChild.src = window.URL.createObjectURL(this.files[0])"
@@ -3675,7 +3673,7 @@
 
                         <div class="row p-3">
                           <div class="col-md-2 ">
-                            <p class="h6">Certificate: <span class="required">*</span></p>
+                            <p class="h6">Certificate:</p>
                           </div>
                           <div class="col-md-10 "><input class="form-control certificate-photo"
 
@@ -3739,7 +3737,7 @@
 
                         <div class="row p-3">
                           <div class="col-md-2 ">
-                            <p class="h6">Certificate: <span class="required">*</span></p>
+                            <p class="h6">Certificate:</p>
                           </div>
                           <div class="col-md-10 "><input class="form-control certificate-photo"
 
@@ -4437,14 +4435,14 @@
                       </div>
                       <div class="row p-3">
                         <div class="col-md-2">
-                          <p class="h6">Percentage<span class="required">*</span></p>
+                          <p class="h6">Percentage</p>
                         </div>
                         <div class="col-md-10"><input value="\${qualedit.percentile == null ? '' : qualedit.percentile }" class="form-control qualification-percentile"
                             id="bachelors-degree-percentile" type="text"></div>
                       </div>
                       <div class="row p-3">
                         <div class="col-md-2 ">
-                          <p class="h6">Certificate<span class="required">*</span></p>
+                          <p class="h6">Certificate</p>
                         </div>
                         <div class="col-md-10"><input type="checkbox" class="qualification-check-box me-1" id="qualification-check-box">Update Certificate?<input value="\${qualedit.url_path}" class="d-none form-control qualification-certificate"
                             onchange="this.nextElementSibling.firstElementChild.src = window.URL.createObjectURL(this.files[0])"
@@ -4504,6 +4502,8 @@
       document.querySelector("#qualification-cancel-button").addEventListener('click', function () {
         document.getElementById('body').classList.remove('d-none');
         document.querySelector('.qualification-modal').classList.add('d-none');
+        document.querySelector('.qualification-row').remove();
+
       });
 
 
@@ -5529,6 +5529,7 @@
     document.querySelector("#award-cancel-button").addEventListener('click', function () {
       document.getElementById('body').classList.remove('d-none');
       document.querySelector('.award-modal').classList.add('d-none');
+      document.querySelector('.award-rows').remove();
     });
 
 
@@ -5769,6 +5770,7 @@
     document.querySelector("#publication-cancel-button").addEventListener('click', function () {
       document.getElementById('body').classList.remove('d-none');
       document.querySelector('.publication-modal').classList.add('d-none');
+      document.querySelector('.publication-row').remove();
     });
     let publicationBase64 = ''
 
@@ -5972,9 +5974,13 @@
 
 
 
-    document.querySelector("#research-cancel-button").addEventListener('click', function () {
+    document.querySelector("#research-cancel-button").addEventListener('click', function (e) {
+     
+      let data = findClosest(e.target,'research-row')
+      console.log(data)
       document.getElementById('body').classList.remove('d-none');
       document.querySelector('.research-modal').classList.add('d-none');
+      document.querySelector('.research-row').remove();
     });
 
 
@@ -6189,6 +6195,7 @@
     document.querySelector('#certification-cancel-button').addEventListener('click', function () {
       document.getElementById('body').classList.remove('d-none');
       document.querySelector('.certification-modal').classList.add('d-none');
+      document.querySelector('.certification-row').remove();
     });
 
     document.querySelector('#certification-submit-button').addEventListener('click', function (e) {
@@ -6467,7 +6474,7 @@
 
                                         <div class="row p-3">
                                           <div class="col-md-2 ">
-                                            <p class="h6">Certificate: <span class="required">*</span></p>
+                                            <p class="h6">Certificate: </p>
                                           </div>
                                           <div class="col-md-10 "><input type='checkbox' class='certification-check-box'>Update Certificate?<input class="d-none form-control certificate-photo"
 
@@ -7220,6 +7227,7 @@
     document.querySelector('#workexperience-cancel-button').addEventListener('click', function (e) {
       document.querySelector('.workexperience-modal').classList.add('d-none');
       document.querySelector('#body').classList.remove('d-none');
+      document.querySelector('.workexperience-row').remove();
 
     })
 
@@ -7379,10 +7387,10 @@
 
             <div class="row p-3">
               <div class="col-md-3 ">
-                <p class="h6"> Duration: </p>
+                <p class="h6"> Duration in Year: </p>
               </div>
               <div class="col-md-9">
-               <input class="form-control duration-of-teaching" id="duration-of-teaching" value="\${expedit.duration}" type="text" value="0day" readonly/>
+               <input class="form-control duration-of-teaching" id="duration-of-teaching" value="\${expedit.duration}" type="text" value="0" readonly/>
                <span class="duration-of-teaching-message text-success" ></span>
               </div>
             </div>
@@ -7636,10 +7644,10 @@
 
              <div class="row p-3">
                <div class="col-md-3 ">
-                 <p class="h6"> Duration: </p>
+                 <p class="h6"> Duration in Year: </p>
                </div>
                <div class="col-md-9">
-                <input class="form-control duration-of-teaching" id="duration-of-teaching" type="text" value="0day" readonly/>
+                <input class="form-control duration-of-teaching" id="duration-of-teaching" type="text" value="0" readonly/>
                 <span class="duration-of-teaching-message text-success" ></span>
                </div>
              </div>
@@ -7715,8 +7723,8 @@
       }
 
       if ((startDateInput.value).length != 0 && (endDateInput.value).length != 0) {
-        console.log(diffDays)
-        durationValue.value = diffyears + "-Years i.e " + diffmonths + "-Months i.e " + diffDays + "-Days"
+        
+        durationValue.value = diffyears +  "Years";
       }
 
     });
@@ -7857,10 +7865,10 @@
 
             <div class="row p-3">
               <div class="col-md-3 ">
-                <p class="h6"> Duration: </p>
+                <p class="h6"> Duration in Year: </p>
               </div>
               <div class="col-md-9">
-               <input class="form-control duration-of-teaching" id="duration-of-teaching" type="text" value="0day" readonly/>
+               <input class="form-control duration-of-teaching" id="duration-of-teaching" type="text" value="0" readonly/>
                <span class="duration-of-teaching-message text-success" ></span>
               </div>
             </div>
@@ -7995,7 +8003,7 @@
         let object = {}
         object.resume_lid = resume_lid
         // object.organization_lid = '${organization_lid}'
-        object.organization_lid = 1
+        object.organization_lid = org_ID
         object.active = organizationStatus
         data.create_job_application.push(object)
 
@@ -8046,7 +8054,7 @@
             for (let desig of response) {
               schoolType +=
                 `<li>     
-                    <div class="school-type-li col-md-10 col-sm-10 col-12" data-name="\${desig.name}" data-id="\${desig.organization_lid}" ><a>\${desig.name}</a></div>
+                    <div class="school-type-li col-md-10 col-sm-10 col-12" data-name="\${desig.name}" data-id="\${desig.organization_id}" ><a>\${desig.name}</a></div>
                 </li>`
             }
             document.querySelector('#school-list').insertAdjacentHTML('beforeend', schoolType);
@@ -8140,11 +8148,13 @@
         const application_lid = urlParams.get('application_lid')
         const organization_lid = urlParams.get('organization_lid')
 
+        console.log("ORGANIZATION LIDD>>>>>>>>>",org_ID)
+
         let object = {}
         object.resume_lid = resume_lid
         object.application_lid = application_lid
         // object.organization_lid = '${organization_lid}'
-        object.organization_lid = '1'
+        object.organization_lid = organization_lid
         object.active = true
         data.create_job_application.push(object)
 

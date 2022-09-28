@@ -3,28 +3,28 @@ package com.visitingfaculty.dto;
 public class UserDto {
 
     private int id;
+    private int level;
     private String user_id;
     private String password;
     private String email;
     private String name;
-    private int organization_lid;
-    
-    public UserDto(int id, String user_id, String password, String email, String name, int organization_lid) {
+    private String organization_lid;
+    public UserDto() {
+    }
+    public UserDto(int id, int level, String user_id, String password, String email, String name,
+            String organization_lid) {
         this.id = id;
+        this.level = level;
         this.user_id = user_id;
         this.password = password;
         this.email = email;
         this.name = name;
         this.organization_lid = organization_lid;
     }
-    @Override
-    public String toString() {
-        return "UserDto [id=" + id + ", user_id=" + user_id + ", password=" + password + ", email=" + email + ", name="
-                + name + ", organization_lid=" + organization_lid + "]";
-    }
-    public UserDto() {
-    }
-    public UserDto(int id, String user_id, String name, int organization_lid) {
+
+    
+    public UserDto(int level, int id, String user_id, String name, String organization_lid) {
+        this.level = level;
         this.id = id;
         this.user_id = user_id;
         this.name = name;
@@ -35,6 +35,12 @@ public class UserDto {
     }
     public void setId(int id) {
         this.id = id;
+    }
+    public int getLevel() {
+        return level;
+    }
+    public void setLevel(int level) {
+        this.level = level;
     }
     public String getUser_id() {
         return user_id;
@@ -60,12 +66,17 @@ public class UserDto {
     public void setName(String name) {
         this.name = name;
     }
-    public int getOrganization_lid() {
+    public String getOrganization_lid() {
         return organization_lid;
     }
-    public void setOrganization_lid(int organization_lid) {
+    public void setOrganization_lid(String organization_lid) {
         this.organization_lid = organization_lid;
     }
-
+    @Override
+    public String toString() {
+        return "UserDto [email=" + email + ", id=" + id + ", level=" + level + ", name=" + name + ", organization_lid="
+                + organization_lid + ", password=" + password + ", user_id=" + user_id + "]";
+    }
     
+   
 }

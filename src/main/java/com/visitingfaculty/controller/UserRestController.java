@@ -187,6 +187,7 @@ public class UserRestController {
             httpSession.setAttribute("user_id", userDtos.getUser_id());
             httpSession.setAttribute("role", userDtos.getName());
             httpSession.setAttribute("organization_lid", userDtos.getOrganization_lid());
+            httpSession.setAttribute("level", userDtos.getLevel());
             return ResponseEntity.ok(userDtos.getUser_id());
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();

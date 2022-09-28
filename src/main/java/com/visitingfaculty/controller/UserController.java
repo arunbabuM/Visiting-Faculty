@@ -123,6 +123,7 @@ public class UserController {
         String user_id = (String) httpSession.getAttribute("user_id");
         if (user_id != null) {
             m.addAttribute("application_lid", application_lid);
+            m.addAttribute("level", httpSession.getAttribute("level"));
             return "performa-creation";
         }
         return "redirect:/login#session-timeout";

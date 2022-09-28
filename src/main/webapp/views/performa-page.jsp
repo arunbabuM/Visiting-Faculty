@@ -192,12 +192,9 @@
                             <th rowspan="2">Faculty Feedback</th>
                             <th rowspan="2">Total Subjects alloted in a Term</th>
                             <th rowspan="2">Subject Under AOL/OBE</th>
-
-
-                            <th rowspan="2">Comments</th>
-
-                            <th rowspan="2">Status</th>
                             <th rowspan="2">Total Points</th>
+                            <th rowspan="2">Comments</th>
+                            <th rowspan="2">Status</th>
                             <th rowspan="2">Action</th>
                         </tr>
                         <tr>
@@ -296,31 +293,31 @@
             for (performerinfo of performerinfoobj.proforma_details) {
                 let view = `
                 <tr>
-                            <td>\${performerinfo.created_date.split('T')[0]}</td>
-                            <td>NMIMS</td>
-                            <td>\${performerinfo.full_name}</td>
-                            <td>\${performerinfo.pancard_no}</td>
-                            <td><button data-qual="\${performerinfo.application_lid}" data-id = "1" data-toggle="modal" data-target=".bd-example-modal-lg" type="button" class="btn btn-outline-primary text-dark graduate">Graduate</button> </td>
-                            <td><button data-qual="\${performerinfo.application_lid}" data-id = "2" data-toggle="modal" data-target=".bd-example-modal-lg" type="button" class="btn btn-outline-primary text-dark masters">Masters</button></td>
-                            <td><button data-qual="\${performerinfo.application_lid}" data-id = "3" data-toggle="modal" data-target=".bd-example-modal-lg" type="button" class="btn btn-outline-primary text-dark phd">PHD</button></td>
-                            <td>\${performerinfo.teaching_exp}</td>
-                            <td>\${performerinfo.industrial_exp}</td>
-                            <td>\${performerinfo.total_exp}</td>
-                            <td>\${performerinfo.module}</td>
-                            <td>\${performerinfo.program_id}</td>
-                            <td>\${performerinfo.acad_session}</td>
-                            <td>\${performerinfo.rate_per_hours}</td>
-                            <td>\${performerinfo.total_no_of_hrs_alloted}</td>
-                            <td>\${performerinfo.no_of_division}</td>
-                            <td>\${performerinfo.student_count_per_division}</td>
-                            <td>\${performerinfo.rate_per_hours * performerinfo.total_no_of_hrs_alloted}</td>
-                            <td>FeedBack</td>
-                            <td>1</td>
-                            <td>\${performerinfo.aol_obe}</td>
-                            <td>Comments</td>
-                            <td>Pending</td>
-                            <td>6.5</td>
-                            <td><i class="fa-solid fa-fast-forward approve-button" title="Send for Approval"></i></td>
+                    <td>\${performerinfo.created_date.split('T')[0]}</td>
+                    <td>NMIMS</td>
+                    <td>\${performerinfo.full_name}</td>
+                    <td>\${performerinfo.pancard_no}</td>
+                    <td><button data-qual="\${performerinfo.application_lid}" data-id = "1" data-toggle="modal" data-target=".bd-example-modal-lg" type="button" class="btn btn-outline-primary text-dark graduate">Graduate</button> </td>
+                    <td><button data-qual="\${performerinfo.application_lid}" data-id = "2" data-toggle="modal" data-target=".bd-example-modal-lg" type="button" class="btn btn-outline-primary text-dark masters">Masters</button></td>
+                    <td><button data-qual="\${performerinfo.application_lid}" data-id = "3" data-toggle="modal" data-target=".bd-example-modal-lg" type="button" class="btn btn-outline-primary text-dark phd">PHD</button></td>
+                    <td>\${performerinfo.teaching_exp}</td>
+                    <td>\${performerinfo.industrial_exp}</td>
+                    <td>\${performerinfo.total_exp}</td>
+                    <td>\${performerinfo.module}</td>
+                    <td>\${performerinfo.program_id}</td>
+                    <td>\${performerinfo.acad_session}</td>
+                    <td>\${performerinfo.rate_per_hours}</td>
+                    <td>\${performerinfo.total_no_of_hrs_alloted}</td>
+                    <td>\${performerinfo.no_of_division}</td>
+                    <td>\${performerinfo.student_count_per_division}</td>
+                    <td>\${performerinfo.rate_per_hours * performerinfo.total_no_of_hrs_alloted}</td>
+                    <td>FeedBack</td>
+                    <td>1</td>
+                    <td>\${performerinfo.aol_obe}</td>
+                    <td>\${performerinfo.max_points}</td>
+                    <td>Comments</td>
+                    <td>Pending</td>
+                    <td><i class="fa-solid fa-fast-forward approve-button" title="Send for Approval"></i></td>
                 <tr>
                 `
                 document.querySelector('.performer-view').insertAdjacentHTML('afterbegin', view);

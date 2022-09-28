@@ -1069,19 +1069,16 @@ button {
 }
 
 .job-program-list {
-  position: absolute;
   max-height: 100px;
   overflow-y: scroll;
 }
 
 .job-session-list {
-  position: absolute;
   max-height: 100px;
   overflow-y: scroll;
 }
 
 .job-subject-list {
-  position: absolute;
   max-height: 100px;
   overflow-y: scroll;
 }
@@ -1092,40 +1089,35 @@ button {
   width: 100%;
 }
 
-.designation-title li
-{
+.designation-title li {
   border: 2px solid whitesmoke;
   padding: 3px 8px;
 }
 
-.job-program-list li
-{
+.job-program-list li {
   border: 2px solid whitesmoke;
   padding: 3px 8px;
 }
 
-.job-session-list li
-{
+.job-session-list li {
   border: 2px solid whitesmoke;
   padding: 3px 8px;
 }
 
-.job-subject-list li
-{
+.job-subject-list li {
   border: 2px solid whitesmoke;
   padding: 3px 8px;
 }
 
-.jobfacultytable{
+.jobfacultytable {
   box-shadow: 0px 0px 4px 1px;
 }
 
-#performa-creation-div{
+#performa-creation-div {
   padding-top: 5%;
 }
 
-.resume-search-div{
+.resume-search-div {
   margin-top: 10%;
   padding: 10%;
-  
 }
