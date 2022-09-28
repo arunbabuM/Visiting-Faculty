@@ -82,11 +82,11 @@
                             </div>
                         </td>
                         <td><input class="form-control job-date" type="date"> </td>
-                        <td><input class="form-control job-hours" type="text"> </td>
-                        <td><input class="form-control job-rate" type="text"> </td>
-                        <td><input class="form-control job-total-hours" type="text"> </td>
-                        <td><input class="form-control job-division" type="text"> </td>
-                        <td><input class="form-control job-count" type="text"> </td>
+                        <td><input class="form-control job-hours" type="number"> </td>
+                        <td><input class="form-control job-rate" type="number"> </td>
+                        <td><input class="form-control job-total-hours" type="number"> </td>
+                        <td><input class="form-control job-division" type="number"> </td>
+                        <td><input class="form-control job-count" type="number"> </td>
                         <td><select class="form-control job-process">
                                 <option value="0">-Select-</option>
                                 <option value="AOL">AOL</option>
@@ -128,6 +128,25 @@
     </div>
   </div>
 </main>
+
+<div class="modal-loader d-none" id="main-loader">
+    <svg version="1.1" id="L5" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
+      y="0px" viewBox="0 0 100 100" enable-background="new 0 0 0 0" xml:space="preserve">
+      <circle fill="#FF4136" stroke="none" cx="6" cy="50" r="6">
+        <animateTransform attributeName="transform" dur="1s" type="translate" values="0 15 ; 0 -15; 0 15"
+          repeatCount="indefinite" begin="0.1" />
+      </circle>
+      <circle fill="#FF851B" stroke="none" cx="30" cy="50" r="6">
+        <animateTransform attributeName="transform" dur="1s" type="translate" values="0 10 ; 0 -10; 0 10"
+          repeatCount="indefinite" begin="0.2" />
+      </circle>
+      <circle fill="#FFDC00" stroke="none" cx="54" cy="50" r="6">
+        <animateTransform attributeName="transform" dur="1s" type="translate" values="0 5 ; 0 -5; 0 5"
+          repeatCount="indefinite" begin="0.3" />
+      </circle>
+    </svg>
+  </div>
+
     <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/SimpleAlert.js"></script>
@@ -244,6 +263,11 @@ function searchSubjectApi(targetSubjectList,programId,sessionName) {
         type: 'GET',
         success: function (response) {
             console.log("response>>> ", response)
+
+            if(!response) {
+                response = '[]';
+            }
+
             let resResult = JSON.parse(response);
 
 
@@ -294,9 +318,6 @@ document.addEventListener('click', function(e) {
         custTarget.querySelector('.custom-select-div-ul').classList.add('d-none');
     }
 
-
-
-
 })
 
 
@@ -307,15 +328,29 @@ document.addEventListener('click', function(e) {
         let jobPorformaSubjectUl = findClosest(e.target, 'job-tr').querySelector(".job-subject-list")
 
         if(e.target.classList.contains('job-program')) {
+
+            let selectedLi = jobPorformaProgramUl.querySelector(`li[selected=true]`);
+
+            if(selectedLi) {
+                selectedLi.setAttribute('selected', false);
+            }
+
             clearTimeout(apiTimeout)
             const value = e.target.value
             apiTimeout = setTimeout(() => searchProgramApi(value, e.target), 2000)
         }
+
+        if(e.target.classList.contains('job-session')) {
+
+            let selectedLi = jobPorformaSessionUl.querySelector(`li[selected=true]`);
+
+            if(selectedLi) {
+                selectedLi.setAttribute('selected', false);
+            }
+        }
      
         
         if(e.target.classList.contains('job-subject')) { 
- 
-        
             // Declare variables
             var input, filter, ul, li, a, i, txtValue;
             // Input for the variables declared
@@ -343,40 +378,34 @@ document.addEventListener('click', function(e) {
 
 
         if(e.target.classList.contains('single-program')) {
-            findClosest(e.target, 'job-tr').querySelector(".job-session").value = "";
-            findClosest(e.target, 'job-tr').querySelector(".job-subject").value = "";
-            let trSession = findClosest(e.target, 'job-tr').querySelector(".job-session-list");
-            let programId = null;
-            let dropDownData = findClosest(e.target, 'job-tr').querySelectorAll(`li[selected=true]`).forEach(data => {
-                if(data.classList.contains('job-program-item')) {
 
-                    programId += data.dataset.id
+            let thisTr = findClosest(e.target, 'job-tr');
 
-                } 
+            thisTr.querySelector(".job-session").value = "";
+            thisTr.querySelector(".job-subject").value = "";
 
-            })
+            let trSession = thisTr.querySelector(".job-session-list");
+            let programId = e.target.dataset.id;
 
-
-            searchSessionApi(trSession,programId);
+            searchSessionApi(trSession, programId);
         }
-        let programId = null;
+
 
         if(e.target.classList.contains('single-session')) {
-            findClosest(e.target, 'job-tr').querySelector(".job-subject").value = "";
-            let trSubject = findClosest(e.target, 'job-tr').querySelector(".job-subject-list");
-            let sessionName=  null;
-            let dropDownData = findClosest(e.target, 'job-tr').querySelectorAll(`li[selected=true]`).forEach(data => {
-                if(data.classList.contains('job-program-item')) {
+            let thisTr = findClosest(e.target, 'job-tr');
+            let trSubject = thisTr.querySelector(".job-subject-list");
+            let acadSessionName =   e.target.dataset.value;
+            let acadSessionId = e.target.dataset.id;
+            let programId;
+            let programLi = thisTr.querySelector(`.job-program-list li[selected=true]`)
+            if(programLi) {
+               programId =  programLi.dataset.id
+            }
 
-                    programId = data.dataset.id
-
-                } 
-                if(data.classList.contains('job-session-item')) {
-                    sessionName = data.dataset.value
-                }
-
-            })
-            searchSubjectApi(trSubject,programId,sessionName);
+            thisTr.querySelector(".job-subject").value = "";
+            
+    
+            searchSubjectApi(trSubject, programId, acadSessionName);
         }
 
     })
@@ -432,11 +461,11 @@ document.addEventListener('click', function(e) {
                             </div>
                         </td>
                         <td><input class="form-control job-date" type="date"> </td>
-                        <td><input class="form-control job-hours" type="text"> </td>
-                        <td><input class="form-control job-rate" type="text"> </td>
-                        <td><input class="form-control job-total-hours" type="text"> </td>
-                        <td><input class="form-control job-division" type="text"> </td>
-                        <td><input class="form-control job-count" type="text"> </td>
+                        <td><input class="form-control job-hours" type="number"> </td>
+                        <td><input class="form-control job-rate" type="number"> </td>
+                        <td><input class="form-control job-total-hours" type="number"> </td>
+                        <td><input class="form-control job-division" type="number"> </td>
+                        <td><input class="form-control job-count" type="number"> </td>
                         <td><select class="form-control job-process">
                                 <option value="0">-Select-</option>
                                 <option value="AOL">AOL</option>
@@ -469,61 +498,139 @@ document.addEventListener('click', function(e) {
 
     document.querySelector('#job-application-submit-btn').addEventListener('click',function(){
      
-     let jobArrar = {"insert_proforma" : []};
-     let jobApllicationData = document.querySelectorAll('.job-tr');
-     let programName = '';
-     let programId = '';
-     let subjectName = '';
-     let subjectId = '';
-     for(let i=0 ; i<jobApllicationData.length;i++)
-     {
+        document.getElementById('main-loader').classList.remove('d-none');
 
-      let dropDownData = jobApllicationData[i].querySelectorAll(`li[selected=true]`).forEach(data => {
+        let jobArrar = {"insert_proforma" : []};
+        let jobApllicationData = document.querySelectorAll('.job-tr');
+        let subjectName = '';
+        let subjectId = '';
+        
+        for(let i = 0; i < jobApllicationData.length; i++)
+        {
+            
+            jobApllicationData[i].querySelector('.job-program').classList.remove('input-border');
+            jobApllicationData[i].querySelector('.job-session').classList.remove('input-border');
+            jobApllicationData[i].querySelector('.job-subject').classList.remove('input-border');
+            jobApllicationData[i].querySelector('.job-date').classList.remove('input-border');
+            jobApllicationData[i].querySelector('.job-hours').classList.remove('input-border');
+            jobApllicationData[i].querySelector('.job-total-hours').classList.remove('input-border');
+            jobApllicationData[i].querySelector('.job-division').classList.remove('input-border');
+            jobApllicationData[i].querySelector('.job-count').classList.remove('input-border');
+            jobApllicationData[i].querySelector('.job-rate').classList.remove('input-border');
 
-        if(data.classList.contains('job-program-item')) {
+            let selectedProgramLi = jobApllicationData[i].querySelector(`.job-program-list li[selected=true]`);
+            let selectedSessionLi = jobApllicationData[i].querySelector(`.job-session-list li[selected=true]`);
+            let selectedModuleLi = jobApllicationData[i].querySelector(`.job-subject-list li[selected=true]`);
+            let proformaId = jobApllicationData[i].dataset.id
+            let programInput = selectedProgramLi ? selectedProgramLi.dataset.id : '';
+            let programName = selectedProgramLi ? selectedProgramLi.dataset.value : '';
+            // let sessionId = selectedSessionLi ? selectedSessionLi.dataset.id : '';
+            let sessionName = selectedSessionLi ? selectedSessionLi.dataset.value : '';
+            let moduleId = selectedModuleLi ? selectedModuleLi.dataset.id : '';
+            let moduleName = selectedModuleLi ? selectedModuleLi.dataset.value : '';
+            let session = jobApllicationData[i].querySelector('.job-session').value;
+            let date = jobApllicationData[i].querySelector('.job-date').value;
+            let hours = jobApllicationData[i].querySelector('.job-hours').value;
+            let rate = jobApllicationData[i].querySelector('.job-rate').value;
+            let totalhours = jobApllicationData[i].querySelector('.job-total-hours').value;
+            let division = jobApllicationData[i].querySelector('.job-division').value;
+            let count = jobApllicationData[i].querySelector('.job-count').value;
+            let process = jobApllicationData[i].querySelector('.job-process').value;
 
-            programName += data.dataset.value
-            programId += data.dataset.id
+            let checkProgramInput = tabledatacheck(programInput);
+            let checkSession = tabledatacheck(sessionName);
+            let checkDate = tabledatacheck(date);
+            let checkHours = tabledatacheck(hours);
+            let checkRate = tabledatacheck(rate);
+            let checkTotalHours = tabledatacheck(totalhours);
+            let checkDivision = tabledatacheck(division);
+            let checkCount = tabledatacheck(count);
+            let checkProcess = tabledatacheck(process);
+            let checkSubject = tabledatacheck(moduleId);
 
-        } 
+            if (checkProgramInput == false) {
+                jobApllicationData[i].querySelector('.job-program').classList.add('input-border');;
+                document.getElementById('main-loader').classList.add('d-none');
+                return;
 
-        if(data.classList.contains('job-subject-item')) {
+            } else if(checkSession == false) {
 
-            subjectName += data.dataset.value
-            subjectId += data.dataset.id
+                jobApllicationData[i].querySelector('.job-session').classList.add('input-border');;
+                document.getElementById('main-loader').classList.add('d-none');
+            return;
 
-        }
+            }
+                else if(checkDate == false) {
 
-      })
+                jobApllicationData[i].querySelector('.job-date').classList.add('input-border');;
+                document.getElementById('main-loader').classList.add('d-none');
+            return;
 
-      let session = jobApllicationData[i].querySelector('.job-session').value;
-      let date = jobApllicationData[i].querySelector('.job-date').value;
-      let hours = jobApllicationData[i].querySelector('.job-hours').value;
-      let rate = jobApllicationData[i].querySelector('.job-rate').value;
-      let totalhours = jobApllicationData[i].querySelector('.job-total-hours').value;
-      let division = jobApllicationData[i].querySelector('.job-division').value;
-      let count = jobApllicationData[i].querySelector('.job-count').value;
-      let process = jobApllicationData[i].querySelector('.job-process').value;
-      
-      obj = {
-        application_lid:'${application_lid}',  
-        module_id:  subjectId,    
-        module: subjectName,        
-        teaching_hours:hours,
-        program_name: programName,
-        program_id: programId,
-        acad_session:session,
-        commencement_date_of_program:date,
-        rate_per_hours:rate,
-        total_no_of_hrs_alloted:totalhours,
-        no_of_division:division,
-        student_count_per_division:count,
-        aol_obe:process,
-        level : '${level}',
-        status_lid : 1,
+            }
+                else if(checkHours == false) {
 
-      }
-      jobArrar.insert_proforma.push(obj);
+                jobApllicationData[i].querySelector('.job-hours').classList.add('input-border');;
+                document.getElementById('main-loader').classList.add('d-none');
+            return;
+
+            
+            } else if(checkRate == false) {
+
+                jobApllicationData[i].querySelector('.job-rate').classList.add('input-border');;
+                document.getElementById('main-loader').classList.add('d-none');
+            return;
+
+            
+            } else if(checkTotalHours == false) {
+
+                jobApllicationData[i].querySelector('.job-total-hours').classList.add('input-border');;
+                document.getElementById('main-loader').classList.add('d-none');
+            return;
+
+            
+            } else if(checkDivision == false) {
+
+                jobApllicationData[i].querySelector('.job-division').classList.add('input-border');;
+                document.getElementById('main-loader').classList.add('d-none');
+            return;
+            
+            } else if(checkCount == false) {
+
+                jobApllicationData[i].querySelector('.job-count').classList.add('input-border');;
+                document.getElementById('main-loader').classList.add('d-none');
+            return;
+
+            
+            } else if(checkProcess == false) {
+
+                jobApllicationData[i].querySelector('.job-process').classList.add('input-border');;
+                document.getElementById('main-loader').classList.add('d-none');
+            return;
+
+            }
+            
+            obj = {
+                application_lid:'${application_lid}',  
+                proforma_id : proformaId ,
+                module_id:  moduleId, 
+                module_name: moduleName,
+                vf_module_id: '',     
+                teaching_hours:hours,
+                program_name: programName,
+                program_id: programInput,
+                acad_session: sessionName,
+                commencement_date_of_program:date,
+                rate_per_hours:rate,
+                total_no_of_hrs_alloted:totalhours,
+                no_of_division:division,
+                student_count_per_division:count,
+                aol_obe:process,
+                level : '${level}',
+                status_lid : 1,
+                username : '${user_id}'
+
+            }
+            jobArrar.insert_proforma.push(obj);
      }
      console.log("Array : ",JSON.stringify(jobArrar));
 
@@ -542,8 +649,10 @@ document.addEventListener('click', function(e) {
             if (data.status == 200) {
                 console.log(data);
                 location.href = '${pageContext.request.contextPath}/performa'
+                document.getElementById('main-loader').classList.add('d-none');
             } else {
               alert('Check Details Input');
+              document.getElementById('main-loader').classList.add('d-none');
             }
           })
         }
@@ -560,7 +669,7 @@ for(let proforma of resumeinfo.proforma_details) {
 
     console.log(proforma)
     proformaData += `
-                            <tr class='job-tr'>
+                            <tr class='job-tr' data-id ="\${proforma.proforma_id}">
                                     <td>
                                         <div class="custom-select-div">
                                             <input class="form-control job-program cust-input" value = "\${proforma.program_name == null ? '' : proforma.program_name}"  data-id="" data-name="" type="text">
@@ -580,11 +689,11 @@ for(let proforma of resumeinfo.proforma_details) {
                                         </div>
                                     </td>
                                     <td><input class="form-control job-date" type="date" value = "\${proforma.commencement_date_of_program}"> </td>
-                                    <td><input class="form-control job-hours" type="text" value = "\${proforma.teaching_hours}"> </td>
-                                    <td><input class="form-control job-rate" type="text" value = "\${proforma.rate_per_hours}"> </td>
-                                    <td><input class="form-control job-total-hours" type="text" value = "\${proforma.total_no_of_hrs_alloted}"> </td>
-                                    <td><input class="form-control job-division" type="text" value = "\${proforma.no_of_division}"> </td>
-                                    <td><input class="form-control job-count" type="text" value = "\${proforma.student_count_per_division}" > </td>
+                                    <td><input class="form-control job-hours" type="number" value = "\${proforma.teaching_hours}"> </td>
+                                    <td><input class="form-control job-rate" type="number" value = "\${proforma.rate_per_hours}"> </td>
+                                    <td><input class="form-control job-total-hours" type="number" value = "\${proforma.total_no_of_hrs_alloted}"> </td>
+                                    <td><input class="form-control job-division" type="number" value = "\${proforma.no_of_division}"> </td>
+                                    <td><input class="form-control job-count" type="number" value = "\${proforma.student_count_per_division}" > </td>
                                     <td><select class="form-control job-process">
                                             <option value="0">-Select-</option>
                                             <option value="AOL">AOL</option>

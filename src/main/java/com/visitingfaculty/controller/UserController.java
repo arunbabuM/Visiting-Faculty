@@ -124,6 +124,7 @@ public class UserController {
         if (user_id != null) {
             m.addAttribute("application_lid", application_lid);
             m.addAttribute("level", httpSession.getAttribute("level"));
+            m.addAttribute("user_id", httpSession.getAttribute("user_id"));
             return "performa-creation";
         }
         return "redirect:/login#session-timeout";
