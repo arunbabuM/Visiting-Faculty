@@ -213,7 +213,7 @@
   </div>
 
   <div class="session-timeout-alert alert alert-warning alert-dismissible fade show d-flex justify-content-center align-items-center d-none">
-    <strong>Sorry!</strong>&nbsp &nbsp Your Session has expired, Kindly Login again
+    <strong>Oops!</strong>&nbsp &nbsp Your Session has expired, Kindly Login again
     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
   </div>
 

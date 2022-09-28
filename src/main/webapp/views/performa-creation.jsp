@@ -11,9 +11,16 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/style.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/login.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/simpleAlert.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
   
     <title>Create Performa</title>
     <link rel="icon" type="image/x-icon" href="images.jpg">
+
+    <style>
+        .select2-selection {
+            width: 300px;
+        }
+    </style>
 </head>
 <body>
 
@@ -36,8 +43,8 @@
                     id="add-moreAllottedSubjects"><i class="fas fa-plus"></i></button>
             </div>
         </div>
-      
-        <div class="card-body table-responsive">
+
+        <div class="card-body porforma-table table-responsive">
             <table class="table jobfacultytable" id="">
                 <thead>
                     <th>Program&nbsp;<span class="text-danger fs-5">*</span></th>
@@ -56,21 +63,23 @@
     
                 <tbody class="job-application-body">
                     <tr class='job-tr'>
-                        <td class="custom-select-div"><input class="form-control job-program" type="text">
-                            <ul class="form-control d-none" id="job-program-list">
-
-                            </ul>
+                        <td>
+                            <div class="custom-select-div">
+                                <input class="form-control job-program cust-input"  data-id="" data-name="" type="text">
+                                <ul class="form-control d-none job-program-list custom-select-div-ul"></ul>
+                            </div>
                         </td>
-                        <td class="custom-select-div" ><input class="form-control job-session" type="text"> 
-                            <ul class="form-control d-none" id="job-session-list">
-                                
-                            </ul>
+                        <td>
+                            <div class="custom-select-div">
+                                <input class="form-control job-session cust-input" data-name="" type="text"> 
+                                <ul class="form-control d-none job-session-list custom-select-div-ul"></ul>
+                            </div>
                         </td>
-                        <!-- <td><input class="form-control" type="text"> </td> -->
-                        <td class="custom-select-div" ><input class="form-control job-subject" type="text"> 
-                            <ul class="form-control d-none" id="job-subject-list">
-                              
-                            </ul>
+                        <td>
+                            <div class="custom-select-div">
+                                <input class="form-control job-subject cust-input" data-id="" data-name="" type="text"> 
+                                <ul class="form-control d-none job-subject-list custom-select-div-ul"></ul>
+                            </div>
                         </td>
                         <td><input class="form-control job-date" type="date"> </td>
                         <td><input class="form-control job-hours" type="text"> </td>
@@ -126,124 +135,220 @@
     <script src="${pageContext.request.contextPath}/js/leftsidebartoggle.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/jquery.bootpag.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <script id="script-data"></script>
 
     <script>
 
-    //    $.ajax({
-    //         url: 'https://dev-portal.svkm.ac.in:8080/vfApi/getSchoolsList',
-    //         type: 'get',
-    //         success: function (response) {
-    //           let selectList = ''
-    //             for (let desig of response) {
-    //             selectList +=
-    //               `<li>     
-    //                   <div class="job-program-item col-md-10 col-sm-10 col-12" data-name="\${desig.collegeName}" data-id="\${desig.schoolObjId}" >\${desig.collegeName}</div>
-    //               </li>`
-    //           }
-    //           document.querySelector("#job-program-list").insertAdjacentHTML("beforeend",selectList)
-    //         },
-    //         error: function (error) {
-    //           console.log("Error::::::::::::", error);
-    //         }
-    //       })
-    //       $.ajax({
-    //         url: 'https://dev-portal.svkm.ac.in:8080/vfApi/getSchoolsList',
-    //         type: 'get',
-    //         success: function (response) {
-    //             let selectList = ''
-    //           for (let desig of response) {
-    //             selectList +=
-    //               `<li>     
-    //                   <div class="job-session-item col-md-10 col-sm-10 col-12" data-name="\${desig.collegeName}" data-id="\${desig.schoolObjId}" >\${desig.collegeName}</div>
-    //               </li>`
-    //           }
-    //           document.querySelector("#job-session-list").insertAdjacentHTML("beforeend",selectList)
-    //         },
-    //         error: function (error) {
-    //           console.log("Error::::::::::::", error);
-    //         }
-    //       })
-    //       $.ajax({
-    //         url: 'https://dev-portal.svkm.ac.in:8080/vfApi/getSchoolsList',
-    //         type: 'get',
-    //         success: function (response) {
-    //             let selectList = ''
-    //           for (let desig of response) {
-    //             selectList +=
-    //               `<li>     
-    //                   <div class="job-subject-item col-md-10 col-sm-10 col-12" data-name="\${desig.collegeName}" data-id="\${desig.schoolObjId}" >\${desig.collegeName}</div>
-    //               </li>`
-    //           }
-    //           document.querySelector("#job-subject-list").insertAdjacentHTML("beforeend",selectList)
-    //         },
-    //         error: function (error) {
-    //           console.log("Error::::::::::::", error);
-    //         }
-    //       })
+// ------------------------function fro search which will be used for all 3 dropdowns-----------
 
-    //       document.querySelector('#performa-creation-div').addEventListener('click', function (e) {
+let apiTimeout = null;
 
-    //       if (e.target.classList.contains("job-program")) {
-    //         document.getElementById('job-program-list').classList.remove("d-none");
-    //       } else {
-    //         document.getElementById('job-program-list').classList.add("d-none");
-    //       }
-          
-    //       if (e.target.classList.contains("job-program-item") || findClosest(e.target,'job-program-item')) {
-    //         console.log('target', e.target)
-    //         let id = e.target.classList.contains("job-program-item") ? e.target.dataset.id : e.target.parentElement.dataset.id;
-    //         let name = e.target.classList.contains("job-program-item") ? e.target.dataset.name : e.target.parentElement.dataset.name
-    //         document.querySelector('.job-program').value = name;
-    //         document.querySelector('.job-program').dataset.id = id;
-    //         document.querySelector('.job-program').dataset.name = name;
-    //         console.log('value', name + id);
-    //         document.getElementById('job-program-list').classList.add("d-none");
-    //       }
 
-    //       if (e.target.classList.contains("job-session")) {
-    //         document.getElementById('job-session-list').classList.remove("d-none");
-    //       } else {
-    //         document.getElementById('job-session-list').classList.add("d-none");
-    //       }
-          
-    //       if (e.target.classList.contains("job-session-item") || findClosest(e.target,'job-session-item')) {
-    //         console.log('target', e.target)
-    //         let id = e.target.classList.contains("job-session-item") ? e.target.dataset.id : e.target.parentElement.dataset.id;
-    //         let name = e.target.classList.contains("job-session-item") ? e.target.dataset.name : e.target.parentElement.dataset.name
-    //         document.querySelector('.job-session').value = name;
-    //         document.querySelector('.job-session').dataset.id = id;
-    //         document.querySelector('.job-session').dataset.name = name;
-    //         console.log('value', name + id);
-    //         document.getElementById('job-session-list').classList.add("d-none");
-    //       }
+function searchProgramApi(query, targetProgramSearch) {
 
-    //       if (e.target.classList.contains("job-subject")) {
-    //         document.getElementById('job-subject-list').classList.remove("d-none");
-    //       } else {
-    //         document.getElementById('job-subject-list').classList.add("d-none");
-    //       }
-          
-    //       if (e.target.classList.contains("job-subject-item") || findClosest(e.target,'job-subject-item')) {
-    //         console.log('target', e.target)
-    //         let id = e.target.classList.contains("job-subject-item") ? e.target.dataset.id : e.target.parentElement.dataset.id;
-    //         let name = e.target.classList.contains("job-subject-item") ? e.target.dataset.name : e.target.parentElement.dataset.name
-    //         document.querySelector('.job-subject').value = name;
-    //         document.querySelector('.job-subject').dataset.id = id;
-    //         document.querySelector('.job-subject').dataset.name = name;
-    //         console.log('value', name + id);
-    //         document.getElementById('job-subject-list').classList.add("d-none");
-    //       }
-    //       })
+    let jobPorformaProgramUl = findClosest(targetProgramSearch, 'job-tr').querySelector(".job-program-list");
+    let selectProgramList = '';
+
+    $.ajax({
+        url: `http://localhost:8084/getProgramName?characters=\${query}&programId=0&schoolObjId=00004537`,
+        type: 'GET',
+        success: function (response) {
+            console.log("response>>> ", response)
+            let resResult = JSON.parse(response).results;
+
+            for (let desig of resResult) {
+                    selectProgramList +=
+                `<li class="cust-single single-program job-program-item" data-value="\${desig.programName}" data-id="\${desig.id}">     
+                    \${desig.programName}
+                </li>`
+            }
+
+            jobPorformaProgramUl.innerHTML = selectProgramList;
+
+            jobPorformaProgramUl.classList.remove("d-none");
+
+
+        },
+        error: function (error) {
+            return error;
+        }
+    })
+    
+}
+
+
+function searchSessionApi(targetSessionList) {
+
+    let selectSessionList = '';
+
+    $.ajax({
+        url: `http://localhost:8084/getacadSession?programId=50008774`,
+        type: 'GET',
+        success: function (response) {
+            console.log("response>>> ", response)
+            let resResult = JSON.parse(response).data;
+
+            for (let session of resResult) {
+            selectSessionList +=
+                `<li class="cust-single single-session job-session-item" data-value="\${session.acadSession}">     
+                    \${session.acadSession}
+                </li>`
+            }
+
+            targetSessionList.innerHTML = selectSessionList;
+            targetSessionList.classList.remove("d-none");
+
+        },
+        error: function (error) {
+            return error;
+        }
+    })
+
+}
+
+
+function searchSubjectApi(targetSubjectList) {
+
+    let selectSubjectList = '';
+
+    $.ajax({
+        url: `http://localhost:8084/getSubjectName?programId=50002935&semester=Semester II`,
+        type: 'GET',
+        success: function (response) {
+            console.log("response>>> ", response)
+            let resResult = JSON.parse(response);
+
+
+            for (let sub of resResult) {
+            selectSubjectList +=
+                `<li class="cust-single single-subject job-subject-item" data-value="\${sub.moduleName}" data-id="\${sub.moduleId}">     
+                    \${sub.moduleName}
+                </li>`
+            }
+
+            targetSubjectList.innerHTML = selectSubjectList;
+            targetSubjectList.classList.remove("d-none");
+
+
+        },
+        error: function (error) {
+            return error;
+        }
+    })
+
+}
+
+document.addEventListener('click', function(e) {
+
+    document.querySelectorAll(`.custom-select-div-ul`).forEach(function(item){
+        item.classList.add('d-none');
+    })
+
+    let custTarget = findClosest(e.target, 'custom-select-div');
+
+    if(e.target.classList.contains('cust-input')) {
+        custTarget.querySelector('.custom-select-div-ul').classList.remove('d-none');
+    }
+
+
+    if(custTarget && e.target.classList.contains('cust-single')) { 
+        let targetInput = custTarget.querySelector("input");
+        targetInput.value = e.target.getAttribute('data-value');
+
+        custTarget.querySelectorAll(`li[selected=true]`).forEach(function(item){
+            item.setAttribute('selected', 'false');
+        })
+
+        e.target.setAttribute('selected', 'true');
+        custTarget.querySelector('.custom-select-div-ul').classList.add('d-none');
+    }
+
+
+
+
+})
+
+
+
+    document.querySelector('#performa-creation-div').addEventListener('keyup', function(e) {
+        let jobPorformaProgramUl = findClosest(e.target, 'job-tr').querySelector(".job-program-list")
+        let jobPorformaSessionUl = findClosest(e.target, 'job-tr').querySelector(".job-session-list")
+        let jobPorformaSubjectUl = findClosest(e.target, 'job-tr').querySelector(".job-subject-list")
+
+        if(e.target.classList.contains('job-program')) {
+            clearTimeout(apiTimeout)
+            const value = e.target.value
+            apiTimeout = setTimeout(() => searchProgramApi(value, e.target), 2000)
+        }
+     
+        
+        if(e.target.classList.contains('job-subject')) { 
+ 
+        
+            // Declare variables
+            var input, filter, ul, li, a, i, txtValue;
+            // Input for the variables declared
+            input = findClosest(e.target, 'job-tr').querySelector('.job-subject');
+            filter = input.value.toUpperCase();
+            ul = findClosest(e.target, 'job-tr').querySelector(".job-subject-list");
+            li = ul.getElementsByTagName('li');
+            // Loop through all list items, and hide those who don't match the search query
+            for (i = 0; i < li.length; i++) {
+              a = li[i].getElementsByTagName("a")[0];
+              txtValue = a.textContent || a.innerText;
+              if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                li[i].style.display = "";
+              } else {
+                li[i].style.display = "none";
+              }
+            }
+        }
+
+    })
+
+  
+
+    document.querySelector('#performa-creation-div').addEventListener('click', function(e) {
+
+        // if(e.target.classList.contains('job-program')) { 
+        //     let targetInput = findClosest(e.target, 'job-tr').querySelector(".job-program-list");
+        //     targetInput.classList.remove('d-none');
+        // }
+
+        // if(e.target.classList.contains('job-session')) { 
+        //     let targetInput = findClosest(e.target, 'job-tr').querySelector(".job-session-list");
+        //     targetInput.classList.remove('d-none');
+        // }
+
+        // if(e.target.classList.contains('job-subject')) { 
+        //     let targetInput = findClosest(e.target, 'job-tr').querySelector(".job-subject-list");
+        //     targetInput.classList.remove('d-none');
+        // }
+
+        if(e.target.classList.contains('single-program')) {
+            console.log("SEARCHING SESSION")
+            let trSession = findClosest(e.target, 'job-tr').querySelector(".job-session-list");
+            searchSessionApi(trSession);
+        }
+
+        if(e.target.classList.contains('single-session')) {
+            console.log("SEARCHING SUBJECT")
+            let trSubject = findClosest(e.target, 'job-tr').querySelector(".job-subject-list");
+            searchSubjectApi(trSubject);
+        }
+
+    })
+        
+
 
       document.querySelector('#image-preview-cancel-button').addEventListener('click', function (e) {
       document.getElementById('performa-creation-div').classList.remove('d-none');
       document.querySelector('.image-preview-modal').classList.add('d-none');
-    //   document.getElementById("image-uploaded").src = " ";
       });
 
     document.querySelector('#performa-creation-div').addEventListener('click', function (e) {
-
+        
       if (e.target.classList.contains('qualification-certificate-display') || e.target.classList.contains(
           'award-certificate-display') || e.target.classList.contains('publication-certificate-display') || e.target
         .classList.contains('research-certificate-display') || e.target.classList.contains(
@@ -264,27 +369,41 @@
     //************************************Function's for Job Application Table***************************************************
 
     //Job Application Table Add Button
-    document.querySelector('.add-btn').addEventListener('click',function(){        
+    document.querySelector('.add-btn').addEventListener('click',function(){     
+  
         let row = `                
-                <tr class='job-tr'>
-                    <td><input class="form-control job-program" type="text"> </td>
-                    <td><input class="form-control job-session" type="text"> </td>
-                    <!-- <td><input class="form-control" type="text"> </td> -->
-                    <td><input class="form-control job-subject" type="text"> </td>
-                    <td><input class="form-control job-date" type="date"> </td>
-                    <td><input class="form-control job-hours" type="text"> </td>
-                    <td><input class="form-control job-rate" type="text"> </td>
-                    <td><input class="form-control job-total-hours" type="text"> </td>
-                    <td><input class="form-control job-division" type="text"> </td>
-                    <td><input class="form-control job-count" type="text"> </td>
-                    <td><select class="form-control job-process">
-                            <option value="0">-Select-</option>
-                            <option value="AOL">AOL</option>
-                            <option value="OBL">OBE</option>
-                        </select> 
-                    </td>
-                    <td><i class="fa-trash fa-solid text-danger delete-row"></td>
-                </tr>`
+        <tr class='job-tr'>
+                        <td>
+                            <div class="custom-select-div">
+                                <input class="form-control job-program"  data-id="" data-name="" type="text">
+                                <ul class="form-control d-none job-program-list custom-select-div-ul"></ul>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="custom-select-div">
+                                <input class="form-control job-session" data-name="" type="text"> 
+                                <ul class="form-control d-none job-session-list custom-select-div-ul"></ul>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="custom-select-div">
+                                <input class="form-control job-subject" data-id="" data-name="" type="text"> 
+                                <ul class="form-control d-none job-subject-list custom-select-div-ul"></ul>
+                            </div>
+                        </td>
+                        <td><input class="form-control job-date" type="date"> </td>
+                        <td><input class="form-control job-hours" type="text"> </td>
+                        <td><input class="form-control job-rate" type="text"> </td>
+                        <td><input class="form-control job-total-hours" type="text"> </td>
+                        <td><input class="form-control job-division" type="text"> </td>
+                        <td><input class="form-control job-count" type="text"> </td>
+                        <td><select class="form-control job-process">
+                                <option value="0">-Select-</option>
+                                <option value="AOL">AOL</option>
+                                <option value="OBL">OBE</option>
+                            </select> 
+                        </td>
+                    </tr>`
 
         document.querySelector('.job-application-body').insertAdjacentHTML('beforeend',row);
     });
@@ -313,9 +432,8 @@
      let jobApllicationData = document.querySelectorAll('.job-tr');
      for(let i=0 ; i<jobApllicationData.length;i++)
      {
-    
-        let proforma_id = jobApllicationData[i].dataset.proforma
       let program = jobApllicationData[i].querySelector('.job-program').value;
+      let programId = jobApllicationData[i].querySelector('.job-program').dataset.id;
       let session = jobApllicationData[i].querySelector('.job-session').value;
       let subject = jobApllicationData[i].querySelector('.job-subject').value;
       let date = jobApllicationData[i].querySelector('.job-date').value;
@@ -327,11 +445,10 @@
       let process = jobApllicationData[i].querySelector('.job-process').value;
       
       obj = {
-        application_lid:'${application_lid}',
-        proforma_id : proforma_id,    
+        application_lid:'${application_lid}',       
         module:subject,        
         teaching_hours:hours,
-        program_id: "1111",
+        program_id: programId,
         acad_session:session,
         commencement_date_of_program:date,
         rate_per_hours:rate,
@@ -341,7 +458,6 @@
         aol_obe:process,
         level : 1,
         status_lid : 1,
-
 
       }
       jobArrar.insert_proforma.push(obj);
@@ -387,59 +503,13 @@
       }
     });
     console.log('Outside Ajax : ',resumeinfo)
-let proformaTable = ``
-if(resumeinfo.proforma_details != null) {
-let data = resumeinfo.proforma_details
 
-    for(let i = 0 ; i< data.length ; i++) {
-        
-        proformaTable += `
-        <tr class='job-tr' data-proforma = \${data[i].proforma_id}>
-                        <td class="custom-select-div"><input class="form-control job-program" value = "\${data[i].program_id}" type="text">
-                            <ul class="form-control d-none" id="job-program-list">
-                            </ul>
-                        </td>
-                        <td class="custom-select-div" ><input class="form-control job-session" value="\${data[i].acad_session}" type="text"> 
-                            <ul class="form-control d-none" id="job-session-list">
-                                
-                            </ul>
-                        </td>
-                        <!-- <td><input class="form-control" type="text"> </td> -->
-                        <td class="custom-select-div" ><input class="form-control job-subject" value="\${data[i].module}" type="text"> 
-                            <ul class="form-control d-none" id="job-subject-list">
-                              
-                            </ul>
-                        </td>
-                        <td><input class="form-control job-date" type="date" value="\${data[i].commencement_date_of_program}"> </td>
-                        <td><input class="form-control job-hours" type="text" value="\${data[i].teaching_hours}"> </td>
-                        <td><input class="form-control job-rate" type="text" value="\${data[i].rate_per_hours}"> </td>
-                        <td><input class="form-control job-total-hours" type="text" value="\${data[i].total_no_of_hrs_alloted}"> </td>
-                        <td><input class="form-control job-division" type="text" value="\${data[i].no_of_division}"> </td>
-                        <td><input class="form-control job-count" type="text" value="\${data[i].student_count_per_division}"> </td>
-                        <td><select class="form-control job-process">
-                                <option value="0">-Select-</option>
-                                <option value="AOL">AOL</option>
-                                <option value="OBL">OBE</option>
-                            </select> 
-                        </td>
-                    </tr>`
-                                let element = document.querySelector('.job-application-body')
-                                element.innerHTML = proformaTable
 
-                                element.querySelector('.job-process').value = data[i].aol_obe
-
-            
-    }
-}
-
-let resumetable =``
-if(resumeinfo.personal_details != null)
-{
-resumetable+=`<div class="card">
+let resumetable =`
+<div class="card">
     <h2 align="center">\${resumeinfo.personal_details[0].f_name} \${resumeinfo.personal_details[0].l_name}</h2>
-</div>`
-}
-resumetable+=  `<!-------------------------------------------------------Qualification Table----------------------------------------------------->
+</div>
+    <!-------------------------------------------------------Qualification Table----------------------------------------------------->
     <div class="card card-table">
         <div
             class="card-header table-card-header text-uppercase d-flex align-items-center justify-content-between">
@@ -689,6 +759,92 @@ resumetable+= `</tbody>
 </div>
     ` 
 document.querySelector('#performa-creation-div').insertAdjacentHTML('afterbegin', resumetable);
+
+
+
+// function initSelect2LazyLoad(cssSelector) {
+//     console.log('Lazy Load:::::::::::>>')
+//     $(cssSelector).select2({
+//         ajax: {
+//             url: "http://localhost:8084/getProgramName",
+//             dataType: 'json',
+//             delay: 1000,
+//             data: function (params) {
+//                 return {
+//                     programId: 0,
+//                     schoolObjId: '00004537',
+//                     characters: params.term, // search term
+//                     page: params.page
+//                 };
+//             },
+//             processResults: function (data, params) {
+                
+
+//                 console.log("data>>> ", data);
+
+//                 params.page = params.page || 1;
+
+//                 return {
+//                     results: data.results,
+//                     pagination: {
+//                         more: (params.page * 1) < data.results[0].totalCount
+//                     }
+//                 };
+//             },
+//             cache: true
+//         },
+//         placeholder: 'Search for a repository',
+//         minimumInputLength: 1,
+//         templateResult: formatResult,
+//         templateSelection: formatSelection
+//     });
+// }
+
+// initSelect2LazyLoad('.job-program');
+
+
+// function formatResult(data) {
+//     return data.programName;
+// };
+
+// function formatSelection(data) {
+//     return data.programName;
+// };
+
+
+// function formatRepo(repo) {
+//     if (repo.loading) {
+//         return repo.text;
+//     }
+
+//     var $container = $(
+//         "<div class='select2-result-repository clearfix'>" +
+//         "<div class='select2-result-repository__avatar'><img src='" + repo.owner.avatar_url + "' /></div>" +
+//         "<div class='select2-result-repository__meta'>" +
+//         "<div class='select2-result-repository__title'></div>" +
+//         "<div class='select2-result-repository__description'></div>" +
+//         "<div class='select2-result-repository__statistics'>" +
+//         "<div class='select2-result-repository__forks'><i class='fa fa-flash'></i> </div>" +
+//         "<div class='select2-result-repository__stargazers'><i class='fa fa-star'></i> </div>" +
+//         "<div class='select2-result-repository__watchers'><i class='fa fa-eye'></i> </div>" +
+//         "</div>" +
+//         "</div>" +
+//         "</div>"
+//     );
+
+//     $container.find(".select2-result-repository__title").text(repo.full_name);
+//     $container.find(".select2-result-repository__description").text(repo.description);
+//     $container.find(".select2-result-repository__forks").append(repo.forks_count + " Forks");
+//     $container.find(".select2-result-repository__stargazers").append(repo.stargazers_count + " Stars");
+//     $container.find(".select2-result-repository__watchers").append(repo.watchers_count + " Watchers");
+
+//     return $container;
+// }
+
+// function formatRepoSelection(repo) {
+//     return repo.full_name || repo.text;
+// }
+
 
 </script>
 
