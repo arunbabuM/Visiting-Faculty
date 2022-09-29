@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Faculty Registeration</title>
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -223,8 +223,8 @@
           </div>
           <div class="col-md-6" id="login-left">
             <form method="POST" class="text-center" id="login-form">
-              <h3><span>Reg</span>ister</h3>
-              <span class="bottom-line mx-auto pancard-message"></span>
+              <h3><span>Fac</span>ulty<span> Regis</span>teration</h3>
+              <span class="bottom-line mx-auto pancard-message" style="width: 60%;"></span>
               <div class="mt-3 mb-3 removing-input">
                 <small class="pancard-error-message d-none text-danger">Enter Valid Pancard No.</small>
                 <div class="cust-btn-group">
