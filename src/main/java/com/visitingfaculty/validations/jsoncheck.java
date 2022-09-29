@@ -108,7 +108,7 @@ public class jsoncheck {
 
         Boolean account_numberCheck = checkVal.accountNumberCheck(account_number);
         Boolean nameCheck = checkVal.checkLengthThree(name);
-        Boolean branchCheck = checkVal.CheckWithNoSpectailChar(branch);
+        Boolean branchCheck = checkVal.checkLengthThree(branch);
         Boolean ifsc_codeCheck = checkVal.checkLengthThree(ifsc_code);
 
         if (account_numberCheck == true && nameCheck == true && branchCheck == true && ifsc_codeCheck == true) {
