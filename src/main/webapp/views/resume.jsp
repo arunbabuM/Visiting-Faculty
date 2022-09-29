@@ -867,6 +867,7 @@
               <label for="bank-account-type" class="py-md-2">Account Type<span class="required">*</span></label>
               <span id="bank-account-type-message" style="color: red;" class="error"></span>
               <select class="form-control" id="bank-account-type">
+
               </select>
             </div>
           </div>
@@ -4984,6 +4985,10 @@
                   }
                   document.getElementById('bank-account-type').insertAdjacentHTML("beforeend",
                     bankAccountType)
+                    if(resumeinfo.bank_details){
+                        document.getElementById('bank-account-type').value = resumeinfo.bank_details.bank_account_type_lid
+                    }
+
                 },
                 error: function (error) {
                   console.log("Error::::::::::::", error);
@@ -5000,7 +5005,6 @@
           editBankDetailsForm.append('editMicrCode', document.getElementById('micr-code-value').innerText)
           editBankDetailsForm.append('editAccountNumber', document.getElementById('account-number-value')
             .innerText)
-          editBankDetailsForm.append('editAccountType', document.getElementById('account-type-value'.innerText))
 
 
           document.getElementById('bank-name').value = editBankDetailsForm.get('editBankName')
@@ -5008,11 +5012,11 @@
           document.getElementById('bank-ifsc-code').value = editBankDetailsForm.get('editIfscCode')
           document.getElementById('bank-micr-code').value = editBankDetailsForm.get('editMicrCode')
           document.getElementById('bank-account-number').value = editBankDetailsForm.get('editAccountNumber')
-          document.getElementById('bank-account-type').value = resumeinfo.bank_details.bank_account_type_lid
-
 
           document.getElementById('body').classList.add('d-none');
           document.querySelector('.bank-details-modal').classList.remove('d-none');
+          console.log("BANK TPE>>>>>>>" , resumeinfo.bank_details.bank_account_type_lid)
+          document.getElementById('bank-account-type').value = resumeinfo.bank_details.bank_account_type_lid
 
 
         });
@@ -6906,7 +6910,9 @@
 
         let status = 400;
         let softid = element.closest('li').dataset.skillid;
-        fetch('${pageContext.request.contextPath}/delete-softskills', {
+        if(softid) {
+
+          fetch('${pageContext.request.contextPath}/delete-softskills', {
             method: "POST",
             body: softid,
             headers: {
@@ -6923,6 +6929,10 @@
             }
           })
           .catch(exception => console.log(exception));
+        } else {
+          skillList.insertAdjacentHTML('afterbegin', div);
+              element.closest('li').remove();
+        }
       }
     })
 
@@ -6935,6 +6945,7 @@
       if (element.matches('i')) {
         let text = element.parentElement.parentElement.lastElementChild.lastElementChild.innerText
         let id = element.parentElement.parentElement.dataset.id
+        let status_id = element.parentElement.parentElement.dataset.status
         let div = `
                             <li class="hard-skill-list" data-id="\${id}">
                               <div class="row">
@@ -6946,7 +6957,9 @@
                             `
         let status = 400;
         let softid = element.closest('li').dataset.skillid;
-        fetch('${pageContext.request.contextPath}/delete-softskills', {
+        if(softid) {
+
+          fetch('${pageContext.request.contextPath}/delete-softskills', {
             method: "POST",
             body: softid,
             headers: {
@@ -6963,6 +6976,11 @@
             }
           })
           .catch(exception => console.log(exception));
+        } else {
+          skillList.insertAdjacentHTML('afterbegin', div)
+          element.closest('li').remove();
+
+        }
       }
 
     })

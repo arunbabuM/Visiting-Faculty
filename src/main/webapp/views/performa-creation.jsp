@@ -626,7 +626,7 @@ document.addEventListener('click', function(e) {
             
             obj = {
                 application_lid:'${application_lid}',  
-                proforma_id : proformaId ,
+                proforma_id : proformaId,
                 module_id:  moduleId, 
                 module_name: moduleName,
                 vf_module_id: '',     
@@ -733,7 +733,8 @@ document.addEventListener('click', function(e) {
     }
 
 
-
+if(resumeinfo != null)
+{
 let resumetable =`
 <div class="card">
     <h2 align="center">\${resumeinfo.personal_details[0].f_name} \${resumeinfo.personal_details[0].l_name}</h2>
@@ -988,6 +989,7 @@ resumetable+= `</tbody>
 </div>
     ` 
 document.querySelector('#performa-creation-div').insertAdjacentHTML('afterbegin', resumetable);
+}
 
 
 
