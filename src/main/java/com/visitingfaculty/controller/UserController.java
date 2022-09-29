@@ -37,7 +37,6 @@ public class UserController {
         return "reset-password";
     }
 
-
     @GetMapping("/resume")
     public String getResume(@RequestParam(value = "resume_lid") int resume_lid, Model model) {
 
@@ -110,9 +109,10 @@ public class UserController {
     }
 
     @GetMapping("/performa")
-    public String getPerforma() {
+    public String getPerforma(Model m) {
         String user_id = (String) httpSession.getAttribute("user_id");
         if (user_id != null) {
+            m.addAttribute("level", httpSession.getAttribute("level"));
             return "performa-page";
         }
         return "redirect:/login#session-timeout";

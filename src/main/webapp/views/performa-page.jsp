@@ -70,18 +70,20 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">View Resume</h5>
+                        <h5 class="modal-title" id="exampleModalLongTitle">Comment for Proforma Approval</h5>
                         <button type="button" style="border: none;" class="close2 modal2-cancel-button"
                             data-dismiss="modal" aria-label="Close">
                             <span class="close2" aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="proforma-approval-body">
-
+                    <div class="proforma-approval-body container" style="width: auto;">
+                        
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="close2 btn btn-secondary modal2-cancel-button"
                             data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-success proforma-approval-submit-btn"
+                            data-dismiss="modal">Submit</button>
                     </div>
                 </div>
             </div>
@@ -324,7 +326,7 @@
                     <td>\${performerinfo.max_points}</td>
                     <td>Comments</td>
                     <td>Pending</td>
-                    <td><i class="fa-solid fa-fast-forward approve-button" title="Send for Approval"></i></td>
+                    <td><i data-id="\${performerinfo.proforma_id}" class="fa-solid fa-fast-forward approval-btn" title="Send for Approval"></i></td>
                 <tr>
                 `
                 document.querySelector('.performer-view').insertAdjacentHTML('afterbegin', view);
@@ -337,10 +339,6 @@
         let phd = 1;
         document.querySelector('.perfoma-table').addEventListener('click', function (e) {
 
-            if (e.target.classList.contains('fa-fast-forward')) {
-                // e.target.classList.replace('fa-fast-forward', 'fa-check');
-                $('#proforma-approval-modal').modal('toggle');
-            }
 
             //For Graduation Modal
             if (e.target.classList.contains('qual-btn')) {
@@ -481,11 +479,20 @@
                 })
 
             }
-
         })
 
         document.querySelector('.main').addEventListener('click', function (e) {
 
+            if (e.target.classList.contains('approval-btn')) {
+                 proformaid = e.target.dataset.id
+                 console.log(proformaid)
+                $('#proforma-approval-modal').modal('toggle');
+                let commentbox = `<textarea class="textarea proforma-comment container" data-id="\${proformaid}" cols="50" rows="5"></textarea>`;
+                let card = document.querySelector('.proforma-approval-body').querySelector('textarea')
+                card == null ? '' : card.remove()
+                document.querySelector('.proforma-approval-body ').insertAdjacentHTML('afterbegin',commentbox)
+            }
+            
             if (e.target.classList.contains('close1') || e.target.classList.contains('fa-times')) {
                 document.querySelector('.card').remove()
                 $(".qualification-display").modal("toggle");
@@ -493,6 +500,31 @@
             if (e.target.classList.contains('close2')) {
                 document.querySelector('.proforma-approval-body').firstElementChild.remove()
                 $("#proforma-approval-modal").modal("toggle");
+            }
+            if(e.target.classList.contains('proforma-approval-submit-btn'))
+            {
+
+                let proformaArray = {"insert_proforma_status" : []}
+
+                let objectData = {}
+                objectData.proforma_lid = document.querySelector('.proforma-comment').dataset.id
+                objectData.level = '${level}'
+                objectData.comment = document.querySelector('.proforma-comment').value
+                console.log(objectData)
+                
+            //    $.ajax({
+            //     url : '${pageContext.request.contextPath}/proforma-approval',
+            //     type : 'POST',
+            //     success : function(response) {
+
+            //         console.log("Success");
+            //     },
+            //     error : function(err) {
+
+            //         console.log("Error");
+            //     }
+
+            //    })
             }
         })
     </script>

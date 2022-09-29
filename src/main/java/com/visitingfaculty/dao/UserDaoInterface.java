@@ -116,6 +116,9 @@ public interface UserDaoInterface {
     Object getQualPerformer(String data);
 
     Object updateApplication(String data);
+    
+    Object updateproforma(String data);
+
 
     List<SchoolList> getAllSchools(int user_lid);
 }

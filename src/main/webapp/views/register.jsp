@@ -319,14 +319,14 @@
 
   <!-- Page Level JavaScript Libaries End -->
   <script>
-    window.onload = function () {
-      console.log("Window on load")
-      Particles.init({
-        selector: '.background',
-        connectParticles: true,
-        color: '#ffffff'
-      });
-    };
+    // window.onload = function () {
+    //   console.log("Window on load")
+    //   Particles.init({
+    //     selector: '.background',
+    //     connectParticles: true,
+    //     color: '#ffffff'
+    //   });
+    // };
 
 
     //DYNAMIC CSS

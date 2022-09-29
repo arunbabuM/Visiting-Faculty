@@ -1378,7 +1378,6 @@ width: 12.5%;
 
 }
 
-
 .resumeCard {
     border-radius: 20px;
     text-decoration: none;
@@ -1390,4 +1389,17 @@ width: 12.5%;
     color: white;
     transition: all ease-in-out 0.5s;
     cursor: pointer;
+  }
+
+  .textarea {
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+    outline: none !important;
+    border: none !important;
+  }
+  
+  .textarea:focus {
+    outline: none !important;
+    border: none !important;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+  
   }

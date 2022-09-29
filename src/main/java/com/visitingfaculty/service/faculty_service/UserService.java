@@ -5,20 +5,17 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.UUID;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
-
-
 import com.visitingfaculty.service.PasswordService;
 
 @Service
 public class UserService {
 
-    public static String uploadDirectory =  System.getProperty("user.dir") + "/src/main/webapp/imagedata";
+    public static String uploadDirectory = "/data/tomcat/webapps/vf/imagedata"; //System.getProperty("user.dir") + "/src/main/webapp/imagedata";
     //"/data/tomcat/webapps/vf/imagedata";
 
     @Autowired

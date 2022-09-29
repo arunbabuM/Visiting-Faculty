@@ -298,14 +298,14 @@
 
   <!-- Page Level JavaScript Libaries End -->
   <script>
-    window.onload = function () {
-      console.log("Window on load")
-      Particles.init({
-        selector: '.background',
-        connectParticles: true,
-        color: '#ffffff'
-      });
-    };
+    // window.onload = function () {
+    //   console.log("Window on load")
+    //   Particles.init({
+    //     selector: '.background',
+    //     connectParticles: true,
+    //     color: '#ffffff'
+    //   });
+    // };
     if(window.location.hash == '#success') {
       document.querySelector('.login-success-alert').classList.remove('d-none')
     } else {

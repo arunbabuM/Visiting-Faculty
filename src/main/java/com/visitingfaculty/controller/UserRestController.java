@@ -326,4 +326,14 @@ public class UserRestController {
         return schoolLists;
     }
 
+    @PostMapping("/proforma-approval") 
+    public ResponseEntity<?> updateProforma(@RequestBody String data) {
+
+        Object dataFromDb = userDaoInterface.updateproforma(data);
+        if (dataFromDb != null) {
+           return ResponseEntity.status(HttpStatus.OK).build();
+        }
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
 }

@@ -525,4 +525,13 @@ public class userDao implements UserDaoInterface {
         return schoolsList;
     }
 
+    @Override
+    public Object updateproforma(String data) {
+       
+        SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
+                .withFunctionName("update_proforma_status");
+
+        return jdbcCall.executeFunction(Object.class, data);
+    }
+
 }
