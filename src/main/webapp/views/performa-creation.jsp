@@ -90,7 +90,7 @@
                         <td><select class="form-control job-process">
                                 <option value="0">-Select-</option>
                                 <option value="AOL">AOL</option>
-                                <option value="OBL">OBE</option>
+                                <option value="OBE">OBE</option>
                             </select> 
                         </td>
                     </tr>
@@ -350,25 +350,25 @@ document.addEventListener('click', function(e) {
         }
      
         
-        if(e.target.classList.contains('job-subject')) { 
-            // Declare variables
-            var input, filter, ul, li, a, i, txtValue;
-            // Input for the variables declared
-            input = findClosest(e.target, 'job-tr').querySelector('.job-subject');
-            filter = input.value.toUpperCase();
-            ul = findClosest(e.target, 'job-tr').querySelector(".job-subject-list");
-            li = ul.getElementsByTagName('li');
-            // Loop through all list items, and hide those who don't match the search query
-            for (i = 0; i < li.length; i++) {
-              a = li[i].getElementsByTagName("a")[0];
-              txtValue = a.textContent || a.innerText;
-              if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                li[i].style.display = "";
-              } else {
-                li[i].style.display = "none";
-              }
-            }
-        }
+        // if(e.target.classList.contains('job-subject')) { 
+        //     // Declare variables
+        //     var input, filter, ul, li, a, i, txtValue;
+        //     // Input for the variables declared
+        //     input = findClosest(e.target, 'job-tr').querySelector('.job-subject');
+        //     filter = input.value.toUpperCase();
+        //     ul = findClosest(e.target, 'job-tr').querySelector(".job-subject-list");
+        //     li = ul.getElementsByTagName('li');
+        //     // Loop through all list items, and hide those who don't match the search query
+        //     for (i = 0; i < li.length; i++) {
+        //       a = li[i].getElementsByTagName("a")[0];
+        //       txtValue = a.textContent || a.innerText;
+        //       if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        //         li[i].style.display = "";
+        //       } else {
+        //         li[i].style.display = "none";
+        //       }
+        //     }
+        // }
 
     })
 
@@ -469,7 +469,7 @@ document.addEventListener('click', function(e) {
                         <td><select class="form-control job-process">
                                 <option value="0">-Select-</option>
                                 <option value="AOL">AOL</option>
-                                <option value="OBL">OBE</option>
+                                <option value="OBE">OBE</option>
                             </select> 
                         </td>
                         <td><i class="fa-solid text-danger fa-trash delete-row"></i></td>
@@ -527,7 +527,7 @@ document.addEventListener('click', function(e) {
             // let sessionId = selectedSessionLi ? selectedSessionLi.dataset.id : '';
             let sessionName = selectedSessionLi ? selectedSessionLi.dataset.value : '';
             let moduleId = selectedModuleLi ? selectedModuleLi.dataset.id : '';
-            let moduleName = selectedModuleLi ? selectedModuleLi.dataset.value : '';
+            let moduleName = selectedModuleLi == null ? selectedModuleLi.dataset.value : jobApllicationData[i].querySelector('.job-subject').value;
             let session = jobApllicationData[i].querySelector('.job-session').value;
             let date = jobApllicationData[i].querySelector('.job-date').value;
             let hours = jobApllicationData[i].querySelector('.job-hours').value;
@@ -546,7 +546,7 @@ document.addEventListener('click', function(e) {
             let checkDivision = tabledatacheck(division);
             let checkCount = tabledatacheck(count);
             let checkProcess = tabledatacheck(process);
-            let checkSubject = tabledatacheck(moduleId);
+            let checkSubject = tabledatacheck(moduleName);
 
             if (checkProgramInput == false) {
                 jobApllicationData[i].querySelector('.job-program').classList.add('input-border');;
@@ -662,51 +662,60 @@ document.addEventListener('click', function(e) {
 //------------------------------------------------------Appending Tables-------------------------------------------------------------
 
 
-    console.log('Outside Ajax : ',resumeinfo)
-let proformaData = ``
-if( resumeinfo.proforma_details != null){
-for(let proforma of resumeinfo.proforma_details) {
+        console.log('Outside Ajax : ',resumeinfo)
+    let proformaData = ``
+    if( resumeinfo.proforma_details != null){
 
-    console.log(proforma)
-    proformaData += `
-                            <tr class='job-tr' data-id ="\${proforma.proforma_id}">
-                                    <td>
-                                        <div class="custom-select-div">
-                                            <input class="form-control job-program cust-input" value = "\${proforma.program_name == null ? '' : proforma.program_name}"  data-id="" data-name="" type="text">
-                                            <ul class="form-control d-none job-program-list custom-select-div-ul"></ul>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="custom-select-div">
-                                            <input class="form-control job-session cust-input" data-name=""  value = "\${proforma.acad_session}" type="text"> 
-                                            <ul class="form-control d-none job-session-list custom-select-div-ul"></ul>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="custom-select-div">
-                                            <input class="form-control job-subject cust-input" data-id="" value = "\${proforma.module}" data-name="" type="text"> 
-                                            <ul class="form-control d-none job-subject-list custom-select-div-ul"></ul>
-                                        </div>
-                                    </td>
-                                    <td><input class="form-control job-date" type="date" value = "\${proforma.commencement_date_of_program}"> </td>
-                                    <td><input class="form-control job-hours" type="number" value = "\${proforma.teaching_hours}"> </td>
-                                    <td><input class="form-control job-rate" type="number" value = "\${proforma.rate_per_hours}"> </td>
-                                    <td><input class="form-control job-total-hours" type="number" value = "\${proforma.total_no_of_hrs_alloted}"> </td>
-                                    <td><input class="form-control job-division" type="number" value = "\${proforma.no_of_division}"> </td>
-                                    <td><input class="form-control job-count" type="number" value = "\${proforma.student_count_per_division}" > </td>
-                                    <td><select class="form-control job-process">
-                                            <option value="0">-Select-</option>
-                                            <option value="AOL">AOL</option>
-                                            <option value="OBL">OBE</option>
-                                        </select> 
-                                    </td>
-                                </tr>
-                                        `
+    for(let proforma of resumeinfo.proforma_details) {
 
-            document.querySelector('.job-application-body').innerHTML =  proformaData;
-            
-}
-}
+
+        proformaData += `<tr class='job-tr' data-id ="\${proforma.proforma_id}">
+                            <td>
+                                <div class="custom-select-div">
+                                    <input class="form-control job-program cust-input" value = "\${proforma.program_name == null ? '' : proforma.program_name}"  data-id="\${proforma.program_id}" data-name="" type="text">
+                                    <ul class="form-control d-none job-program-list custom-select-div-ul">
+                                        <li class="cust-single single-program job-program-item" data-value="\${proforma.program_name}" data-id="\${proforma.program_id}" selected="true">     
+                                            \${proforma.program_name}
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="custom-select-div">
+                                    <input class="form-control job-session cust-input" data-name=""  value = "\${proforma.acad_session}" type="text"> 
+                                    <ul class="form-control d-none job-session-list custom-select-div-ul">
+                                        <li class="cust-single single-session job-session-item" data-value="\${proforma.acad_session}" selected="true"> 
+                                            \${proforma.acad_session}
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="custom-select-div">
+                                    <input class="form-control job-subject cust-input" data-id="" value = "\${proforma.module}"  type="text"> 
+                                    <ul class="form-control d-none job-subject-list custom-select-div-ul">
+                                        <li class="cust-single single-subject job-subject-item" data-value="\${proforma.module}" selected="true"> 
+                                            \${proforma.module}
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                            <td><input class="form-control job-date" type="date" value = "\${proforma.commencement_date_of_program}"> </td>
+                            <td><input class="form-control job-hours" type="number" value = "\${proforma.teaching_hours}"> </td>
+                            <td><input class="form-control job-rate" type="number" value = "\${proforma.rate_per_hours}"> </td>
+                            <td><input class="form-control job-total-hours" type="number" value = "\${proforma.total_no_of_hrs_alloted}"> </td>
+                            <td><input class="form-control job-division" type="number" value = "\${proforma.no_of_division}"> </td>
+                            <td><input class="form-control job-count" type="number" value = "\${proforma.student_count_per_division}" > </td>
+                            <td><select class="form-control job-process"  >
+                                    <option value="0" >-Select-</option>
+                                    <option value="AOL" \${proforma.aol_obe  == "AOL" ? selected="selected" : null }>AOL</option>
+                                    <option value="OBE" \${proforma.aol_obe  == "OBE" ? selected="selected" : null }>OBE</option>
+                                </select> 
+                            </td>
+                        </tr>`
+                        document.querySelector('.job-application-body').innerHTML =  proformaData;
+        }
+    }
 
 
 
