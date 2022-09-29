@@ -1466,7 +1466,7 @@
                               <p class="h5 py-1">Start Date </p>
                               <p class="h5 py-1">End date</p>
                               <p class="h5 py-1">Duration in Year </p>
-                              <p class="h5 py-1">Padagogy </p>
+                              <p class="h5 py-1">Pedagogy </p>
                             </div>
                             <div class="col-6 ps-md-0 ps-0 col-md-6 col-lg-6 col-sm-6">
                               <p id="" class="">\${exp.start_date}</p>
@@ -7336,7 +7336,7 @@
 
             <div class="row p-3 workexperience-padagogy-div d-none">
               <div class="col-md-3 ">
-                <p class="h6">Padagogy:</p>
+                <p class="h6">Pedagogy:</p>
               </div>
               <div class="col-md-9 ">
                 <input class="form-control padagogy" value="\${expedit.padagogy}"  type="text"/>
@@ -7593,7 +7593,7 @@
 
              <div class="row p-3  workexperience-padagogy-div d-none">
                <div class="col-md-3 ">
-                 <p class="h6">Padagogy:</p>
+                 <p class="h6">Pedagogy:</p>
                </div>
                <div class="col-md-9 ">
                  <input class="form-control padagogy"  type="text"/>
@@ -7814,7 +7814,7 @@
             </div>
             <div class="row p-3 workexperience-padagogy-div d-none">
               <div class="col-md-3 ">
-                <p class="h6">Padagogy:</p>
+                <p class="h6">Pedagogy:</p>
               </div>
               <div class="col-md-9 ">
                 <input class="form-control padagogy"  type="text"/>
@@ -8069,7 +8069,6 @@
         schoolList++
       }
 
-
       document.getElementById('body').classList.add('d-none');
       document.getElementById('create-application-modal').classList.remove("d-none")
     })
@@ -8084,7 +8083,7 @@
       if (schoolList == 1) {
         $.ajax({
           url: 'https://dev-portal.svkm.ac.in:8080/vfApi/getSchoolsList',
-          type: 'POST',
+          type: 'GET',
           dataType: 'json',
           success: function (response) {
             console.log(response)
@@ -8092,7 +8091,7 @@
             for (let desig of response) {
               schoolType +=
                 `<li>     
-                    <div class="school-type-li col-md-10 col-sm-10 col-12" data-name="\${desig.name}" data-id="\${desig.organization_id}" ><a>\${desig.name}</a></div>
+                    <div class="school-type-li col-md-10 col-sm-10 col-12" data-name="\${desig.collegeName}" data-id="\${desig.schoolObjId}" ><a>\${desig.collegeName}</a></div>
                 </li>`
             }
             document.querySelector('#school-list').insertAdjacentHTML('beforeend', schoolType);
@@ -8103,7 +8102,6 @@
         })
         schoolList++
       }
-
 
       document.getElementById('body').classList.add('d-none');
       document.getElementById('create-application-modal').classList.remove("d-none")

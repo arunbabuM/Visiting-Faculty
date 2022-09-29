@@ -214,8 +214,8 @@
 
 <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Large modal</button> -->
 
-<div class="modal fade bd-example-modal-lg qualification-display"  data-keyboard="false" data-backdrop="static" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+<div class="modal fade  bd-example-modal-lg qualification-display"  data-keyboard="false" data-backdrop="static" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLongTitle">Qualification Details</h5>
@@ -297,21 +297,21 @@
                     <td>NMIMS</td>
                     <td>\${performerinfo.full_name}</td>
                     <td>\${performerinfo.pancard_no}</td>
-                    <td><button data-qual="\${performerinfo.application_lid}" data-id = "1" data-toggle="modal" data-target=".bd-example-modal-lg" type="button" class="btn btn-outline-primary text-dark graduate">Graduate</button> </td>
-                    <td><button data-qual="\${performerinfo.application_lid}" data-id = "2" data-toggle="modal" data-target=".bd-example-modal-lg" type="button" class="btn btn-outline-primary text-dark masters">Masters</button></td>
-                    <td><button data-qual="\${performerinfo.application_lid}" data-id = "3" data-toggle="modal" data-target=".bd-example-modal-lg" type="button" class="btn btn-outline-primary text-dark phd">PHD</button></td>
+                    <td><button data-qual="\${performerinfo.application_lid}" data-id = "1" data-toggle="modal" data-target=".bd-example-modal-lg" type="button" class="qual-btn btn btn-outline-primary text-dark">Graduate</button> </td>
+                    <td><button data-qual="\${performerinfo.application_lid}" data-id = "2" data-toggle="modal" data-target=".bd-example-modal-lg" type="button" class="qual-btn btn btn-outline-primary text-dark">Masters</button></td>
+                    <td><button data-qual="\${performerinfo.application_lid}" data-id = "3" data-toggle="modal" data-target=".bd-example-modal-lg" type="button" class="qual-btn btn btn-outline-primary text-dark">PHD</button></td>
                     <td>\${performerinfo.teaching_exp}</td>
                     <td>\${performerinfo.industrial_exp}</td>
                     <td>\${performerinfo.total_exp}</td>
                     <td>\${performerinfo.module}</td>
-                    <td>\${performerinfo.program_id}</td>
+                    <td>\${performerinfo.program_name}</td>
                     <td>\${performerinfo.acad_session}</td>
                     <td>\${performerinfo.rate_per_hours}</td>
                     <td>\${performerinfo.total_no_of_hrs_alloted}</td>
                     <td>\${performerinfo.no_of_division}</td>
                     <td>\${performerinfo.student_count_per_division}</td>
                     <td>\${performerinfo.rate_per_hours * performerinfo.total_no_of_hrs_alloted}</td>
-                    <td>FeedBack</td>
+                    <td><button data-pan-no="\${performerinfo.pancard_no}" class="btn btn-outline-primary feedback-btn">Feedback</button></td>
                     <td>1</td>
                     <td>\${performerinfo.aol_obe}</td>
                     <td>\${performerinfo.max_points}</td>
@@ -337,7 +337,7 @@
             }
 
             //For Graduation Modal
-            if (e.target.dataset.id === '1' || e.target.dataset.id === "2" || e.target.dataset.id === '3') {
+            if (e.target.classList.contains('qual-btn')) {
 
                 console.log('click')
                 let obj = {
@@ -405,8 +405,71 @@
                     }
 
                 });
-
                 
+            }
+
+            if(e.target.classList.contains('feedback-btn')) {
+
+                $.ajax({
+                    url : 'https://dev-portal.svkm.ac.in:8080/vfApi/getFeedback?panCardNo=' + e.target.dataset.panNo,
+                    type : 'GET',
+                    success : function(response) {
+                      $(".qualification-display").modal("toggle",{backdrop: "static ", keyboard: false});
+
+                        let feedbackdetails = response;
+                        console.log(feedbackdetails);
+                        if(feedbackdetails != '')
+                        {
+                        let feedback = `
+                        <div class="card">
+                            <div class="card-body">
+                                <table class="table table-responsive">
+                                    <thead>
+                                        <th>School</th>
+                                        <th>Institute</th>
+                                        <th>Program Name</th>
+                                        <th>Course Name</th>
+                                        <th>Acad year</th>
+                                        <th>Acad Session</th>
+                                        <th>Average</th>
+                                    </thead>
+                                    <tbody>`
+                                    for(gd of feedbackdetails)
+                                    {
+                                    feedback+= `<tr>
+                                            <td>\${gd.school}</td>
+                                            <td>\${gd.inst}</td>
+                                            <td>\${gd.programName}</td>
+                                            <td>\${gd.courseName}</td>
+                                            <td>\${gd.acadYear}</td>
+                                            <td>\${gd.acadSession}</td>
+                                            <td>\${gd.avg}</td>
+                                        </tr>`
+                                    }
+                             feedback+=`</tbody>
+                                </table>
+                            </div>   
+                        </div>
+                        `
+                        $('.card').remove();
+                        document.querySelector('.qualification-div').insertAdjacentHTML('afterend',feedback);
+                    }
+                    else
+                    {
+                        let feedback = `
+                        <div class="card">
+                        <h4 align="center">No Feedback Available</h4>
+                        </div>
+                        `
+                        document.querySelector('.qualification-div').insertAdjacentHTML('afterend',feedback);
+                    }
+                    },
+                    error : function(error) {
+                        console.log("ERROR")
+                    }
+
+                })
+
             }
 
         })
@@ -419,6 +482,8 @@
                 $(".qualification-display").modal("toggle");
             }
         })
+
+        
         
 
     </script>

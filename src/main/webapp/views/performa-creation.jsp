@@ -115,7 +115,7 @@
         </div>
 
         <div class="row">
-          <div class="col-md-12 col-sm-12 d-flex justify-content-center">
+          <div class="col-md-12 col-sm-12 d-flex justify-content-center" style="max-height: 50vh;">
             <img src="" alt="image-uploaded" id="image-uploaded" class="image-uploaded"
               style="width:100%;">
           </div>
@@ -349,7 +349,16 @@ document.addEventListener('click', function(e) {
             }
         }
      
-        
+        if(e.target.classList.contains('job-subject')) {
+
+            let selectedLi = jobPorformaSubjectUl.querySelector(`li[selected=true]`);
+
+            if(selectedLi) {
+                selectedLi.setAttribute('selected', false);
+            }
+
+        }
+                
         // if(e.target.classList.contains('job-subject')) { 
         //     // Declare variables
         //     var input, filter, ul, li, a, i, txtValue;
@@ -527,7 +536,7 @@ document.addEventListener('click', function(e) {
             // let sessionId = selectedSessionLi ? selectedSessionLi.dataset.id : '';
             let sessionName = selectedSessionLi ? selectedSessionLi.dataset.value : '';
             let moduleId = selectedModuleLi ? selectedModuleLi.dataset.id : '';
-            let moduleName = selectedModuleLi == null ? selectedModuleLi.dataset.value : jobApllicationData[i].querySelector('.job-subject').value;
+            let moduleName = selectedModuleLi ? selectedModuleLi.dataset.value : jobApllicationData[i].querySelector('.job-subject').value;
             let session = jobApllicationData[i].querySelector('.job-session').value;
             let date = jobApllicationData[i].querySelector('.job-date').value;
             let hours = jobApllicationData[i].querySelector('.job-hours').value;
@@ -557,55 +566,61 @@ document.addEventListener('click', function(e) {
 
                 jobApllicationData[i].querySelector('.job-session').classList.add('input-border');;
                 document.getElementById('main-loader').classList.add('d-none');
-            return;
+                 return;
 
             }
                 else if(checkDate == false) {
 
                 jobApllicationData[i].querySelector('.job-date').classList.add('input-border');;
                 document.getElementById('main-loader').classList.add('d-none');
-            return;
+                  return;
 
             }
                 else if(checkHours == false) {
 
                 jobApllicationData[i].querySelector('.job-hours').classList.add('input-border');;
                 document.getElementById('main-loader').classList.add('d-none');
-            return;
+                   return;
 
             
             } else if(checkRate == false) {
 
                 jobApllicationData[i].querySelector('.job-rate').classList.add('input-border');;
                 document.getElementById('main-loader').classList.add('d-none');
-            return;
+                  return;
 
             
             } else if(checkTotalHours == false) {
 
                 jobApllicationData[i].querySelector('.job-total-hours').classList.add('input-border');;
                 document.getElementById('main-loader').classList.add('d-none');
-            return;
+                  return;
 
             
             } else if(checkDivision == false) {
 
                 jobApllicationData[i].querySelector('.job-division').classList.add('input-border');;
                 document.getElementById('main-loader').classList.add('d-none');
-            return;
+                 return;
             
             } else if(checkCount == false) {
 
                 jobApllicationData[i].querySelector('.job-count').classList.add('input-border');;
                 document.getElementById('main-loader').classList.add('d-none');
-            return;
+                  return;
 
             
             } else if(checkProcess == false) {
 
                 jobApllicationData[i].querySelector('.job-process').classList.add('input-border');;
                 document.getElementById('main-loader').classList.add('d-none');
-            return;
+                  return;
+
+            } else if(checkSubject == false) {
+
+                jobApllicationData[i].querySelector('.job-subject').classList.add('input-border');;
+                document.getElementById('main-loader').classList.add('d-none');
+                return;
 
             }
             
@@ -694,7 +709,7 @@ document.addEventListener('click', function(e) {
                                 <div class="custom-select-div">
                                     <input class="form-control job-subject cust-input" data-id="" value = "\${proforma.module}"  type="text"> 
                                     <ul class="form-control d-none job-subject-list custom-select-div-ul">
-                                        <li class="cust-single single-subject job-subject-item" data-value="\${proforma.module}" selected="true"> 
+                                        <li class="cust-single single-subject job-subject-item" data-id="\${proforma.vf_module_id != null ? proforma.vf_module_id : proforma.module_id}"  data-value="\${proforma.module}" selected="true"> 
                                             \${proforma.module}
                                         </li>
                                     </ul>
