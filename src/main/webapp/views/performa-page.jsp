@@ -214,18 +214,18 @@
 
 <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Large modal</button> -->
 
-<div class="modal fade bd-example-modal-lg qualification-display" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade bd-example-modal-lg qualification-display"  data-keyboard="false" data-backdrop="static" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLongTitle">Qualification Details</h5>
-          <button type="button" class="btn btn-secondary close1" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></button>
+          <button type="button" class="btn btn-secondary btn btn-danger close1" data-dismiss="modal"><i class="fa fa-times btn btn-danger" aria-hidden="true"></i></button>
         </div>
         <div class="modal-body qualification-div">
           
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary close1" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-secondary btn btn-danger close1" data-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
@@ -355,7 +355,7 @@
                     data: JSON.stringify(obj),
                     contentType: false,
                     success: function (response) {
-                        $(".qualification-display").modal("toggle");
+                        $(".qualification-display").modal("toggle",{backdrop: "static ", keyboard: false});
 
                         let graduationdetails = JSON.parse(response.value).application_resume_qualification;
                         console.log(graduationdetails);
@@ -387,6 +387,7 @@
                         </div>
 
                         `
+                        $('.card').remove();
                         document.querySelector('.qualification-div').insertAdjacentHTML('afterend',qualdetails);
                     }
                     else
@@ -412,7 +413,7 @@
 
         document.querySelector('.qualification-display').addEventListener('click',function(e){
 
-            if(e.target.classList.contains('close1'))
+            if(e.target.classList.contains('close1')||e.target.classList.contains('fa-times'))
             {
                 document.querySelector('.card').remove()
                 $(".qualification-display").modal("toggle");
