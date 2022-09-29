@@ -315,6 +315,18 @@ public class UserRestController {
         userDaoInterface.createProforma(data);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
+   
+    @PostMapping("/delete-proforma-detail")
+    public ResponseEntity<?> deletePerformaDetail(@RequestBody int performaId) {
+        
+        int dataFromDb = userDaoInterface.deleteProformaDetail(performaId);
+        if(dataFromDb == 1) {
+
+            return ResponseEntity.status(HttpStatus.OK).build();
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+
+    }
 
     @PostMapping("/get-schools-list")
     public List<SchoolList> getSchoolList(HttpSession httpSession) {
