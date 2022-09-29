@@ -136,12 +136,12 @@
               <div class="col-md-3 col-sm-12">
                 <label for="contact-number">Contact No. <span class="required">*</span></label>
                 <span id="contact-number-message" style="color: red;" class="error"></span>
-                <input type="text" class="form-control" name="contact_number" id="contact-number" />
+                <input type="number" class="form-control" name="contact_number" id="contact-number" />
               </div>
               <div class="col-md-3 col-sm-12">
                 <label for="temp_contact-number">Secondary Contact No.</label>
                 <span id="temporary-contact-number-message" style="color: red;" class="error"></span>
-                <input type="text" class="form-control" name="temp_contact_number" id="temp_contact-number" />
+                <input type="number" class="form-control" name="temp_contact_number" id="temp_contact-number" />
               </div>
               <div class="col-md-3 col-sm-12">
                 <label for="email">Email Id <span class="required">*</span></label>
@@ -219,7 +219,7 @@
               <div class="col-md-4 col-sm-12">
                 <label for="aadhar-number">Aadhar Card Number <span class="required"></span></label>
                 <span id="aadhar-number-message" style="color: red;" class="error"></span>
-                <input type="text" class="form-control" name="aadhar_number" id="aadhar-number" />
+                <input type="number" class="form-control" name="aadhar_number" id="aadhar-number" />
               </div>
 
               <div class="col-md-4 col-sm-12">
@@ -329,12 +329,12 @@
               <div class="col-md-3 col-sm-12">
                 <label for="contact-number">Contact No. <span class="required">*</span></label>
                 <span id="contact-number-message-insert" style="color: red;" class="error"></span>
-                <input type="text" class="form-control" name="contact_number_insert" id="contact-number-insert" />
+                <input type="number" class="form-control" name="contact_number_insert" id="contact-number-insert" />
               </div>
               <div class="col-md-3 col-sm-12">
                 <label for="temp_contact-number">Secondary Contact No.</label>
                 <span id="temporary-contact-number-message-insert" style="color: red;" class="error"></span>
-                <input type="text" class="form-control" name="temp_contact_number_insert"
+                <input type="number" class="form-control" name="temp_contact_number_insert"
                   id="temp_contact-number-insert" />
               </div>
               <div class="col-md-3 col-sm-12">
@@ -413,7 +413,7 @@
               <div class="col-md-4 col-sm-12">
                 <label for="aadhar-number">Aadhar Card Number <span class="required"></span></label>
                 <span id="aadhar-number-message-insert" style="color: red;" class="error"></span>
-                <input type="text" class="form-control" name="aadhar_number_insert" id="aadhar-number-insert" />
+                <input type="number" class="form-control" name="aadhar_number_insert" id="aadhar-number-insert" />
               </div>
 
               <div class="col-md-4 col-sm-12">
@@ -849,7 +849,7 @@
 
             </div>
             <div class="col-md-6 col-sm-12">
-              <label for="bank-micr-code" class="py-md-2">MICR code<span class="required">*</span></label>
+              <label for="bank-micr-code" class="py-md-2">MICR code<span class="required"></span></label>
               <span id="bank-micr-code-message" style="color: red;" class="error"></span>
               <input type="text" class="form-control" id="bank-micr-code">
 
@@ -2297,7 +2297,7 @@
             document.location.reload();
           } else {
             document.getElementById('main-loader').classList.add('d-none');
-            alert('Check Data');
+            alert('Rectify the Information and Submit again!');
           }
         })
       }, 1000)
@@ -2366,7 +2366,7 @@
                           <p class="h6">Year of Passing <span class="required">*</span></p>
                         </div>
                         <div class="col-md-10 "><input class="form-control qualification-year"
-                            id="bachelors-degree-year-of-passing" type="text"></div>
+                            id="bachelors-degree-year-of-passing" type="number"></div>
                       </div>
 
                       </div>
@@ -2460,7 +2460,7 @@
           <p class="h6">Year of Passing <span class="required">*</span></p>
         </div>
         <div class="col-md-10 "><input class="form-control qualification-year"
-            id="bachelors-degree-year-of-passing" type="text"></div>
+            id="bachelors-degree-year-of-passing" type="number"></div>
       </div>
     
     </div>
@@ -2706,7 +2706,7 @@
             document.location.reload();
           } else {
             document.getElementById('main-loader').classList.add('d-none');
-            alert('Check Qualification details');
+            alert('Rectify Qualification Information and Submit again!');
           }
         })
       }, 1000)
@@ -3372,7 +3372,7 @@
             <div class="col-md-2 ">
               <p class="h6">Volume Year<span class="required">*</span></p>
             </div>
-            <div class="col-md-10 "><input name="volume_year" class="form-control research_volume_year" type="text"></div>
+            <div class="col-md-10 "><input name="volume_year" class="form-control research_volume_year" type="number"></div>
           </div>
         </div>
         <div class="col-12 col-md-12 col-lg-6 col-sm-12">
@@ -3437,7 +3437,7 @@
             <div class="col-md-2 ">
               <p class="h6">Volume Year<span class="required">*</span></p>
             </div>
-            <div class="col-md-10 "><input name="volume_year" class="form-control research_volume_year" type="text"></div>
+            <div class="col-md-10 "><input name="volume_year" class="form-control research_volume_year" type="number"></div>
           </div>
         </div>
         <div class="col-12 col-md-12 col-lg-6 col-sm-12">
@@ -3668,7 +3668,7 @@
                           <div class="col-md-2 ">
                             <p class="h6">Recieved Year: <span class="required">*</span></p>
                           </div>
-                          <div class="col-md-10 "><input class="form-control certification-YOP" type="text"></div>
+                          <div class="col-md-10 "><input class="form-control certification-YOP" type="number"></div>
                         </div>
 
                         <div class="row p-3">
@@ -3732,7 +3732,7 @@
                           <div class="col-md-2 ">
                             <p class="h6">Recieved Year: <span class="required">*</span></p>
                           </div>
-                          <div class="col-md-10 "><input class="form-control certification-YOP" type="text"></div>
+                          <div class="col-md-10 "><input class="form-control certification-YOP" type="number"></div>
                         </div>
 
                         <div class="row p-3">
@@ -4409,7 +4409,7 @@
                           <p class="h6">Year of Passing <span class="required">*</span></p>
                         </div>
                         <div class="col-md-10 "><input value="\${qualedit.year_of_passing}" class="form-control qualification-year"
-                            id="bachelors-degree-year-of-passing" type="text"></div>
+                            id="bachelors-degree-year-of-passing" type="number"></div>
                       </div>
                     
                     </div>
@@ -4898,7 +4898,7 @@
                   <div class="col-md-2 ">
                     <p class="h6">Volume Year<span class="required">*</span></p>
                   </div>
-                  <div class="col-md-10 "><input value="\${researchedit.volume_year}" name="volume_year" class="form-control research_volume_year" type="text"></div>
+                  <div class="col-md-10 "><input value="\${researchedit.volume_year}" name="volume_year" class="form-control research_volume_year" type="number"></div>
                 </div>
               </div>
               <div class="col-12 col-md-12 col-lg-6 col-sm-12">
@@ -6470,7 +6470,7 @@
                                           <div class="col-md-2 ">
                                             <p class="h6">Recieved Year: <span class="required">*</span></p>
                                           </div>
-                                          <div class="col-md-10 "><input value="\${cert.year_of_passing}" class="form-control certification-YOP" type="text"></div>
+                                          <div class="col-md-10 "><input value="\${cert.year_of_passing}" class="form-control certification-YOP" type="number"></div>
                                         </div>
 
                                         <div class="row p-3">
@@ -6549,12 +6549,11 @@
       let facultyBankName1 = bankDetailBankNameValidation(submitBankDetailsForm.get('bankName'))
       let facultyBankBranch1 = bankDetailBankBranchValidation(submitBankDetailsForm.get('branchName'))
       //let facultyIfscCode1 = bankDetailIfscCodeValidation(submitBankDetailsForm.get('ifscCode'))
-      let facultyMicrCode1 = bankDetailMicrCodeValidation(submitBankDetailsForm.get('micrCode'))
+      //let facultyMicrCode1 = bankDetailMicrCodeValidation(submitBankDetailsForm.get('micrCode'))
       let facultyAccountNumber1 = bankDetailAccountNumberValidation(submitBankDetailsForm.get('accountNumber'))
       //let facultyCancelledCheque = bankDetailCancelledChequeValidation(submitBankDetailsForm.get('cancelledCheckPhoto'))
 
-      if (!facultyBankName1 || !facultyBankBranch1 || !facultyMicrCode1 || !
-        facultyAccountNumber1) {
+      if (!facultyBankName1 || !facultyBankBranch1|| !facultyAccountNumber1) {
         return;
       }
 
@@ -6609,7 +6608,7 @@
               document.getElementById('main-loader').classList.add('d-none')
               document.location.reload();
             } else {
-              alert('Check Bank-Detail Inpur');
+              alert('Rectify the Information and Submit again!');
               document.getElementById('main-loader').classList.add('d-none');
             }
           })
