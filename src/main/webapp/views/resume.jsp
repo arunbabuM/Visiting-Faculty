@@ -1472,7 +1472,7 @@
                               <p id="" class="">\${exp.start_date}</p>
                               <p id="" class="">\${exp.end_date}</p>
                               <p id="" class="">\${exp.duration}</p>
-                              <p id="" class="">\${exp.padagogy}</p>
+                              <p id="" class="">\${exp.padagogy == '' ? "N.A" : exp.padagogy} </p>
                               <!-- <p id=""><i class="fa-solid fa-ban text-danger"></i></p> -->
                             </div>
                           </div>
@@ -5068,10 +5068,11 @@
       let tempContact = (result.temp_contact_number);
       let tempemail = tempemailvalidation(result.temp_email);
       let pinvalid = dynamicPin(result.permanent_address_pincode, 'pincode-message');
+      let cityvalid = dynamicLengthCheck(result.permanent_address_city,'city-message');
 
 
       if (!firstName || !lastName || !contactNumber || !email || !aadhar || !address || !
-        country || !DOB || !tempemail || !gender || !pinvalid) {
+        country || !DOB || !tempemail || !gender || !pinvalid || !cityvalid) {
         return;
       }
 
@@ -8038,6 +8039,8 @@
 
     // ************************************************** Drop down to bring school type *******************************************************
 
+    if('${role}' != "User") {
+
     let schoolType = ` `
     let schoolList = 1;
     document.querySelector('.select-school').addEventListener('click', function () {
@@ -8070,6 +8073,42 @@
       document.getElementById('body').classList.add('d-none');
       document.getElementById('create-application-modal').classList.remove("d-none")
     })
+  }
+    if('${role}' == "User") {
+
+    let schoolType = ` `
+    let schoolList = 1;
+    document.querySelector('.select-school').addEventListener('click', function () {
+      console.log("select button has been clicked")
+
+      if (schoolList == 1) {
+        $.ajax({
+          url: 'https://dev-portal.svkm.ac.in:8080/vfApi/getSchoolsList',
+          type: 'POST',
+          dataType: 'json',
+          success: function (response) {
+            console.log(response)
+            console.log(response.value)
+            for (let desig of response) {
+              schoolType +=
+                `<li>     
+                    <div class="school-type-li col-md-10 col-sm-10 col-12" data-name="\${desig.name}" data-id="\${desig.organization_id}" ><a>\${desig.name}</a></div>
+                </li>`
+            }
+            document.querySelector('#school-list').insertAdjacentHTML('beforeend', schoolType);
+          },
+          error: function (error) {
+            console.log("Error::::::::::::", error);
+          }
+        })
+        schoolList++
+      }
+
+
+      document.getElementById('body').classList.add('d-none');
+      document.getElementById('create-application-modal').classList.remove("d-none")
+    })
+  }
 
     document.querySelector('.school-type-input').addEventListener('keyup', function () {
       // Declare variables
