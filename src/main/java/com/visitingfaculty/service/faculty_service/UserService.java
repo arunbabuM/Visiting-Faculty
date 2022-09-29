@@ -19,12 +19,10 @@ import com.visitingfaculty.service.PasswordService;
 public class UserService {
 
     public static String uploadDirectory =  System.getProperty("user.dir") + "/src/main/webapp/imagedata";
-
     //"/data/tomcat/webapps/vf/imagedata";
 
     @Autowired
     private JavaMailSender javaMailSender;
-
 
     @Autowired
     PasswordService passwordService;
@@ -36,7 +34,7 @@ public class UserService {
 
         String subject = "Verify Your Email Adddress";
         String subject2 = "Application Creation Confirmation";
-
+        String subject3 = "OTP to Reset Password";
         try {
 
             SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
@@ -46,9 +44,12 @@ public class UserService {
             if (subjectType == 1) {
             simpleMailMessage.setSubject(subject);
                 
-            } else {
+            } else if(subjectType == 2){
             simpleMailMessage.setSubject(subject2);
                 
+            } else {
+            simpleMailMessage.setSubject(subject3);
+
             }
             simpleMailMessage.setText(message);
 

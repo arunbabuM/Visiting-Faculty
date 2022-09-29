@@ -59,31 +59,34 @@
 
 <body>
 
-    <div class="modal fade" id="view-resume-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">View Resume</h5>
-                    <button type="button" style="border: none;" class="modal2-cancel-button" data-dismiss="modal"
-                        aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal2-body">
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary modal2-cancel-button"
-                        data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
     <jsp:include page="left-sidebar.jsp" />
 
     <main class="main">
         <jsp:include page="header.jsp" />
+
+
+        <div class="modal fade" id="proforma-approval-modal" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">View Resume</h5>
+                        <button type="button" style="border: none;" class="close2 modal2-cancel-button"
+                            data-dismiss="modal" aria-label="Close">
+                            <span class="close2" aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="proforma-approval-body">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="close2 btn btn-secondary modal2-cancel-button"
+                            data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
         <div class="main-content">
 
@@ -208,29 +211,34 @@
                     </thead>
                     <tbody class="performer-view">
 
-                    </tbody>    
+                    </tbody>
                 </table>
-<!--------------------------------------------------------------Modal for qualification-------------------------------------------------------->
+                <!--------------------------------------------------------------Modal for qualification-------------------------------------------------------->
 
-<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Large modal</button> -->
+                <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Large modal</button> -->
 
-<div class="modal fade  bd-example-modal-lg qualification-display"  data-keyboard="false" data-backdrop="static" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">Qualification Details</h5>
-          <button type="button" class="btn btn-secondary btn btn-danger close1" data-dismiss="modal"><i class="fa fa-times btn btn-danger" aria-hidden="true"></i></button>
-        </div>
-        <div class="modal-body qualification-div">
-          
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary btn btn-danger close1" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
-<!--------------------------------------------------------------Modal for qualification-------------------------------------------------------->
+                <div class="modal fade  bd-example-modal-lg qualification-display" data-keyboard="false"
+                    data-backdrop="static" id="exampleModalCenter" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Qualification Details</h5>
+                                <button type="button" class="btn btn-secondary btn btn-danger close1"
+                                    data-dismiss="modal"><i class="fa fa-times btn btn-danger"
+                                        aria-hidden="true"></i></button>
+                            </div>
+                            <div class="modal-body qualification-div">
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary btn btn-danger close1"
+                                    data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
 
@@ -287,7 +295,6 @@
                 console.log("error", error)
             }
         });
-        console.log('Outside Ajax : ', performerinfoobj);
 
         if (performerinfoobj != null) {
             for (performerinfo of performerinfoobj.proforma_details) {
@@ -323,17 +330,16 @@
                 document.querySelector('.performer-view').insertAdjacentHTML('afterbegin', view);
             }
         }
-       
+
 
         let graduation = 1;
         let masters = 1;
         let phd = 1;
         document.querySelector('.perfoma-table').addEventListener('click', function (e) {
-            
-            //console.log(e.target);
 
             if (e.target.classList.contains('fa-fast-forward')) {
-                e.target.classList.replace('fa-fast-forward', 'fa-check');
+                // e.target.classList.replace('fa-fast-forward', 'fa-check');
+                $('#proforma-approval-modal').modal('toggle');
             }
 
             //For Graduation Modal
@@ -345,9 +351,9 @@
                 }
                 let data = {}
                 data.qualification_type_lid = e.target.dataset.id,
-                data.application_lid = e.target.dataset.qual
+                    data.application_lid = e.target.dataset.qual
                 obj.get_application_qualification.push(data);
-                console.log("OBJECTTT",obj)
+                console.log("OBJECTTT", obj)
 
                 $.ajax({
                     url: '${pageContext.request.contextPath}/get-qual',
@@ -355,13 +361,16 @@
                     data: JSON.stringify(obj),
                     contentType: false,
                     success: function (response) {
-                        $(".qualification-display").modal("toggle",{backdrop: "static ", keyboard: false});
+                        $(".qualification-display").modal("toggle", {
+                            backdrop: "static ",
+                            keyboard: false
+                        });
 
-                        let graduationdetails = JSON.parse(response.value).application_resume_qualification;
+                        let graduationdetails = JSON.parse(response.value)
+                            .application_resume_qualification;
                         console.log(graduationdetails);
-                        if(graduationdetails != null)
-                        {
-                        let qualdetails = `
+                        if (graduationdetails != null) {
+                            let qualdetails = `
                         <div class="card">
                             <div class="card-body">
                                 <table class="table table-responsive">
@@ -372,55 +381,57 @@
                                         <th>Year of passing</th>
                                     </thead>
                                     <tbody>`
-                                    for(gd of graduationdetails)
-                                    {
-                        qualdetails+= `<tr>
+                            for (gd of graduationdetails) {
+                                qualdetails += `<tr>
                                             <td>\${gd.institute}</td>
                                             <td>\${gd.topic_of_study}</td>
                                             <td>\${gd.university}</td>
                                             <td>\${gd.rev_timestamp.split('T')[0]}</td>
                                         </tr>`
-                                    }
-                        qualdetails+=`</tbody>
+                            }
+                            qualdetails += `</tbody>
                                 </table>
                             </div>   
                         </div>
 
                         `
-                        $('.card').remove();
-                        document.querySelector('.qualification-div').insertAdjacentHTML('afterend',qualdetails);
-                    }
-                    else
-                    {
-                        let qualdetails = `
+                            $('.card').remove();
+                            document.querySelector('.qualification-div').insertAdjacentHTML(
+                                'afterend', qualdetails);
+                        } else {
+                            let qualdetails = `
                         <div class="card">
                         <h4 align="center">No Data Available</h4>
                         </div>
                         `
-                        document.querySelector('.qualification-div').insertAdjacentHTML('afterend',qualdetails);
-                    }
+                            document.querySelector('.qualification-div').insertAdjacentHTML(
+                                'afterend', qualdetails);
+                        }
                     },
                     error: function (error) {
                         console.log("error", error)
                     }
 
                 });
-                
+
             }
 
-            if(e.target.classList.contains('feedback-btn')) {
+            if (e.target.classList.contains('feedback-btn')) {
 
                 $.ajax({
-                    url : 'https://dev-portal.svkm.ac.in:8080/vfApi/getFeedback?panCardNo=' + e.target.dataset.panNo,
-                    type : 'GET',
-                    success : function(response) {
-                      $(".qualification-display").modal("toggle",{backdrop: "static ", keyboard: false});
+                    url: 'https://dev-portal.svkm.ac.in:8080/vfApi/getFeedback?panCardNo=' + e.target
+                        .dataset.panNo,
+                    type: 'GET',
+                    success: function (response) {
+                        $(".qualification-display").modal("toggle", {
+                            backdrop: "static ",
+                            keyboard: false
+                        });
 
                         let feedbackdetails = response;
                         console.log(feedbackdetails);
-                        if(feedbackdetails != '')
-                        {
-                        let feedback = `
+                        if (feedbackdetails != '') {
+                            let feedback = `
                         <div class="card">
                             <div class="card-body">
                                 <table class="table table-responsive">
@@ -434,9 +445,8 @@
                                         <th>Average</th>
                                     </thead>
                                     <tbody>`
-                                    for(gd of feedbackdetails)
-                                    {
-                                    feedback+= `<tr>
+                            for (gd of feedbackdetails) {
+                                feedback += `<tr>
                                             <td>\${gd.school}</td>
                                             <td>\${gd.inst}</td>
                                             <td>\${gd.programName}</td>
@@ -445,26 +455,26 @@
                                             <td>\${gd.acadSession}</td>
                                             <td>\${gd.avg}</td>
                                         </tr>`
-                                    }
-                             feedback+=`</tbody>
+                            }
+                            feedback += `</tbody>
                                 </table>
                             </div>   
                         </div>
                         `
-                        $('.card').remove();
-                        document.querySelector('.qualification-div').insertAdjacentHTML('afterend',feedback);
-                    }
-                    else
-                    {
-                        let feedback = `
+                            $('.card').remove();
+                            document.querySelector('.qualification-div').insertAdjacentHTML(
+                                'afterend', feedback);
+                        } else {
+                            let feedback = `
                         <div class="card">
                         <h4 align="center">No Feedback Available</h4>
                         </div>
                         `
-                        document.querySelector('.qualification-div').insertAdjacentHTML('afterend',feedback);
-                    }
+                            document.querySelector('.qualification-div').insertAdjacentHTML(
+                                'afterend', feedback);
+                        }
                     },
-                    error : function(error) {
+                    error: function (error) {
                         console.log("ERROR")
                     }
 
@@ -474,18 +484,17 @@
 
         })
 
-        document.querySelector('.qualification-display').addEventListener('click',function(e){
+        document.querySelector('.main').addEventListener('click', function (e) {
 
-            if(e.target.classList.contains('close1')||e.target.classList.contains('fa-times'))
-            {
+            if (e.target.classList.contains('close1') || e.target.classList.contains('fa-times')) {
                 document.querySelector('.card').remove()
                 $(".qualification-display").modal("toggle");
             }
+            if (e.target.classList.contains('close2')) {
+                document.querySelector('.proforma-approval-body').firstElementChild.remove()
+                $("#proforma-approval-modal").modal("toggle");
+            }
         })
-
-        
-        
-
     </script>
 </body>
 
