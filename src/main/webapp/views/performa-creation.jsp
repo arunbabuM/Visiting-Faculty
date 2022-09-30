@@ -494,7 +494,43 @@ document.addEventListener('click', function(e) {
            e.target.parentElement.parentElement.remove();
        }
 
+       if(e.target.classList.contains('delete-row-from-db'))
+       {
+        
+        let proformaId = findClosest(e.target, 'job-tr').querySelector(".delete-row-from-db").dataset.delete
+        console.log(proformaId)
+        let target = e.target
+        deletePorforma(proformaId,target)
+       }
+
     });
+
+    function deletePorforma(proformaId,target){
+
+           fetch('${pageContext.request.contextPath}/delete-proforma-detail', {
+                method: "POST",
+                body: proformaId,
+                headers: {
+
+                  "Content-Type": "application/json; charset=UTF-8",
+                }
+              })
+              .then(response => status = response.status)
+              .then(response => {
+                console.log(response)
+                if (status == 200) {
+
+                  target.closest('tr').remove()
+
+                } else {
+                  console.log("Error")
+                }
+              })
+              .catch(exception => console.log(exception));
+
+    }
+
+    
 
     //Job Application Cancel Button
     document.querySelector('#job-application-cancel-btn').addEventListener('click',function(){
@@ -683,7 +719,6 @@ document.addEventListener('click', function(e) {
 
     for(let proforma of resumeinfo.proforma_details) {
 
-
         proformaData += `<tr class='job-tr' data-id ="\${proforma.proforma_id}">
                             <td>
                                 <div class="custom-select-div">
@@ -727,6 +762,7 @@ document.addEventListener('click', function(e) {
                                     <option value="OBE" \${proforma.aol_obe  == "OBE" ? selected="selected" : null }>OBE</option>
                                 </select> 
                             </td>
+                            <td><i class="fa-solid text-danger fa-trash delete-row-from-db" data-delete= "\${proforma.proforma_id}"></i></td>
                         </tr>`
                         document.querySelector('.job-application-body').innerHTML =  proformaData;
         }

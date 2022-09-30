@@ -526,6 +526,12 @@ public class userDao implements UserDaoInterface {
     }
 
     @Override
+    public int deleteProformaDetail(int id) {
+        String sql = "Update proforma_details set active = false where proforma_id = ?";
+        return jdbcTemplate.update(sql, id);
+    }
+
+    @Override
     public Object updateproforma(String data) {
        
         SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
