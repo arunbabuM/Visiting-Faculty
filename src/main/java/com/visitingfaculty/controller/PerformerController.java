@@ -23,10 +23,10 @@ public class PerformerController
     }
 
     @PostMapping(value="/performer-view")
-    public Object performerView(@RequestBody String schoolid)
+    public Object performerView(@RequestBody String data)
     {
-        schoolid = schoolid.split("=")[0];
-        Object perfomaView = userDaoInterface.getJobView(schoolid);
+        System.err.println(data);
+        Object perfomaView = userDaoInterface.getJobView(data);
         return perfomaView;
     }
 

@@ -63,11 +63,15 @@ public class UserController {
             } else if (role.equals("User")) {
                 m.addAttribute("user_id", httpSession.getAttribute("user_id"));
                 return "faculty/dashboard";
+            } else{
+                m.addAttribute("user_id", httpSession.getAttribute("user_id"));
+                return "upperLevelDashboard";
             }
-            return "redirect:/login";
+            // return "redirect:/login";
         }
         return "redirect:/login#session-timeout";
     }
+
 
     @GetMapping("/logout")
     public String logout() {
@@ -113,6 +117,7 @@ public class UserController {
         String user_id = (String) httpSession.getAttribute("user_id");
         if (user_id != null) {
             m.addAttribute("level", httpSession.getAttribute("level"));
+            m.addAttribute("organization_lid", httpSession.getAttribute("organization_lid"));
             return "performa-page";
         }
         return "redirect:/login#session-timeout";

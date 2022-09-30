@@ -1107,6 +1107,7 @@
       </div>
 
       <div class="shadow-lg">
+        <h3 class="school-tag d-none">This Application is for : <b id="school-name"></b></h3>
 
         <!--------------------------------------Personal Details Section ---------------------------------------->`
 
@@ -7643,9 +7644,25 @@
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     if(urlParams.has('application_lid')) {
-
+      const organization_lid = urlParams.get('organization_lid')
       document.querySelector('.approve-application').classList.remove('d-none')
       document.querySelector('.select-school').classList.add('d-none')
+
+      $.ajax({
+        url: '${pageContext.request.contextPath}/get-school-name',
+        type: 'POST',
+        data:  organization_lid,
+        success: function (response) {
+
+          document.getElementById('school-name').innerHTML = response
+          document.querySelector('.select-tag').classList.remove('d-none')
+
+        },
+        error: function (error) {
+          console.log("Error:::", error)
+        }
+      })
+
 
       document.querySelector('.approve-application').addEventListener('click', function(){
         let status = 400;
@@ -7661,7 +7678,7 @@
 
         let org_ID = document.querySelector('.school-type-input').dataset.id
         const application_lid = urlParams.get('application_lid')
-        const organization_lid = urlParams.get('organization_lid')
+        
 
         let object = {}
         object.resume_lid = resume_lid

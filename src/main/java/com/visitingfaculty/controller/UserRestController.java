@@ -116,7 +116,7 @@ public class UserRestController {
 
         // if user not exist then we will generatae a random 6 digit token for
         // verification
-
+        System.out.println( "USERDATA>>>>>>>>>>>>>" + userDto);
         httpSession.setAttribute("user_id", userDto.getUser_id());
         password = userDto.getPassword();
 
@@ -328,6 +328,18 @@ public class UserRestController {
 
     }
 
+    @PostMapping("/get-school-name")
+    public ResponseEntity<?> getSchoolName(@RequestBody int organizationId) {
+        
+       userDaoInterface.getSchoolName(organizationId);
+    //    int dataFromDb = 
+    //    if(dataFromDb == 1) {
+    //         
+    //     }
+    //     return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+           return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
     @PostMapping("/get-schools-list")
     public List<SchoolList> getSchoolList(HttpSession httpSession) {
 
@@ -340,6 +352,7 @@ public class UserRestController {
 
     @PostMapping("/proforma-approval") 
     public ResponseEntity<?> updateProforma(@RequestBody String data) {
+        System.err.println(data);
 
         Object dataFromDb = userDaoInterface.updateproforma(data);
         if (dataFromDb != null) {
@@ -352,11 +365,12 @@ public class UserRestController {
     @PostMapping("/get-status-list")
     public Object getStatusList(@RequestBody String data) {
 
+        System.out.println(data);
         Object dataFromDb = userDaoInterface.getStatusList(data);
         if(dataFromDb != null) {
-            return ResponseEntity.status(HttpStatus.OK).build();
+            return dataFromDb;
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        return null;
     }
 
 }
