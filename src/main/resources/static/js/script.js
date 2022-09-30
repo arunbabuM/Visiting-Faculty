@@ -134,35 +134,35 @@ function clearError() {
 
 let condition;
 
-function personalDetailFirstNameValidation(res) {
-  if (checkLength(res) > 2) {
-    if (isCharAlphabet(res)) {
-      condition = true;
-    } else {
-      document.getElementById("first-name-message").innerHTML = "Only Alphabets are allowed";
-      condition = false;
-    }
-  } else {
-    document.getElementById("first-name-message").innerHTML = "Invalid length";
-    condition = false;
-  }
-  return condition;
-}
+// function personalDetailFirstNameValidation(res) {
+//   if (checkLength(res) > 2) {
+//     if (isCharAlphabet(res)) {
+//       condition = true;
+//     } else {
+//       document.getElementById("first-name-message").innerHTML = "Only Alphabets are allowed";
+//       condition = false;
+//     }
+//   } else {
+//     document.getElementById("first-name-message").innerHTML = "Invalid length";
+//     condition = false;
+//   }
+//   return condition;
+// }
 
-function personalDetailLastNameValidation(res) {
-  if (checkLength(res) > 2) {
-    if (isCharAlphabet(res)) {
-      condition = true;
-    } else {
-      document.getElementById("last-name-message").innerHTML = "Only Alphabets are allowed";
-      condition = false;
-    }
-  } else {
-    document.getElementById("last-name-message").innerHTML = "Invalid length";
-    condition = false;
-  }
-  return condition;
-}
+// function personalDetailLastNameValidation(res) {
+//   if (checkLength(res) > 2) {
+//     if (isCharAlphabet(res)) {
+//       condition = true;
+//     } else {
+//       document.getElementById("last-name-message").innerHTML = "Only Alphabets are allowed";
+//       condition = false;
+//     }
+//   } else {
+//     document.getElementById("last-name-message").innerHTML = "Invalid length";
+//     condition = false;
+//   }
+//   return condition;
+// }
 
 function personalDetailDateOfBirthValidation(res) {
   var dob = res;
@@ -219,40 +219,40 @@ function personalDetailGenderValidation(gender) {
   return condition;
 }
 
-function personalDetailContactNumberValidation(res) {
-  if (res.length != 10) {
-    document.getElementById('contact-number-message').innerHTML = "Invalid length";
-    condition = false;
-  } else {
-    if (isNaN(res)) {
-      document.getElementById('contact-number-message').innerHTML = "Characters Not Allowed";
-      condition = false;
-    } else {
-      if ((res.charAt(0) != 9) && (res.charAt(0) != 8) && (res.charAt(0) != 7) && (res.charAt(0) != 6)) {
-        document.getElementById('contact-number-message').innerHTML = "Invalid phone number";
-        condition = false;
-      } else {
-        condition = true;
-      }
-    }
-  }
-  return condition;
-}
+// function personalDetailContactNumberValidation(res) {
+//   if (res.length != 10) {
+//     document.getElementById('contact-number-message').innerHTML = "Invalid length";
+//     condition = false;
+//   } else {
+//     if (isNaN(res)) {
+//       document.getElementById('contact-number-message').innerHTML = "Characters Not Allowed";
+//       condition = false;
+//     } else {
+//       if ((res.charAt(0) != 9) && (res.charAt(0) != 8) && (res.charAt(0) != 7) && (res.charAt(0) != 6)) {
+//         document.getElementById('contact-number-message').innerHTML = "Invalid phone number";
+//         condition = false;
+//       } else {
+//         condition = true;
+//       }
+//     }
+//   }
+//   return condition;
+// }
 
-function personalDetailEmailValidation(res) {
-  var atposition = res.indexOf('@');
-  var dotposition = res.lastIndexOf('.');
-  if (atposition < 1 || (res.length - 2) == dotposition) {
-    (document).getElementById('email-message').innerHTML = "Invalid email address";
-    condition = false;
-  } else if (atposition < dotposition) {
-    condition = true;
-  } else {
-    (document).getElementById('email-message').innerHTML = "Invalid email address";
-    condition = false;
-  }
-  return condition;
-}
+// function personalDetailEmailValidation(res) {
+//   var atposition = res.indexOf('@');
+//   var dotposition = res.lastIndexOf('.');
+//   if (atposition < 1 || (res.length - 2) == dotposition) {
+//     (document).getElementById('email-message').innerHTML = "Invalid email address";
+//     condition = false;
+//   } else if (atposition < dotposition) {
+//     condition = true;
+//   } else {
+//     (document).getElementById('email-message').innerHTML = "Invalid email address";
+//     condition = false;
+//   }
+//   return condition;
+// }
 
 function emailValidation(res) {
   var atposition = res.indexOf('@');
@@ -399,30 +399,30 @@ function personalDetailAadharPhotoValidation(res) {
 }
 
 
-function personalDetailAddressValidation(res) {
-  if (checkLength(res) > 5) {
-    condition = true;
-  } else {
-    document.getElementById("address-message").innerHTML = "Invalid length";
-    condition = false;
-  }
-  return condition;
-}
+// function personalDetailAddressValidation(res) {
+//   if (checkLength(res) > 5) {
+//     condition = true;
+//   } else {
+//     document.getElementById("address-message").innerHTML = "Invalid length";
+//     condition = false;
+//   }
+//   return condition;
+// }
 
-function personalDetailCityValidation(res) {
-  if (checkLength(res) > 3) {
-    if (!isCharNumber(res)) {
-      condition = true;
-    } else {
-      document.getElementById("city-message").innerHTML = "Only characters are allowed";
-      condition = false;
-    }
-  } else {
-    document.getElementById("city-message").innerHTML = "Invalid length";
-    condition = false;
-  }
-  return condition;
-}
+// function personalDetailCityValidation(res) {
+//   if (checkLength(res) > 3) {
+//     if (!isCharNumber(res)) {
+//       condition = true;
+//     } else {
+//       document.getElementById("city-message").innerHTML = "Only characters are allowed";
+//       condition = false;
+//     }
+//   } else {
+//     document.getElementById("city-message").innerHTML = "Invalid length";
+//     condition = false;
+//   }
+//   return condition;
+// }
 
 function personalDetailPincodeValidation(res) {
   if (checkLength(res) > 3) {
@@ -534,86 +534,86 @@ function qualificationDetailCertificateValidation(res) {
   return condition;
 }
 
-function bankDetailBankNameValidation(res) {
-  if (checkLength(res) > 3) {
-    condition = true;
-  } else {
-    document.getElementById("bank-name-message").innerHTML = "Invalid length";
-    condition = false;
-  }
-  return condition;
-}
+// function bankDetailBankNameValidation(res) {
+//   if (checkLength(res) > 3) {
+//     condition = true;
+//   } else {
+//     document.getElementById("bank-name-message").innerHTML = "Invalid length";
+//     condition = false;
+//   }
+//   return condition;
+// }
 
-function bankDetailBankBranchValidation(res) {
-  if (checkLength(res) > 3) {
-    condition = true;
-  } else {
-    document.getElementById("bank-branch-message").innerHTML = "Invalid length";
-    condition = false;
-  }
-  return condition;
-}
+// function bankDetailBankBranchValidation(res) {
+//   if (checkLength(res) > 3) {
+//     condition = true;
+//   } else {
+//     document.getElementById("bank-branch-message").innerHTML = "Invalid length";
+//     condition = false;
+//   }
+//   return condition;
+// }
 
 
-function bankDetailIfscCodeValidation(res) {
-  if (res.length != 11) {
-    condition = false;
-    document.getElementById('bank-ifsc-code-message').innerHTML = "Invalid length";
-  } else {
-    let firstfour = res.substring(0, 4);
-    let lastseven = res.substring(4, 11);
-    for (let i = 0; i < firstfour.length; i++) {
-      if (firstfour[i] < 'A' || firstfour[i] > 'Z') {
-        condition = false;
-        document.getElementById('bank-ifsc-code-message').innerHTML = "Invalid ifsc character";
-        break;
-      } else {
-        for (let j = 0; j < lastseven.length; j++) {
-          if (lastseven[j] >= '0' && lastseven[j] <= '9') {
-            condition = true;
-          } else {
-            console.log('in loop' + lastseven[j]);
-            condition = false;
-            document.getElementById('bank-ifsc-code-message').innerHTML = "Invalid last seven number";
-            break;
-          }
-        }
+// function bankDetailIfscCodeValidation(res) {
+//   if (res.length != 11) {
+//     condition = false;
+//     document.getElementById('bank-ifsc-code-message').innerHTML = "Invalid length";
+//   } else {
+//     let firstfour = res.substring(0, 4);
+//     let lastseven = res.substring(4, 11);
+//     for (let i = 0; i < firstfour.length; i++) {
+//       if (firstfour[i] < 'A' || firstfour[i] > 'Z') {
+//         condition = false;
+//         document.getElementById('bank-ifsc-code-message').innerHTML = "Invalid ifsc character";
+//         break;
+//       } else {
+//         for (let j = 0; j < lastseven.length; j++) {
+//           if (lastseven[j] >= '0' && lastseven[j] <= '9') {
+//             condition = true;
+//           } else {
+//             console.log('in loop' + lastseven[j]);
+//             condition = false;
+//             document.getElementById('bank-ifsc-code-message').innerHTML = "Invalid last seven number";
+//             break;
+//           }
+//         }
 
-      }
-    }
-  }
-  return condition;
-}
+//       }
+//     }
+//   }
+//   return condition;
+// }
 
-function bankDetailMicrCodeValidation(res) {
-  if (res.length < 3) {
-    document.getElementById('bank-micr-code-message').innerHTML = "Invalid length";
-    condition = false;
-  } else {
-    if (isNaN(res)) {
-      document.getElementById('bank-micr-code-message').innerHTML = "Character not allowed";
-      condition = false;
-    } else {
-      condition = true;
-    }
-  }
-  return condition;
-}
+// function bankDetailMicrCodeValidation(res) {
+//   if (res.length < 3) {
+//     document.getElementById('bank-micr-code-message').innerHTML = "Invalid length";
+//     condition = false;
+//   } else {
+//     if (isNaN(res)) {
+//       document.getElementById('bank-micr-code-message').innerHTML = "Character not allowed";
+//       condition = false;
+//     } else {
+//       condition = true;
+//     }
+//   }
+//   return condition;
+// }
 
-function bankDetailAccountNumberValidation(res) {
-  if ((checkLength(res) <= 10) || (checkLength(res) > 16)) {
-    document.getElementById('bank-account-number-message').innerHTML = "Invalid length"
-    condition = false;
-  } else {
-    if (isNaN(res)) {
-      document.getElementById('bank-account-number-message').innerHTML = "Charaters not allowed";
-      condition = false;
-    } else {
-      condition = true;
-    }
-  }
-  return condition;
-}
+// function bankDetailAccountNumberValidation(res) {
+//   if ((checkLength(res) <= 10) || (checkLength(res) > 16)) {
+//     document.getElementById('bank-account-number-message').innerHTML = "Invalid length"
+//     condition = false;
+//   } else {
+//     if (isNaN(res)) {
+//       document.getElementById('bank-account-number-message').innerHTML = "Charaters not allowed";
+//       condition = false;
+//     } else {
+//       condition = true;
+//     }
+//   }
+//   return condition;
+// }
 
 
 
@@ -848,18 +848,6 @@ function checkboxfunction(checkbox, input) {
     }
   });
 }
-
-// function workexperienceCheckBoxfunction(checkbox, input) {
-//   $("." + checkbox).on("click", function () {
-//     if ($(this).is(":checked")) {
-//       document.querySelector('.' + input).classList.add('d-none');
-//     } else {
-//       document.querySelector('.' + input).classList.remove('d-none');
-//     }
-//   });
-// }
-
-
 
 //*****************************************************Dynamic Validation's**************************************************************** 
 
