@@ -211,7 +211,7 @@
   </div>
   
   <div class="alert alert-danger-2 alert-dismissible fade show d-flex justify-content-center align-items-center d-none">
-    <strong>Error!</strong>&nbsp &nbsp Invalid OTP
+    <strong>Error!</strong>&nbsp &nbsp 
     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
   </div>
 
@@ -404,6 +404,8 @@
       // emailValidation(result.email)
 
       if (result.password == result.confirmPassword) {
+
+        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",result)
 
         document.getElementById('main-loader').classList.remove('d-none');
         fetch('${pageContext.request.contextPath}/verify-registration', {

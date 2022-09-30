@@ -116,7 +116,7 @@ public class UserRestController {
 
         // if user not exist then we will generatae a random 6 digit token for
         // verification
-
+        System.out.println( "USERDATA>>>>>>>>>>>>>" + userDto);
         httpSession.setAttribute("user_id", userDto.getUser_id());
         password = userDto.getPassword();
 
@@ -326,6 +326,18 @@ public class UserRestController {
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 
+    }
+
+    @PostMapping("/get-school-name")
+    public ResponseEntity<?> getSchoolName(@RequestBody int organizationId) {
+        
+       userDaoInterface.getSchoolName(organizationId);
+    //    int dataFromDb = 
+    //    if(dataFromDb == 1) {
+    //         
+    //     }
+    //     return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+           return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @PostMapping("/get-schools-list")
