@@ -33,7 +33,7 @@ list += `
         </a>
 
 `
-    } else {
+    } else if("${role}" == "User") {
 
         list += `
         
@@ -47,6 +47,15 @@ list += `
             <li><img src="${pageContext.request.contextPath}/icons/logout.png" class="ps-3 pe-2"> Logout</li>
         </a>
         
+        `
+    } else {
+        list +=`
+        <a href="${pageContext.request.contextPath}/dashboard" class="offset-list-item-link">
+            <li><img src="${pageContext.request.contextPath}/icons/speedometer.png" class="ps-3 pe-2"> Dashboard</li>
+        </a>
+        <a href="${pageContext.request.contextPath}/logout" class="offset-list-item-link">
+            <li><img src="${pageContext.request.contextPath}/icons/logout.png" class="ps-3 pe-2"> Logout</li>
+        </a>
         `
     }
 

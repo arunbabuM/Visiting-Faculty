@@ -340,6 +340,7 @@ public class UserRestController {
 
     @PostMapping("/proforma-approval") 
     public ResponseEntity<?> updateProforma(@RequestBody String data) {
+        System.err.println(data);
 
         Object dataFromDb = userDaoInterface.updateproforma(data);
         if (dataFromDb != null) {
@@ -352,11 +353,12 @@ public class UserRestController {
     @PostMapping("/get-status-list")
     public Object getStatusList(@RequestBody String data) {
 
+        System.out.println(data);
         Object dataFromDb = userDaoInterface.getStatusList(data);
         if(dataFromDb != null) {
-            return ResponseEntity.status(HttpStatus.OK).build();
+            return dataFromDb;
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        return null;
     }
 
 }

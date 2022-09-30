@@ -465,11 +465,11 @@ public class userDao implements UserDaoInterface {
     }
 
     @Override
-    public Object getJobView(String schoolid) {
+    public Object getJobView(String data) {
         SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
                 .withFunctionName("get_proforma_details");
 
-        return jdbcCall.executeFunction(Object.class, schoolid);
+        return jdbcCall.executeFunction(Object.class, data);
     }
 
     @Override
