@@ -534,4 +534,13 @@ public class userDao implements UserDaoInterface {
         return jdbcCall.executeFunction(Object.class, data);
     }
 
+    @Override
+    public Object getStatusList(String data) {
+       
+        SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
+                .withFunctionName("get_status_list");
+
+        return jdbcCall.executeFunction(Object.class, data);
+    }
+
 }

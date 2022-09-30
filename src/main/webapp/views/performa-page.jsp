@@ -485,7 +485,9 @@
 
             if (e.target.classList.contains('approval-btn')) {
                  proformaid = e.target.dataset.id
-                 console.log(proformaid)
+                 $.ajax({
+                    url : '${pageContext.request.contextPath}/get-status-list'
+                 })
                 $('#proforma-approval-modal').modal('toggle');
                 let commentbox = `<textarea class="textarea proforma-comment container" data-id="\${proformaid}" cols="50" rows="5"></textarea>`;
                 let card = document.querySelector('.proforma-approval-body').querySelector('textarea')

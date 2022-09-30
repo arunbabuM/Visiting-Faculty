@@ -336,4 +336,15 @@ public class UserRestController {
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
+
+    @PostMapping("/get-status-list")
+    public Object getStatusList(@RequestBody String data) {
+
+        Object dataFromDb = userDaoInterface.getStatusList(data);
+        if(dataFromDb != null) {
+            return ResponseEntity.status(HttpStatus.OK).build();
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+
 }
