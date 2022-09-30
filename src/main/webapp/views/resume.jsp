@@ -829,7 +829,7 @@
           <div class="row">
             <div class="col-md-6 col-sm-12">
               <label for="bank-name" class="py-md-2">Name of the Bank<span class="required">*</span></label>
-              <span id="bank-name-message" style="color: rgb(159, 214, 55);" class="error"></span>
+              <span id="bank-name-message" style="color: rgb(214, 55, 55);" class="error"></span>
               <input type="text" class="form-control" id="bank-name">
 
             </div>
@@ -1116,15 +1116,12 @@
           let tempEmail = "";
 
           if ((personal_details[0].temp_contact_number) == null) {
-            console.log("LOOP-1")
             tempCont = "N.A"
           }
           if ((personal_details[0].address).length == 0) {
-            console.log("LOOP-2")
             tempAdd = "N.A"
           }
           if ((personal_details[0].temp_email).length == 0) {
-            console.log("LOOP-3")
             tempEmail = "N.A"
           }
 
@@ -1956,7 +1953,7 @@
                       <h6 class="pb-4">Cancalled Cheque Photo</h6>
                     </div>
                     <div class="col-6 ps-md-0 ps-0 col-md-6 col-lg-6 col-sm-6">`
-          if (bank_details.micr_code != null) {
+          if (bank_details.micr_code != '') {
 
             resume += ` <p id="micr-code-value">\${bank_details.micr_code}</p>`
           } else {
@@ -2095,7 +2092,6 @@
 
         }
       },
-
       error: function (error) {
         console.log("error", error)
       }
@@ -2119,20 +2115,15 @@
 
     //Personal Details Submit
     document.querySelector('#personal-details-submit-insert').addEventListener('click', function (e) {
-
-      console.log()
       e.preventDefault()
 
       let arrayresult = [];
       let result = {};
 
-      // clearError();
-
       result.firstName = document.querySelector('#first-name-insert').value;
       result.lastName = document.querySelector('#last-name-insert').value;
       result.profilePhoto1 = document.querySelector('#photo-insert').value;
       result.DOB = document.querySelector('#date-of-birth-insert').value;
-      //result.gender = document.querySelector("#gender-row-insert input[type='radio']:checked").value;
       let is = document.querySelector("#gender-row-insert input[type='radio']:checked");
       if (is != null) {
         document.getElementById('gender-message-insert').innerHTML = '';
@@ -2146,7 +2137,6 @@
       result.pancard = "${user_id}";
       result.pancardPhoto = document.querySelector('#pan-photo-insert').value;
       result.email = document.querySelector('#email-insert').value;
-
       result.aadhar = document.querySelector('#aadhar-number-insert').value;
       result.pan = document.getElementById('pan-number-insert').value;
       result.aadharPhoto1 = document.querySelector('#aadhar-photo-insert').value;
@@ -2218,10 +2208,9 @@
       }
       setTimeout(function () {
 
-        console.log(photoArray)
         let user_info = {}
         let user_contact = {}
-        console.log(JSON.stringify(result))
+
         user_contact.user_lid = '${user_lid}'
         user_contact.resume_lid = resume_lid
         user_contact.contact_number = result.contactNumber
@@ -2273,7 +2262,6 @@
         } else {
           genderValue = "Other"
         }
-        console.log(genderValue)
         let options = {
 
           method: 'POST',
@@ -2560,10 +2548,6 @@
         let checkPercentile = qualificationDetailPercentageValidation(qualificationPercentile);
         // let checkCancelledCheque = qualificationDetailCertificateValidation(qualificationCertificate);
 
-        // console.log(qualificationCertificateImage)
-        console.log(checkPercentile)
-        // console.log(checkSubject)
-
         let qualificationCertificateSRC = qualificationRow[i].querySelector('.qualification-certificate-preview')
           .src
         //  to add the red border according to validations
@@ -2595,8 +2579,6 @@
           qualificationTitle1 = "PHD"
           qualification_type = 3
         }
-        console.log(qualificationTitle)
-        console.log(qualification_type)
 
         let qualificationvalue = false;
         if (qualificationStatus == 'true') {
@@ -2632,53 +2614,6 @@
 
           }
 
-
-
-          div += ` 
-         <div class="text-block right qualification-update" >
-                 <div class="card-body">
-                   <h2 id="year-of-passing">\${qualificationYear}\</h2>
-
-                   <div id="qualification-display-div" class=" px-3 px-sm-4 px-lg-4 mt-1">
-                     <div class="row">
-
-                       <div class="col-12 col-md-6 col-lg-6 col-sm-12">
-                         <div class="row pt-lg-3">
-                           <div class="col-6  col-md-6 ps-md-0 ps-0 ps-sm-0 col-lg-6 col-sm-6">
-                             <p class="h5 pb-1">Title :</p>
-                             <p class="h5 py-1">Major Subject :</p>
-                             <p class="h5 py-1">University :</p>
-                           </div>
-                           <div class="col-6 col-md-6 col-lg-6 col-sm-6">
-                             <p id="">\${qualificationTitle1}\</p>
-                             <p id="">\${qualificationSubject}\</p>
-                             <p id="">\${qualificationUniversity}\</p>
-                           </div>
-                         </div>
-                       </div>
-
-                       <div class="col-12 col-md-6 col-lg-6 col-sm-12">
-                         <div class="row pt-lg-3">
-                           <div class="col-6 ps-lg-5 col-md-6 ps-md-0 ps-0 ps-sm-0 col-lg-6 col-sm-6">
-                             <p class="h5 pb-1">College</p>
-                             <p class="h5 py-1">percentage</p>
-                             <p class="h5 py-1">Certificate</p>
-                           </div>
-                           <div class="col-6 ps-md-0 ps-0 col-md-6 col-lg-6 col-sm-6">
-                             <p class="" id="">\${qualificationCollege}\</p>
-                             <p id="" class="">\${qualificationPercentile}\</p>
-                             <p ><i id="qualification-certificate-display" data-image = "\${qualificationCertificateSRC}" class="fa-solid fa-image text-success qualification-certificate-display"></i></p>
-                           </div>
-                         </div>
-                       </div>
-                     </div>
-                   </div>
-                 </div>
-               </div>
-                 `
-
-
-
           qualificationTableArray.push(object)
         }, 1000)
       }
@@ -2703,7 +2638,6 @@
             document.getElementById('body').classList.remove('d-none');
             document.querySelector('.qualification-modal').classList.add('d-none');
             document.getElementById('main-loader').classList.add('d-none');
-
             document.location.reload();
           } else {
             document.getElementById('main-loader').classList.add('d-none');
@@ -2805,8 +2739,6 @@
 
     //Award Add Button
     document.getElementById('award-add-button').addEventListener('click', function () {
-      console.log("Award Add Button clicked");
-
 
       let table = `  <div class="position-relative award_delete_btn d-flex" style="cursor: pointer;">  
         <div class="container">   
@@ -2960,7 +2892,6 @@
 
 
           let organizationType = organization_type_lid
-          console.log(organizationType)
           if (organizationType == 1) {
             organizationType1 = "School"
           } else if (organizationType == 2) {
@@ -2971,45 +2902,6 @@
 
 
           let recievedAwardDate = changeDateFormat(achievement_date)
-          div += `
-           <div id="award-display-div" class=" px-3 px-sm-4 px-lg-4 mt-1">
-              <div class="row">
-
-                <div class="col-12 col-md-6 col-lg-6 col-sm-12">
-                  <div class="row pt-lg-3">
-                    <div class="col-6  col-md-6 ps-md-0 ps-0 ps-sm-0 col-lg-6 col-sm-6">
-                      <p class="h5 pb-1">Award Name :</p>
-                      <p class="h5 py-1">organization :</p>
-                      <p class="h5 py-1">Organization Type :</p>
-
-                    </div>
-                    <div class="col-6 col-md-6 col-lg-6 col-sm-6">
-                      <p id="">\${title}\</p>
-                      <p id="">\${organization_name}</p>
-                      <p id="">\${organizationType1}\</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-12 col-md-6 col-lg-6 col-sm-12">
-                  <div class="row pt-lg-3">
-                    <div class="col-6 ps-lg-5 col-md-6 ps-md-0 ps-0 ps-sm-0 col-lg-6 col-sm-6">
-                      <p class="h5 pb-1">Description :</p>
-                      <p class="h5 pb-1">Recieved date :</p>
-                      <p class="h5 py-1">Certificate :</p>
-                    </div>
-                    <div class="col-6 ps-md-0 ps-0 col-md-6 col-lg-6 col-sm-6">
-                      <p class="" id="">\${description}\</p>
-                      <p class="" id="">\${recievedAwardDate}\</p>
-                      <p ><i id="award-certificate-display" data-image = "\${awardCertificateSRC}" class="fa-solid fa-image text-success award-certificate-display"></i></p>
-
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-              `
 
           resume_achievement.push(obj);
         }, 1000)
@@ -3277,43 +3169,6 @@
           }
           publicationTableArray.push(object)
 
-
-          div += `   
-      <div class=" px-3 px-sm-4 px-lg-4 mt-1">
-            <div class="row">
-           <div class="col-12 col-md-6 col-lg-6 col-sm-12">
-                <div class="row pt-lg-3">
-                  <div class="col-6  col-md-6 ps-md-0 ps-0 ps-sm-0 col-lg-6 col-sm-6">
-                    <p class="h5 pb-1">Role :</p>
-                    <p class="h5 py-1">No. of Authors :</p>
-                    <p class="h5 py-1">Book Title :</p>
-
-                  </div>
-                  <div class="col-6 col-md-6 col-lg-6 col-sm-6">
-                    <p id="">\${publicationRole}\</p>
-                    <p id="">\${publicationNumberOfAuthors}\ </p>
-                    <p id="">\${publicationBookTitle}\</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-12 col-md-6 col-lg-6 col-sm-12">
-                <div class="row pt-lg-3">
-                  <div class="col-6 ps-lg-5 col-md-6 ps-md-0 ps-0 ps-sm-0 col-lg-6 col-sm-6">
-                    <p class="h5 pb-1">Publisher :</p>
-                    <p class="h5 pb-1">Publication Year:</p>
-                    <p class="h5 py-1">Certificate :</p>
-                  </div>
-                  <div class="col-6 ps-md-0 ps-0 col-md-6 col-lg-6 col-sm-6">
-                    <p class="" id="">\${publicationPublisher}\</p>
-                    <p class="" id="">\${publicationYearOfPublication}\</p>
-                    <p><i id="publication-certificate-display" data-image = "\${publicationCertificateSRC}" class="fa-solid fa-image text-success publication-certificate-display"></i></p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-            `
         }, 1000)
       }
 
@@ -3481,11 +3336,8 @@
     //Research Submit Button
     document.querySelector('#research-submit-insert').addEventListener('click', function () {
 
-
-      console.log("research button clicked");
       let researchTableElem = document.querySelectorAll('.research-row');
       let noofrows = researchTableElem.length;
-      console.log("no of rows", noofrows);
       let resumeResearchTable = [];
       let div = ''
       for (let j = 0; j < noofrows; j++) {
@@ -3502,7 +3354,6 @@
 
 
         let research__lid = researchTableElem[j].dataset.researchlid
-        console.log("RESEARCH>>>>>>>>", research__lid)
         let researchCertificateSRC = researchTableElem[j].querySelector('.research-certificate-preview').src;
 
 
@@ -3558,41 +3409,6 @@
           }
 
           console.log(JSON.stringify(obj))
-          div += `<div  class=" px-3 px-sm-4 px-lg-4 mt-1 ">
-                  <div class="row">
-
-                    <div class="col-12 col-md-6 col-lg-6 col-sm-12">
-                      <div class="row pt-lg-3">
-                        <div class="col-6  col-md-6 ps-md-0 ps-0 ps-sm-0 col-lg-6 col-sm-6">
-                          <p class="h5 py-1">Title :</p>
-                          <p class="h5 py-1">Volume year :</p>
-
-                        </div>
-                        <div class="col-6 col-md-6 col-lg-6 col-sm-6">
-                          <p id="">\${Journal_name}\</p>
-                          <p id="">\${volume_year}\</p>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="col-12 col-md-6 col-lg-6 col-sm-12">
-                      <div class="row pt-lg-3">
-                        <div class="col-6 ps-lg-5 col-md-6 ps-md-0 ps-0 ps-sm-0 col-lg-6 col-sm-6">
-                          <p class="h5 pb-1">Description :</p>
-                          <p class="h5 pb-1">Category :</p>
-                          <p class="h5 py-1">Certificate :</p>
-                        </div>
-                        <div class="col-6 ps-md-0 ps-0 col-md-6 col-lg-6 col-sm-6">
-                          <p class="" id="">\${description}\</p>
-                          <p class="" id="">\${category}\</p>
-                          <p><i id="research-certificate-display" data-image = "\${researchCertificateSRC}" class="fa-solid fa-image text-success research-certificate-display"></i></p>
-
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>                  
-        `
           resumeResearchTable.push(obj);
         }, 1000)
       }
@@ -3617,7 +3433,6 @@
             document.getElementById('body').classList.remove('d-none');
             document.querySelector('.research-modal').classList.add('d-none');
             document.getElementById('main-loader').classList.add('d-none');
-
             document.location.reload();
           } else {
             document.getElementById('main-loader').classList.add('d-none');
@@ -3705,7 +3520,6 @@
 
     //Certifiaction Add button
     document.querySelector('#certification-add-button').addEventListener('click', function () {
-      console.log("entered inside certification add button")
 
       let table = `  
     <div class="position-relative certification_delete_btn d-flex" style="cursor: pointer;"> 
@@ -3792,12 +3606,6 @@
         let checkYOP = yearcheck(professionalYOP);
         //let checkCertification = tabledatacheck(professionalCertification);
 
-        console.log(checkCertificateName)
-        console.log(checkInstitution)
-        console.log(checkYOP)
-        // console.log(checkSubject)
-
-
         //  to add the red border according to validations
         if (checkCertificateName == false) {
           certificationRow[i].querySelector('.certification-certificate').classList.add('input-border');
@@ -3832,65 +3640,6 @@
             url_path: photoArray[i],
           }
 
-          div += `
-            <div class="text-block right " id="preview-qualification-div">
-              <div class="card-body preview-certification-div">
-
-                <div  class=" px-3 px-sm-4 px-lg-4 mt-1">
-                  <div class="row">
-
-                    <div class="col-12 col-md-6 col-lg-6 col-sm-12">
-                      <div class="row pt-lg-3">
-                        <div class="col-6  col-md-6 ps-md-0 ps-0 ps-sm-0 col-lg-6 col-sm-6">
-                          <p class="h5 pb-1">Certification name:</p>
-                        </div>
-                        <div class="col-6 col-md-6 col-lg-6 col-sm-6">
-                          <p id="">\${professionalCertificateName}\</p>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="col-12 col-md-6 col-lg-6 col-sm-12">
-                      <div class="row pt-lg-3">
-                        <div class="col-6 ps-lg-6 col-md-6 ps-md-0 ps-0 ps-sm-0 col-lg-6 col-sm-6">
-                          <p class="h5 pb-1">Institution :</p>
-                        </div>
-                        <div class="col-6 ps-md-0 ps-0 col-md-6 col-lg-6 col-sm-6">
-                          <p class="" id="">\${professionalInstitution}\</p>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="col-12 col-md-6 col-lg-6 col-sm-12">
-                      <div class="row pt-lg-3">
-                        <div class="col-6  col-md-6 ps-md-0 ps-0 ps-sm-0 col-lg-6 col-sm-6">
-                          <p class="h5 pb-1">Recieved Year:</p>
-                        </div>
-                        <div class="col-6 col-md-6 col-lg-6 col-sm-6">
-                          <p id="">\${professionalYOP}\</p>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="col-12 col-md-6 col-lg-6 col-sm-12">
-                      <div class="row pt-lg-3">
-                        <div class="col-6  col-md-6 ps-md-0 ps-0 ps-sm-0 col-lg-6 col-sm-6">
-                          <p class="h5 pb-1">Certificate:</p>
-                        </div>
-                        <div class="col-6 col-md-6 col-lg-6 col-sm-6">
-                          <p id=""><i class="fa-solid fa-image text-success"></i></p>
-                        </div>
-                      </div>
-                    </div>
-
-                  </div>
-                </div>
-
-              </div>
-            </div>
-
-           `
-
           certificationTableArray.push(object)
         }, 1000)
       }
@@ -3914,7 +3663,6 @@
             document.getElementById('body').classList.remove('d-none');
             document.querySelector('.certification-modal').classList.add('d-none');
             document.getElementById('main-loader').classList.add('d-none');
-
             document.location.reload();
           } else {
             document.getElementById('main-loader').classList.add('d-none');
@@ -3996,14 +3744,10 @@
       submitBankDetailsForm.append('accountType', accountType1)
       // submitBankDetailsForm.append('cancelledCheckPhoto', document.getElementById('cancelled_cheque_Photo-insert').value)
 
-      let facultyBankNameValid = dynamicLengthCheck(submitBankDetailsForm.get('bankName'),
-        'bank-name-message-insert');
-      let facultyBankBranchValid = dynamicLengthCheck(submitBankDetailsForm.get('branchName'),
-        'bank-branch-message-insert');
-      // let facultyIfscCodevalid = dynamicIFSCCheck(submitBankDetailsForm.get('ifscCode'),
-      //   'bank-ifsc-code-message-insert');
-      let facultyAccountNumberValid = dynamicBankAcountNumber(submitBankDetailsForm.get('accountNumber'),
-        'bank-account-number-message-insert');
+      let facultyBankNameValid = dynamicLengthCheck(submitBankDetailsForm.get('bankName'),'bank-name-message-insert');
+      let facultyBankBranchValid = dynamicLengthCheck(submitBankDetailsForm.get('branchName'),'bank-branch-message-insert');
+      let facultyAccountNumberValid = dynamicBankAcountNumber(submitBankDetailsForm.get('accountNumber'),'bank-account-number-message-insert');
+      let facultyifscValid = dynamicLengthCheck(document.querySelector('#bank-ifsc-code-insert').value,'bank-ifsc-code-message-insert')
 
       if (!facultyBankNameValid || !facultyBankBranchValid || !facultyAccountNumberValid) {
         return;
@@ -4071,7 +3815,6 @@
 
 
     document.querySelector('#body').addEventListener('click', function (e) {
-      console.log(e.target);
 
       if (e.target.classList.contains('qualification-certificate-display') || e.target.classList.contains(
           'award-certificate-display') || e.target.classList.contains('publication-certificate-display') || e.target
@@ -4314,7 +4057,6 @@
     //Rana Changes 
     document.querySelector('.qualification-modal').addEventListener('click', function (e) {
       if (e.target.classList.contains('qualification_delete_btn')) {
-        console.log("delete-button has been clicked")
       }
     });
 
@@ -4372,7 +4114,6 @@
             if (resumeinfo.resume_qualification != null) {
               for (qualedit of resumeinfo.resume_qualification) {
                 if (qualedit.qualification_type_lid != 4) {
-                  console.log(id)
                   if (qualedit.resume_qualification_lid == id) {
                     document.querySelector('.qualification-data').innerHTML = ""
 
@@ -4528,7 +4269,6 @@
           } else {
             id = e.target.dataset.experienceid
           }
-          console.log(id)
           editWorkExperienceDetail(id)
         }
 
@@ -5015,7 +4755,6 @@
 
           document.getElementById('body').classList.add('d-none');
           document.querySelector('.bank-details-modal').classList.remove('d-none');
-          console.log("BANK TPE>>>>>>>" , resumeinfo.bank_details.bank_account_type_lid)
           document.getElementById('bank-account-type').value = resumeinfo.bank_details.bank_account_type_lid
 
 
@@ -5036,10 +4775,7 @@
 
 
     document.querySelector('#personal-details-submit-button').addEventListener('click', function (e) {
-
       e.preventDefault()
-
-
 
       let myForm = document.getElementById('myForm')
       let formData = new FormData(myForm)
@@ -5051,26 +4787,17 @@
 
       clearError();
 
-      let firstName = personalDetailFirstNameValidation(result.f_name);
-      let lastName = personalDetailLastNameValidation(result.l_name);
-
-      //let profilePhoto1 = personalDetailProfilePhotoValidation(document.getElementById("photo").value);
-
+      let firstName = dynamiCheckSpecialChar(result.f_name,'first-name-message');
+      let lastName = dynamiCheckSpecialChar(result.l_name,'last-name-message');
       let DOB = personalDetailDateOfBirthValidation(result.date_of_birth);
       let gender = personalDetailGenderValidation(result.gender);
-      let contactNumber = personalDetailContactNumberValidation(result.contact_number);
-      let temporaryContact = personalDetailTemporaryContactValidation(result.temp_contact_number);
-
-      //let pancard = personalDetailPancardValidation(result.pan_number);
-      //let pancardPhoto = personalDetailPancardPhotoValidation(document.getElementById("pan-photo").value);
-      let email = personalDetailEmailValidation(result.email);
+      let contactNumber = dynamicContactCheck(result.contact_number,'contact-number-message');
+      let temporaryContact = dynamicTempContactNumber(result.temp_contact_number,'temporary-contact-number-message');
+      let email = dynamicEmailCheck(result.email,'email-message');
       let aadhar = personalDetailAadharValidation(result.aadhar_number);
-      //let aadharPhoto1 = personalDetailAadharPhotoValidation(document.getElementById("aadhar-photo").value);
-
-      let address = personalDetailAddressValidation(result.permanent_address);
-      let country = personalDetailCountryValidation(result.nationality);
-      let tempContact = (result.temp_contact_number);
-      let tempemail = tempemailvalidation(result.temp_email);
+      let address = dynamicLengthCheck(result.permanent_address,'address-message');
+      let country = dynamicLengthCheck(result.nationality,'country-message');
+      let tempemail = dynamicTempEmail(result.temp_email,'temp-email-message');
       let pinvalid = dynamicPin(result.permanent_address_pincode, 'pincode-message');
       let cityvalid = dynamicLengthCheck(result.permanent_address_city,'city-message');
 
@@ -5079,7 +4806,6 @@
         country || !DOB || !tempemail || !gender || !pinvalid || !cityvalid) {
         return;
       }
-
 
       let personalDetailsData = {
         "insert_user_personal_details": {
@@ -5189,7 +4915,6 @@
         } else {
           genderValue = "Other"
         }
-        console.log(genderValue)
         document.getElementById('main-loader').classList.remove('d-none');
 
         let options = {
@@ -5219,7 +4944,6 @@
 
         })
       }, 1000)
-
     });
 
     document.querySelector('#personal-details-cancel-button').addEventListener('click', function (e) {
@@ -5276,10 +5000,6 @@
         let checkPercentile = qualificationDetailPercentageValidation(qualificationPercentile);
         // let checkCancelledCheque = qualificationDetailCertificateValidation(qualificationCertificate);
 
-        // console.log(qualificationCertificateImage)
-        console.log(checkPercentile)
-        // console.log(checkSubject)
-
         let qualificationCertificateSRC = qualificationRow[i].querySelector('.qualification-certificate-preview')
           .src
         //  to add the red border according to validations
@@ -5331,8 +5051,6 @@
           qualificationTitle1 = "PHD"
           qualification_type = 3
         }
-        console.log(qualificationTitle)
-        console.log(qualification_type)
 
         let qualificationvalue = false;
         if (qualificationStatus == 'true') {
@@ -5373,53 +5091,6 @@
 
           }
 
-
-
-          div += ` 
-          <div class="text-block right qualification-update" >
-                  <div class="card-body">
-                    <h2 id="year-of-passing">\${qualificationYear}\</h2>
-
-                    <div id="qualification-display-div" class=" px-3 px-sm-4 px-lg-4 mt-1">
-                      <div class="row">
-
-                        <div class="col-12 col-md-6 col-lg-6 col-sm-12">
-                          <div class="row pt-lg-3">
-                            <div class="col-6  col-md-6 ps-md-0 ps-0 ps-sm-0 col-lg-6 col-sm-6">
-                              <p class="h5 pb-1">Title :</p>
-                              <p class="h5 py-1">Major Subject :</p>
-                              <p class="h5 py-1">University :</p>
-                            </div>
-                            <div class="col-6 col-md-6 col-lg-6 col-sm-6">
-                              <p id="">\${qualificationTitle1}\</p>
-                              <p id="">\${qualificationSubject}\</p>
-                              <p id="">\${qualificationUniversity}\</p>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div class="col-12 col-md-6 col-lg-6 col-sm-12">
-                          <div class="row pt-lg-3">
-                            <div class="col-6 ps-lg-5 col-md-6 ps-md-0 ps-0 ps-sm-0 col-lg-6 col-sm-6">
-                              <p class="h5 pb-1">College</p>
-                              <p class="h5 py-1">percentage</p>
-                              <p class="h5 py-1">Certificate</p>
-                            </div>
-                            <div class="col-6 ps-md-0 ps-0 col-md-6 col-lg-6 col-sm-6">
-                              <p class="" id="">\${qualificationCollege}\</p>
-                              <p id="" class="">\${qualificationPercentile}\</p>
-                              <p ><i id="qualification-certificate-display" data-image = "\${qualificationCertificateSRC}" class="fa-solid fa-image text-success qualification-certificate-display"></i></p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                  `
-
-
-
           qualificationTableArray.push(object)
         }, 1000)
       }
@@ -5442,11 +5113,9 @@
         fetchRes.then(success => {
           if (success.status == 200) {
             document.getElementById('qualification-list').firstElementChild.remove()
-            document.getElementById('qualification-list').insertAdjacentHTML('beforeend', div)
             document.getElementById('body').classList.remove('d-none');
             document.querySelector('.qualification-modal').classList.add('d-none');
             document.getElementById('main-loader').classList.add('d-none');
-
             document.location.reload();
           } else {
             document.getElementById('main-loader').classList.add('d-none');
@@ -5605,7 +5274,6 @@
         vjstableelement[i].querySelector('.awardOrganizationType').classList.remove('input-border');
 
         let resume_achievement_lid1 = vjstableelement[i].dataset.awardlid;
-        console.log('resume_achievement_lid1', resume_achievement_lid1);
         let title = vjstableelement[i].querySelector('.awardName').value;
         let organization_name = vjstableelement[i].querySelector('.awardOrganization').value;
         let organization_type_lid = vjstableelement[i].querySelector('.awardOrganizationType').value;
@@ -5686,45 +5354,6 @@
 
 
           let recievedAwardDate = changeDateFormat(achievement_date)
-          div += `
-        <div id="award-display-div" class=" px-3 px-sm-4 px-lg-4 mt-1">
-                    <div class="row">
-
-                      <div class="col-12 col-md-6 col-lg-6 col-sm-12">
-                        <div class="row pt-lg-3">
-                          <div class="col-6  col-md-6 ps-md-0 ps-0 ps-sm-0 col-lg-6 col-sm-6">
-                            <p class="h5 pb-1">Award Name :</p>
-                            <p class="h5 py-1">organization :</p>
-                            <p class="h5 py-1">Organization Type :</p>
-
-                          </div>
-                          <div class="col-6 col-md-6 col-lg-6 col-sm-6">
-                            <p id="">\${title}\</p>
-                            <p id="">\${organization_name}</p>
-                            <p id="">\${organizationType1}\</p>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="col-12 col-md-6 col-lg-6 col-sm-12">
-                        <div class="row pt-lg-3">
-                          <div class="col-6 ps-lg-5 col-md-6 ps-md-0 ps-0 ps-sm-0 col-lg-6 col-sm-6">
-                            <p class="h5 pb-1">Description :</p>
-                            <p class="h5 pb-1">Recieved date :</p>
-                            <p class="h5 py-1">Certificate :</p>
-                          </div>
-                          <div class="col-6 ps-md-0 ps-0 col-md-6 col-lg-6 col-sm-6">
-                            <p class="" id="">\${description}\</p>
-                            <p class="" id="">\${recievedAwardDate}\</p>
-                            <p ><i id="award-certificate-display" data-image = "\${awardCertificateSRC}" class="fa-solid fa-image text-success award-certificate-display"></i></p>
-
-                          </div>
-                        </div>
-                      </div>
-
-                    </div>
-                  </div>
-                    `
 
           resume_achievement.push(obj);
         }, 1000)
@@ -5751,11 +5380,9 @@
 
             if (data.status == 200) {
               document.getElementById('award-preview-div').firstElementChild.remove()
-              document.getElementById('award-preview-div').insertAdjacentHTML('beforeend', div)
               document.getElementById('body').classList.remove('d-none');
               document.querySelector('.award-modal').classList.add('d-none');
               document.getElementById('main-loader').classList.add('d-none');
-
               document.location.reload();
             } else {
               document.getElementById('main-loader').classList.add('d-none');
@@ -5858,43 +5485,6 @@
           }
           publicationTableArray.push(object)
 
-
-          div += `   
-         <div class=" px-3 px-sm-4 px-lg-4 mt-1">
-                  <div class="row">
-                 <div class="col-12 col-md-6 col-lg-6 col-sm-12">
-                      <div class="row pt-lg-3">
-                        <div class="col-6  col-md-6 ps-md-0 ps-0 ps-sm-0 col-lg-6 col-sm-6">
-                          <p class="h5 pb-1">Role :</p>
-                          <p class="h5 py-1">No. of Authors :</p>
-                          <p class="h5 py-1">Book Title :</p>
-
-                        </div>
-                        <div class="col-6 col-md-6 col-lg-6 col-sm-6">
-                          <p id="">\${publicationRole}\</p>
-                          <p id="">\${publicationNumberOfAuthors}\ </p>
-                          <p id="">\${publicationBookTitle}\</p>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="col-12 col-md-6 col-lg-6 col-sm-12">
-                      <div class="row pt-lg-3">
-                        <div class="col-6 ps-lg-5 col-md-6 ps-md-0 ps-0 ps-sm-0 col-lg-6 col-sm-6">
-                          <p class="h5 pb-1">Publisher :</p>
-                          <p class="h5 pb-1">Publication Year:</p>
-                          <p class="h5 py-1">Certificate :</p>
-                        </div>
-                        <div class="col-6 ps-md-0 ps-0 col-md-6 col-lg-6 col-sm-6">
-                          <p class="" id="">\${publicationPublisher}\</p>
-                          <p class="" id="">\${publicationYearOfPublication}\</p>
-                          <p><i id="publication-certificate-display" data-image = "\${publicationCertificateSRC}" class="fa-solid fa-image text-success publication-certificate-display"></i></p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                  `
         }, 1000)
       }
 
@@ -5915,11 +5505,9 @@
         fetchRes.then(success => {
           if (success.status == 200) {
             document.getElementById('publication-appending-div').firstElementChild.remove()
-            document.getElementById('publication-appending-div').insertAdjacentHTML('beforeend', div)
             document.getElementById('body').classList.remove('d-none');
             document.querySelector('.publication-modal').classList.add('d-none');
             document.getElementById('main-loader').classList.add('d-none');
-
             document.location.reload();
           } else {
             document.getElementById('main-loader').classList.add('d-none');
@@ -5993,11 +5581,8 @@
 
     document.querySelector('#research-submit-button').addEventListener('click', function () {
 
-
-      console.log("research button clicked");
       let researchTableElem = document.querySelectorAll('.research-row');
       let noofrows = researchTableElem.length;
-      console.log("no of rows", noofrows);
       let resumeResearchTable = [];
       let div = ''
       for (let j = 0; j < noofrows; j++) {
@@ -6076,41 +5661,7 @@
           }
 
           console.log(JSON.stringify(obj))
-          div += `<div  class=" px-3 px-sm-4 px-lg-4 mt-1 ">
-                  <div class="row">
-
-                    <div class="col-12 col-md-6 col-lg-6 col-sm-12">
-                      <div class="row pt-lg-3">
-                        <div class="col-6  col-md-6 ps-md-0 ps-0 ps-sm-0 col-lg-6 col-sm-6">
-                          <p class="h5 py-1">Title :</p>
-                          <p class="h5 py-1">Volume year :</p>
-
-                        </div>
-                        <div class="col-6 col-md-6 col-lg-6 col-sm-6">
-                          <p id="">\${Journal_name}\</p>
-                          <p id="">\${volume_year}\</p>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="col-12 col-md-6 col-lg-6 col-sm-12">
-                      <div class="row pt-lg-3">
-                        <div class="col-6 ps-lg-5 col-md-6 ps-md-0 ps-0 ps-sm-0 col-lg-6 col-sm-6">
-                          <p class="h5 pb-1">Description :</p>
-                          <p class="h5 pb-1">Category :</p>
-                          <p class="h5 py-1">Certificate :</p>
-                        </div>
-                        <div class="col-6 ps-md-0 ps-0 col-md-6 col-lg-6 col-sm-6">
-                          <p class="" id="">\${description}\</p>
-                          <p class="" id="">\${category}\</p>
-                          <p><i id="research-certificate-display" data-image = "\${researchCertificateSRC}" class="fa-solid fa-image text-success research-certificate-display"></i></p>
-
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>                  
-        `
+        
           resumeResearchTable.push(obj);
         }, 1000)
       }
@@ -6133,11 +5684,9 @@
         fetchRes.then(success => {
           if (success.status == 200) {
             document.getElementById('research-appending-div').firstElementChild.remove()
-            document.getElementById('research-appending-div').insertAdjacentHTML('beforeend', div)
             document.getElementById('body').classList.remove('d-none');
             document.querySelector('.research-modal').classList.add('d-none');
             document.getElementById('main-loader').classList.add('d-none');
-
             document.location.reload();
           } else {
             document.getElementById('main-loader').classList.add('d-none');
@@ -6234,13 +5783,6 @@
         let checkYOP = yearcheck(professionalYOP);
         let checkCertification = tabledatacheck(professionalCertification);
 
-
-        console.log(checkCertificateName)
-        console.log(checkInstitution)
-        console.log(checkYOP)
-        // console.log(checkSubject)
-
-
         //  to add the red border according to validations
         if (checkCertificateName == false) {
           certificationRow[i].querySelector('.certification-certificate').classList.add('input-border');
@@ -6285,64 +5827,6 @@
             url_path: photoArray[i],
           }
 
-          div += `
-                  <div class="text-block right " id="preview-qualification-div">
-                    <div class="card-body preview-certification-div">
-
-                      <div  class=" px-3 px-sm-4 px-lg-4 mt-1">
-                        <div class="row">
-
-                          <div class="col-12 col-md-6 col-lg-6 col-sm-12">
-                            <div class="row pt-lg-3">
-                              <div class="col-6  col-md-6 ps-md-0 ps-0 ps-sm-0 col-lg-6 col-sm-6">
-                                <p class="h5 pb-1">Certification name:</p>
-                              </div>
-                              <div class="col-6 col-md-6 col-lg-6 col-sm-6">
-                                <p id="">\${professionalCertificateName}\</p>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="col-12 col-md-6 col-lg-6 col-sm-12">
-                            <div class="row pt-lg-3">
-                              <div class="col-6 ps-lg-6 col-md-6 ps-md-0 ps-0 ps-sm-0 col-lg-6 col-sm-6">
-                                <p class="h5 pb-1">Institution :</p>
-                              </div>
-                              <div class="col-6 ps-md-0 ps-0 col-md-6 col-lg-6 col-sm-6">
-                                <p class="" id="">\${professionalInstitution}\</p>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="col-12 col-md-6 col-lg-6 col-sm-12">
-                            <div class="row pt-lg-3">
-                              <div class="col-6  col-md-6 ps-md-0 ps-0 ps-sm-0 col-lg-6 col-sm-6">
-                                <p class="h5 pb-1">Recieved Year:</p>
-                              </div>
-                              <div class="col-6 col-md-6 col-lg-6 col-sm-6">
-                                <p id="">\${professionalYOP}\</p>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="col-12 col-md-6 col-lg-6 col-sm-12">
-                            <div class="row pt-lg-3">
-                              <div class="col-6  col-md-6 ps-md-0 ps-0 ps-sm-0 col-lg-6 col-sm-6">
-                                <p class="h5 pb-1">Certificate:</p>
-                              </div>
-                              <div class="col-6 col-md-6 col-lg-6 col-sm-6">
-                                <p id=""><i class="fa-solid fa-image text-success"></i></p>
-                              </div>
-                            </div>
-                          </div>
-
-                        </div>
-                      </div>
-
-                    </div>
-                  </div>
-                 `
-
           certificationTableArray.push(object)
         }, 1000)
       }
@@ -6364,11 +5848,9 @@
         fetchRes.then(success => {
           if (success.status == 200) {
             document.getElementById('certification-appending-div').firstElementChild.remove()
-            document.getElementById('certification-appending-div').insertAdjacentHTML('beforeend', div)
             document.getElementById('body').classList.remove('d-none');
             document.querySelector('.certification-modal').classList.add('d-none');
             document.getElementById('main-loader').classList.add('d-none');
-
             document.location.reload();
           } else {
             document.getElementById('main-loader').classList.add('d-none');
@@ -6525,7 +6007,6 @@
 
 
       let flag3 = document.getElementById('bank-account-type').value
-      console.log(flag3)
       if (flag3 == 1) {
         accountType1 = "Current Account"
       } else if (flag3 == 2) {
@@ -6549,13 +6030,11 @@
       submitBankDetailsForm.append('cancelledCheckPhoto', document.getElementById('cancelled_cheque_Photo').value)
 
       clearError();
+      let facultyIfscCode1 = dynamicLengthCheck(submitBankDetailsForm.get('ifscCode'),'bank-ifsc-code-message');
+      let facultyBankName1 = dynamicLengthCheck(submitBankDetailsForm.get('bankName'),'bank-name-message');
+      let facultyBankBranch1 = dynamicLengthCheck(submitBankDetailsForm.get('branchName'),'bank-branch-message');
+      let facultyAccountNumber1 = dynamicBankAcountNumber(submitBankDetailsForm.get('accountNumber'),'bank-account-number-message');
 
-      let facultyBankName1 = bankDetailBankNameValidation(submitBankDetailsForm.get('bankName'))
-      let facultyBankBranch1 = bankDetailBankBranchValidation(submitBankDetailsForm.get('branchName'))
-      //let facultyIfscCode1 = bankDetailIfscCodeValidation(submitBankDetailsForm.get('ifscCode'))
-      //let facultyMicrCode1 = bankDetailMicrCodeValidation(submitBankDetailsForm.get('micrCode'))
-      let facultyAccountNumber1 = bankDetailAccountNumberValidation(submitBankDetailsForm.get('accountNumber'))
-      //let facultyCancelledCheque = bankDetailCancelledChequeValidation(submitBankDetailsForm.get('cancelledCheckPhoto'))
 
       if (!facultyBankName1 || !facultyBankBranch1|| !facultyAccountNumber1) {
         return;
@@ -6626,7 +6105,6 @@
 
 
     document.querySelector('#skills-modal-cancel-button').addEventListener('click', function () {
-      console.log('OK!')
       document.getElementById('body').classList.remove('d-none');
       document.querySelector('.skills-modal').classList.add('d-none');
       document.querySelector("#add-custom-soft-skill").outerHTML = "";
@@ -6672,7 +6150,6 @@
         let value = hardSkillListGroup[i].dataset.id
         let status = hardSkillListGroup[i].dataset.status
         let value2 = hardSkillListGroup[i].firstElementChild.lastElementChild.lastElementChild.innerText
-        console.log(value2)
 
         if (status == 1) {
           let obj = {}
@@ -6995,7 +6472,6 @@
       let div = ''
       let workexperienceTableArray = []
       let workexperienceRow = document.querySelectorAll('.workexperience-row')
-      console.log(workexperienceRow)
 
       for (i = 0; i < workexperienceRow.length; i++) {
 
@@ -7021,8 +6497,6 @@
         let workexperienceStartDate = workexperienceRow[i].querySelector('.start-date').value;
         let workexperienceEndDate = workexperienceRow[i].querySelector('.end-date').value;
 
-        console.log('ID', workexperienceDesignationTypeLID);
-        console.log('Name', workexperienceDesignationType);
         let checkWorkExp = tabledatacheck(workexperienceType);
         let checkUniversity = tabledatacheck(workexperienceUniversity);
         let checkSubjetTaught = tabledatacheck(workexperienceSubjectTaught);
@@ -7125,7 +6599,6 @@
       let div = ''
       let workexperienceTableArray = []
       let workexperienceRow = document.querySelectorAll('.workexperience-row')
-      console.log(workexperienceRow)
 
       for (i = 0; i < workexperienceRow.length; i++) {
 
@@ -7150,7 +6623,6 @@
         let workexperienceOther = workexperienceRow[i].querySelector('.other').value;
         let workexperienceStartDate = workexperienceRow[i].querySelector('.start-date').value;
         let workexperienceEndDate = workexperienceRow[i].querySelector('.end-date').value;
-        console.log(resume_workexperience_lid)
 
         let checkWorkExp = tabledatacheck(workexperienceType);
         let checkUniversity = tabledatacheck(workexperienceUniversity);
@@ -7517,7 +6989,6 @@
       }
 
       if ((startDateInput.value).length != 0 && (endDateInput.value).length != 0) {
-        console.log(diffDays)
         durationValue.value = diffyears 
       }
 
@@ -7536,13 +7007,11 @@
       }
 
       if (target.classList.contains("workexperience-li")) {
-        console.log('target', target)
         let id = target.dataset.id;
         let name = target.dataset.name;
         designationInput.value = name;
         designationInput.dataset.id = id;
         designationInput.dataset.name = name;
-        console.log('value', name + id);
         designationType.classList.add("d-none");
       }
 
@@ -7760,13 +7229,11 @@
       }
 
       if (target.classList.contains("workexperience-li")) {
-        console.log('target', target)
         let id = target.dataset.id;
         let name = target.dataset.name;
         designationInput.value = name;
         designationInput.dataset.id = id;
         designationInput.dataset.name = name;
-        console.log('value', name + id);
         designationType.classList.add("d-none");
       }
 
@@ -8069,7 +7536,6 @@
           type: 'POST',
           dataType: 'json',
           success: function (response) {
-            console.log(response)
             console.log(response.value)
             for (let desig of response) {
               schoolType +=
@@ -8095,7 +7561,6 @@
     let schoolType = ` `
     let schoolList = 1;
     document.querySelector('.select-school').addEventListener('click', function () {
-      console.log("select button has been clicked")
 
       if (schoolList == 1) {
         $.ajax({
@@ -8103,7 +7568,6 @@
           type: 'GET',
           dataType: 'json',
           success: function (response) {
-            console.log(response)
             console.log(response.value)
             for (let desig of response) {
               schoolType +=
@@ -8160,20 +7624,17 @@
       }
 
       if (e.target.classList.contains("school-type-li") || findClosest(e.target,'school-type-li')) {
-        console.log('target', e.target)
         let id = e.target.classList.contains("school-type-li") ? e.target.dataset.id : e.target.parentElement.dataset.id;
         let name = e.target.classList.contains("school-type-li") ? e.target.dataset.name : e.target.parentElement.dataset.name
         document.querySelector('.school-type-input').value = name;
         document.querySelector('.school-type-input').dataset.id = id;
         document.querySelector('.school-type-input').dataset.name = name;
-        console.log('value', name + id);
         document.getElementById('school-list').classList.add("d-none");
       }
 
     })
 
     document.querySelector('#create-application-cancel-button').addEventListener('click', function () {
-      console.log("cancel button has been clicked")
       document.getElementById('body').classList.remove('d-none');
       document.getElementById('create-application-modal').classList.add("d-none")
     })
@@ -8201,8 +7662,6 @@
         let org_ID = document.querySelector('.school-type-input').dataset.id
         const application_lid = urlParams.get('application_lid')
         const organization_lid = urlParams.get('organization_lid')
-
-        console.log("ORGANIZATION LIDD>>>>>>>>>",org_ID)
 
         let object = {}
         object.resume_lid = resume_lid
