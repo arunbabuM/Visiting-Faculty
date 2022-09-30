@@ -549,4 +549,10 @@ public class userDao implements UserDaoInterface {
         return jdbcCall.executeFunction(Object.class, data);
     }
 
+    @Override
+    public int getSchoolName(int id) {
+        String sql = "SELECT name FROM organization where organization_id = ?";
+        return jdbcTemplate.update(sql, id);
+    }
+
 }
