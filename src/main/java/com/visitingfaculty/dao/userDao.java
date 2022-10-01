@@ -254,7 +254,7 @@ public class userDao implements UserDaoInterface {
     @Transactional
     public int insertUser(User user) {
 
-        String sql = "insert into public.user( user_id , password_hash) values( ? , ? )";
+        String sql = "insert into public.user( user_id , password_hash , email) values( ? , ? , ? )";
         String sql2 = "insert into user_role( user_lid , role_lid) values( ? , ? )";
 
         KeyHolder holder = new GeneratedKeyHolder();
@@ -264,6 +264,7 @@ public class userDao implements UserDaoInterface {
                 PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
                 ps.setString(1, user.getUser_id());
                 ps.setString(2, user.getPassword_hash());
+                ps.setString(3, user.getEmail());
                 return ps;
             }
         }, holder);
@@ -366,9 +367,9 @@ public class userDao implements UserDaoInterface {
     @Override
     public User getUserByResume(int id) {
 
-        String sql = "SELECT u.id,u.user_id,u.password_hash FROM PUBLIC.user u INNER JOIN resume r ON r.user_lid = u.id WHERE r.id=?";
+        String sql = "SELECT u.id,u.email,u.user_id,u.password_hash FROM PUBLIC.user u INNER JOIN resume r ON r.user_lid = u.id WHERE r.id=?";
         User user = jdbcTemplate.queryForObject(sql, (rs, rownum) -> {
-            return new User(rs.getInt("id"), rs.getString("user_id"), rs.getString("password_hash"));
+            return new User(rs.getInt("id"), rs.getString("user_id"), rs.getString("password_hash"),rs.getString("email"));
         }, id);
         return user;
     }
@@ -488,8 +489,7 @@ public class userDao implements UserDaoInterface {
         JSONArray array = jsonString.getJSONArray("create_job_application");
         int resume_lid = array.getJSONObject(0).getInt("resume_lid");
         int organization_lid = array.getJSONObject(0).getInt("organization_lid");
-        boolean active = array.getJSONObject(0).getBoolean("active");
-        int rows = jdbcTemplate.update(sql, resume_lid, organization_lid, active);
+        int rows = jdbcTemplate.update(sql, resume_lid, organization_lid, false);
 
         if (rows ==  1) {
             String sql2 = "	SELECT ui.email FROM user_application ua INNER JOIN user_info ui ON ua.resume_lid = ui.resume_lid AND ua.resume_lid = ?  LIMIT 1";
@@ -508,6 +508,15 @@ public class userDao implements UserDaoInterface {
 
         SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
                 .withFunctionName("update_application");
+
+        return jdbcCall.executeFunction(Object.class, user_id);
+    }
+
+    @Override
+    public Object insertApplication(String user_id) {
+
+        SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
+                .withFunctionName("insert_application");
 
         return jdbcCall.executeFunction(Object.class, user_id);
     }
@@ -565,11 +574,20 @@ public class userDao implements UserDaoInterface {
     }
 
     @Override
+
+    public Object getExpperfoma(String data) {
+       
+        SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
+                .withFunctionName("get_application_resume_experience");
+
+        return jdbcCall.executeFunction(Object.class, data);
+
     public Object getCommments(int id) {
          SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
                 .withFunctionName("get_comments");
 
         return jdbcCall.executeFunction(Object.class, id);
+
     }
 
 }
