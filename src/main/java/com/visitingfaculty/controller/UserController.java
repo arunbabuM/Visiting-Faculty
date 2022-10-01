@@ -117,6 +117,7 @@ public class UserController {
         String user_id = (String) httpSession.getAttribute("user_id");
         if (user_id != null) {
             m.addAttribute("level", httpSession.getAttribute("level"));
+            m.addAttribute("user_id", httpSession.getAttribute("user_id"));
             m.addAttribute("organization_lid", httpSession.getAttribute("organization_lid"));
             return "performa-page";
         }

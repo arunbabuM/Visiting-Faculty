@@ -373,4 +373,17 @@ public class UserRestController {
         return null;
     }
 
+    @PostMapping("/get-comments")
+    public Object getComments(@RequestBody String data) {
+        JSONObject obj = new JSONObject(data);
+        int proforma_lid = Integer.parseInt(obj.getString("proforma_lid"));
+
+        Object dataFromDb = userDaoInterface.getCommments(proforma_lid);
+
+        if(dataFromDb != null) {
+            return dataFromDb;
+        }
+        return null;
+    }
+
 }

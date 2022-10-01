@@ -127,5 +127,7 @@ public interface UserDaoInterface {
 
     Object getStatusList(String data);
 
+    Object getCommments(int proforma_lid);
+
     List<SchoolList> getAllSchools(int user_lid);
 }

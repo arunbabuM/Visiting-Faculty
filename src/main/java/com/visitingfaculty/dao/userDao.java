@@ -564,4 +564,12 @@ public class userDao implements UserDaoInterface {
         return jdbcTemplate.update(sql, id);
     }
 
+    @Override
+    public Object getCommments(int id) {
+         SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
+                .withFunctionName("get_comments");
+
+        return jdbcCall.executeFunction(Object.class, id);
+    }
+
 }
