@@ -120,10 +120,14 @@ public interface UserDaoInterface {
     Object getQualPerformer(String data);
 
     Object updateApplication(String data);
+
+    Object insertApplication(String data);
     
     Object updateproforma(String data);
 
     Object getStatusList(String data);
 
     List<SchoolList> getAllSchools(int user_lid);
+
+    Object getExpperfoma(String data);
 }

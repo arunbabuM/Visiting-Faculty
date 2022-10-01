@@ -354,23 +354,39 @@ function personalDetailPancardPhotoValidation(res) {
   return condition;
 }
 
+// function personalDetailAadharValidation(res) {
+//   if (res.length>0){
+//   if (res.length != 12) {
+//     document.getElementById('aadhar-number-message').innerHTML = "Invalid Adhar Number";
+//     condition = false;
+//   } else {
+//     for (let i = 0; i < res.length; i++) {
+//       if (res[i] < '0' || res[i] > '9') {
+//         condition = false;
+//         document.getElementById('aadhar-number-message').innerHTML = "Special Character not allowed";
+//         break;
+//       } else {
+//         condition = true;
+//       }
+//     }
+//   }
+//   condition = false;
+// }
+//   return condition;
+// }
+
 function personalDetailAadharValidation(res) {
+  let condition = true;
   if (res.length>0){
-  if (res.length != 12) {
+  if (res.length == 12) 
+  {    
+    condition = true;
+  }
+  else
+  {
     document.getElementById('aadhar-number-message').innerHTML = "Invalid Adhar Number";
     condition = false;
-  } else {
-    for (let i = 0; i < res.length; i++) {
-      if (res[i] < '0' || res[i] > '9') {
-        condition = false;
-        document.getElementById('aadhar-number-message').innerHTML = "Special Character not allowed";
-        break;
-      } else {
-        condition = true;
-      }
-    }
-  }
-  condition = false;
+  } 
 }
   return condition;
 }

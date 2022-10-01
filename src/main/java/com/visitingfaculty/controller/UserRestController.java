@@ -260,7 +260,7 @@ public class UserRestController {
         System.out.println(data);
         String role = (String) httpSession.getAttribute("role");
         System.out.println(role);
-        if(role.equals("USER")){
+        if(role.equals("User")){
             dataFromDb = userDaoInterface.updateApplication(data);
         } else { 
             // dataFromDb = userDaoInterface.createJobApplicationByAdmin(data);
@@ -276,7 +276,7 @@ public class UserRestController {
     @PostMapping("/update-job-application")
     public ResponseEntity<?> updateJobApplication(@RequestBody String data ,HttpSession httpSession) {
 
-  
+        System.out.println("DATA>>>>>>>>" + data);
            Object dataFromDb = userDaoInterface.updateApplication(data);
 
         if (dataFromDb == null) {
@@ -301,6 +301,7 @@ public class UserRestController {
             String password_hash = passwordService.encodePassword(data.getPassword());
             user.setPassword_hash(password_hash);
             user.setUser_id(data.getUser_id());
+            user.setEmail(data.getEmail());
             System.out.println(user.getPassword_hash());
             userDaoInterface.insertUser(user);
             return ResponseEntity.status(HttpStatus.OK).build();

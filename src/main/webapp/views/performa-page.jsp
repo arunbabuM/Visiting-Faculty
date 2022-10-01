@@ -90,6 +90,31 @@
             </div>
         </div>
 
+        <!-- <div class="modal fade" id="proforma-approval-modal" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Comment for Proforma Approval</h5>
+                        <button type="button" style="border: none;" class="close2 modal2-cancel-button"
+                            data-dismiss="modal" aria-label="Close">
+                            <span class="close2" aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="proforma-approval-body container" style="width: auto;">
+                        <select class="form-select status-select form-select-lg mb-3">  
+                          </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="close2 btn btn-secondary modal2-cancel-button"
+                            data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-success proforma-approval-submit-btn"
+                            data-dismiss="modal">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+
    
 
         <div class="main-content">
@@ -309,8 +334,7 @@
                 schoolArray.push(desig.organization_id)
 
                 schoolType +=
-                `<option class="school-option col-md-10 col-sm-10 col-12" value="\${desig.organization_id}" data-name="\${desig.name}"  >\${desig.name}
-                </option>`
+                `<option class="school-option col-md-10 col-sm-10 col-12" value="\${desig.organization_id}" data-name="\${desig.name}"  >\${desig.name}</option>`
             }
             document.querySelector('.school-select').insertAdjacentHTML('beforeend', schoolType);
           },
@@ -321,17 +345,10 @@
         schoolList++
       }
 
-
-        let graduation = 1;
-        let masters = 1;
-        let phd = 1;
         document.querySelector('.perfoma-table').addEventListener('click', function (e) {
 
-
-            //For Graduation Modal
             if (e.target.classList.contains('qual-btn')) {
 
-                console.log('click')
                 let obj = {
                     "get_application_qualification": []
                 }
@@ -505,6 +522,7 @@
                     }
                  })
             }
+
             
             if (e.target.classList.contains('close1') || e.target.classList.contains('fa-times')) {
                 document.querySelector('.card').remove()
@@ -584,8 +602,8 @@
                     <td><button data-qual="\${performerinfo.application_lid}" data-id = "1" data-toggle="modal" data-target=".bd-example-modal-lg" type="button" class="qual-btn btn btn-outline-primary text-dark">Graduate</button> </td>
                     <td><button data-qual="\${performerinfo.application_lid}" data-id = "2" data-toggle="modal" data-target=".bd-example-modal-lg" type="button" class="qual-btn btn btn-outline-primary text-dark">Masters</button></td>
                     <td><button data-qual="\${performerinfo.application_lid}" data-id = "3" data-toggle="modal" data-target=".bd-example-modal-lg" type="button" class="qual-btn btn btn-outline-primary text-dark">PHD</button></td>
-                    <td>\${performerinfo.teaching_exp}</td>
-                    <td>\${performerinfo.industrial_exp}</td>
+                    <td><button data-qual="\${performerinfo.application_lid}" data-exp = "4" class="btn btn-outline-primary text-dark exp-btn"> \${performerinfo.teaching_exp}</button></td>
+                    <td><button data-qual="\${performerinfo.application_lid}" data-exp = "5" class="btn btn-outline-primary text-dark exp-btn"> \${performerinfo.industrial_exp}</button></td>
                     <td>\${performerinfo.total_exp}</td>
                     <td>\${performerinfo.module}</td>
                     <td>\${performerinfo.program_name}</td>
@@ -607,10 +625,6 @@
             }
             document.querySelector('.performer-view').innerHTML =  view;
         }
-
-
-
-
                 },
                 error: function (error) {
                     console.log("error", error)

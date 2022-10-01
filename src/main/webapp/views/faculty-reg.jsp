@@ -312,6 +312,7 @@
       }
       let regObj = {
         user_id: panCard,
+        email : email,
         password: password
       }
       let options = {
