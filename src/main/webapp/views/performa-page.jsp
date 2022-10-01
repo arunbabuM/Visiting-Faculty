@@ -291,7 +291,7 @@
                             <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalLongTitle">Details</h5>
                                 <button type="button" class="btn btn-secondary btn btn-danger close1"
-                                    data-dismiss="modal"><i class="fa fa-times btn btn-danger"
+                                    data-dismiss="modal"><i class="fa close1 fa-times btn btn-danger"
                                         aria-hidden="true"></i></button>
                             </div>
                             <div class="modal-body qualification-div">
@@ -634,7 +634,7 @@
                 })
             }
 
-            if (e.target.classList.contains('close1') || e.target.classList.contains('fa-times')) {
+            if (e.target.classList.contains('close1')) {
                 document.querySelector('.card').remove()
                 $(".qualification-display").modal("toggle");
             }
