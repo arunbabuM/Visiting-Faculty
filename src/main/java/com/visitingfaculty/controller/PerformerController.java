@@ -45,4 +45,12 @@ public class PerformerController
         Object perfomaqual = userDaoInterface.getQualPerformer(data);
         return perfomaqual;
     }
+
+    @PostMapping(value="/get-experience")
+    public Object performerexp(@RequestBody String data)
+    {
+        System.out.println("data : "+data);
+        Object perfomaexp = userDaoInterface.getExpperfoma(data);
+        return perfomaexp;
+    }
 }

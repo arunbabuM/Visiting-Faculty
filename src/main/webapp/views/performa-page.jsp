@@ -122,6 +122,7 @@
             </div>
         </div>
 
+
         <div class="modal fade" id="comments-modal" tabindex="-1" role="dialog"
             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -144,7 +145,8 @@
                     </div>
                 </div>
             </div>
-        </div>
+
+        </div> -->
 
 
 
@@ -354,6 +356,7 @@
         let schoolList = 1;
         let schoolArray = []
 
+
         function getAllProforma() {
             if (schoolList == 1) {
                 $.ajax({
@@ -381,6 +384,7 @@
                     }
                 })
                 schoolList++
+
             }
 
             //   let proformaObject = {"get_all_proforma" : []}
@@ -432,10 +436,6 @@
                         }
                         document.querySelector('.performer-view').innerHTML = view;
                     }
-
-
-
-
                 },
                 error: function (error) {
                     console.log("error", error)
@@ -447,13 +447,11 @@
         let graduation = 1;
         let masters = 1;
         let phd = 1;
+
         document.querySelector('.perfoma-table').addEventListener('click', function (e) {
 
-
-            //For Graduation Modal
             if (e.target.classList.contains('qual-btn')) {
 
-                console.log('click')
                 let obj = {
                     "get_application_qualification": []
                 }
@@ -634,6 +632,7 @@
                 })
             }
 
+
             if (e.target.classList.contains('close1') || e.target.classList.contains('fa-times')) {
                 document.querySelector('.card').remove()
                 $(".qualification-display").modal("toggle");
@@ -695,6 +694,7 @@
                     "organization_lid": organization_lid
                 }
                 objArray.proforma_details.push(obj)
+
 
                 $.ajax({
                     url: '${pageContext.request.contextPath}/performer-view',
@@ -796,6 +796,7 @@
             if(e.target.classList.contains('comments-cancel-button')){
 
                 $('#comments-modal').modal('toggle')
+
 
             }
         })
