@@ -333,11 +333,6 @@ public class UserRestController {
     public ResponseEntity<?> getSchoolName(@RequestBody int organizationId) {
         
        userDaoInterface.getSchoolName(organizationId);
-    //    int dataFromDb = 
-    //    if(dataFromDb == 1) {
-    //         
-    //     }
-    //     return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
            return ResponseEntity.status(HttpStatus.OK).build();
     }
 
