@@ -117,8 +117,21 @@ public class UserController {
         String user_id = (String) httpSession.getAttribute("user_id");
         if (user_id != null) {
             m.addAttribute("level", httpSession.getAttribute("level"));
+            m.addAttribute("user_id", httpSession.getAttribute("user_id"));
             m.addAttribute("organization_lid", httpSession.getAttribute("organization_lid"));
             return "performa-page";
+        }
+        return "redirect:/login#session-timeout";
+    }
+
+    @GetMapping("/proforma-report")
+    public String viewPerforma(Model m) {
+        String user_id = (String) httpSession.getAttribute("user_id");
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>entered inside view page");
+        if (user_id != null) {
+            m.addAttribute("level", httpSession.getAttribute("level"));
+            m.addAttribute("organization_lid", httpSession.getAttribute("organization_lid"));
+            return "proforma-report";
         }
         return "redirect:/login#session-timeout";
     }

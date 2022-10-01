@@ -125,7 +125,11 @@ public interface UserDaoInterface {
     
     Object updateproforma(String data);
 
+    Object getAllProforma(String data);
+
     Object getStatusList(String data);
+
+    Object getCommments(int proforma_lid);
 
     List<SchoolList> getAllSchools(int user_lid);
 

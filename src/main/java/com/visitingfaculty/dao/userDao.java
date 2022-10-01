@@ -559,18 +559,35 @@ public class userDao implements UserDaoInterface {
     }
 
     @Override
+    public Object getAllProforma(String data) {
+       
+        SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
+                .withFunctionName("get_all_proforma");
+
+        return jdbcCall.executeFunction(Object.class, data);
+    }
+
+    @Override
     public int getSchoolName(int id) {
         String sql = "SELECT name FROM organization where organization_id = ?";
         return jdbcTemplate.update(sql, id);
     }
 
     @Override
+
     public Object getExpperfoma(String data) {
        
         SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
                 .withFunctionName("get_application_resume_experience");
 
         return jdbcCall.executeFunction(Object.class, data);
+
+    public Object getCommments(int id) {
+         SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
+                .withFunctionName("get_comments");
+
+        return jdbcCall.executeFunction(Object.class, id);
+
     }
 
 }
