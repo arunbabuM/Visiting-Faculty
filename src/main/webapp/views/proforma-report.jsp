@@ -64,58 +64,6 @@
     <main class="main">
         <jsp:include page="header.jsp" />
 
-
-        <div class="modal fade" id="proforma-approval-modal" tabindex="-1" role="dialog"
-            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Comment for Proforma Approval</h5>
-                        <button type="button" style="border: none;" class="close2 modal2-cancel-button"
-                            data-dismiss="modal" aria-label="Close">
-                            <span class="close2" aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="proforma-approval-body container" style="width: auto;">
-                        <select class="form-select status-select form-select-lg mb-3">
-                        </select>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="close2 btn btn-secondary modal2-cancel-button"
-                            data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-success proforma-approval-submit-btn"
-                            data-dismiss="modal">Submit</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="modal fade" id="comments-modal" tabindex="-1" role="dialog"
-            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Comment for Proforma Approval</h5>
-                        <button type="button" style="border: none;" class="comments-cancel-button"
-                            data-dismiss="modal" aria-label="Close">
-                            <span class="comments-cancel-button" aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="comments-body container" style="width: auto;">
-                       
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger comments-cancel-button"
-                            data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-success comments-submit-btn"
-                            data-dismiss="modal">Submit</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-
         <div class="main-content">
 
             <div class="col-md-9 text-center pt-4" id="select-div" style="margin: auto;">
@@ -232,7 +180,6 @@
                             <th rowspan="2">Total Points</th>
                             <th rowspan="2">Comments</th>
                             <th rowspan="2">Status</th>
-                            <th rowspan="2">Action</th>
                         </tr>
                         <tr>
                             <th>Graduate</th>
@@ -328,16 +275,16 @@
                     async: false,
                     contentType: false,
                     success: function (response) {
-                        
+                        console.log(response)
+                        console.log(response.value)
+                        let schoolObject = {}
                         for (let desig of response) {
-                            let schoolObject = {"organization_lid" : desig.organization_id};
-                            console.log(desig.organization_id)
-                            // schoolObject.organization_lid = desig.organization_id;
+                            schoolObject.organization_lid = desig.organization_id;
                             schoolArray.push(schoolObject);
 
                             schoolType +=
                                 `<option class="school-option col-md-10 col-sm-10 col-12" value="\${desig.organization_id}" data-name="\${desig.name}">\${desig.name}
-                                 </option>`
+                </option>`
                         }
                         document.querySelector('.school-select').insertAdjacentHTML('beforeend',
                         schoolType);
@@ -365,6 +312,7 @@
                     performerinfoobj = data;
 
                     if (performerinfoobj.proforma_details != null) {
+                        console.log(performerinfoobj)
                         let view = ``
                         for (performerinfo of performerinfoobj.proforma_details) {
                             view += `
@@ -390,9 +338,8 @@
                     <td>1</td>
                     <td>\${performerinfo.aol_obe}</td>
                     <td>\${performerinfo.max_points}</td>
-                    <td><button data-id = "\${performerinfo.proforma_id}" data-toggle="modal" type="button" class="comments-btn btn btn-outline-primary text-dark">Comments</button></td>
+                    <td>Comments</td>
                     <td>Pending</td>
-                    <td><i data-id="\${performerinfo.proforma_id}" class="fa-solid fa-fast-forward approval-btn" title="Send for Approval"></i></td>
                 <tr>
                 `
                         }
@@ -561,89 +508,12 @@
 
         document.querySelector('.main').addEventListener('click', function (e) {
 
-            if (e.target.classList.contains('approval-btn')) {
-                proformaid = e.target.dataset.id
-                console.log("LEVEL>>>>>>>>>>", '${level}')
-                let statusObject = {
-                    "get_status_list": []
-                }
-                let object = {}
-                object.proforma_lid = proformaid;
-                object.level = '${level}';
-                statusObject.get_status_list.push(object)
-                console.log(JSON.stringify(statusObject))
-
-                $.ajax({
-                    url: '${pageContext.request.contextPath}/get-status-list',
-                    type: 'POST',
-                    data: JSON.stringify(statusObject),
-                    contentType: false,
-                    success: function (response) {
-                        let selectOptions = JSON.parse(response.value)
-                        $('#proforma-approval-modal').modal('toggle');
-                        let commentbox =
-                            `<textarea class="textarea proforma-comment container" data-id="\${proformaid}" cols="50" rows="5"></textarea>`;
-                        let options = `<option value="0" selected>Select Status</option>`
-                        for (let option of selectOptions.status_list) {
-                            options += `<option value="\${option.id}">\${option.name}</option>`
-                        }
-                        let card = document.querySelector('.proforma-approval-body').querySelector(
-                            'textarea')
-                        card == null ? '' : card.remove()
-                        document.querySelector('.proforma-approval-body').insertAdjacentHTML(
-                            'afterbegin', commentbox)
-                        document.querySelector('.status-select').innerHTML = options
-                    },
-                    error: function (error) {
-                        console.log(error);
-                    }
-                })
-            }
-
             if (e.target.classList.contains('close1') || e.target.classList.contains('fa-times')) {
                 document.querySelector('.card').remove()
                 $(".qualification-display").modal("toggle");
             }
-            if (e.target.classList.contains('close2')) {
-                document.querySelector('.proforma-approval-body').firstElementChild.remove()
-                $("#proforma-approval-modal").modal("toggle");
-            }
-            if (e.target.classList.contains('proforma-approval-submit-btn')) {
+         
 
-                document.querySelector('.status-select').classList.remove('border-danger');
-
-                let proformaArray = {
-                    "insert_proforma_status": []
-                }
-
-                let objectData = {}
-                objectData.proforma_lid = document.querySelector('.proforma-comment').dataset.id
-                objectData.level = '${level}'
-                objectData.comment = document.querySelector('.proforma-comment').value
-                objectData.status_lid = document.querySelector('.status-select').value
-                if (objectData.status_lid < 1 || objectData.status_lid > 4) {
-                    document.querySelector('.status-select').classList.add('border-danger');
-                    return;
-                }
-                proformaArray.insert_proforma_status.push(objectData);
-
-                $.ajax({
-                    url: '${pageContext.request.contextPath}/proforma-approval',
-                    type: 'POST',
-                    data: JSON.stringify(proformaArray),
-                    contentType: false,
-                    success: function (response) {
-
-                        console.log("Success");
-                        location.reload()
-                    },
-                    error: function (err) {
-
-                        console.log("Error");
-                    }
-
-                })
-            }
 
             if (e.target.classList.contains('school-select')) {
                 let objArray = {
@@ -695,11 +565,10 @@
                     <td>\${performerinfo.rate_per_hours * performerinfo.total_no_of_hrs_alloted}</td>
                     <td><button data-pan-no="\${performerinfo.pancard_no}" class="btn btn-outline-primary feedback-btn">Feedback</button></td>
                     <td>1</td>
-                    <td>\${performerinfo.aol_obe}</td>
+                    <td>\${performerinfo.aol_obe}</td>}
                     <td>\${performerinfo.max_points}</td>
                     <td>Comments</td>
                     <td>Pending</td>
-                    <td><i data-id="\${performerinfo.proforma_id}" class="fa-solid fa-fast-forward approval-btn" title="Send for Approval"></i></td>
                 <tr>
                 `
                             }
@@ -715,25 +584,13 @@
                     }
                 });
             }
-
-            //
-            if(e.target.classList.contains('comments-btn')){
-
-                $('#comments-modal').modal('toggle')
-
-            }
-            if(e.target.classList.contains('comments-cancel-button')){
-
-                $('#comments-modal').modal('toggle')
-
-            }
         })
 
         if(Number.parseInt("${level}") > 2){
             document.getElementById('select-div').classList.add('d-none');
             
         }
-
+        
     </script>
 </body>
 

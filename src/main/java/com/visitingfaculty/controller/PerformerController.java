@@ -30,6 +30,14 @@ public class PerformerController
         return perfomaView;
     }
 
+    @PostMapping(value="/get-all-proforma")
+    public Object getAllProforma(@RequestBody String data)
+    {
+        System.err.println(data);
+        Object perfomaView = userDaoInterface.getAllProforma(data);
+        return perfomaView;
+    }
+
     @PostMapping(value="/get-qual")
     public Object performerqual(@RequestBody String data)
     {

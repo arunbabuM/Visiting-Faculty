@@ -70,7 +70,7 @@
 
               <div class="col-md-4 col-sm-12">
                 <div class="form-group">
-                  <label for="first-name" cl>First Name <span class="required">*</span></label>
+                  <label for="first-name" >First Name <span class="required">*</span></label>
                   <span id="first-name-message" style="color: red;" class="error"></span>
                   <input type="text" class="form-control" name="f_name" id="first-name" placeholder="First Name">
                 </div>
@@ -7414,52 +7414,6 @@
       }
     })
 
-    //     document.querySelector('.workExperience-row').addEventListener('change', function (e) {
-    //       let target = e.target;
-    //       if (target.classList.contains('workExperience-Type')) {
-    //         let closestParent = findClosest(e.target, 'workExperience-row').querySelector('.padagogy');
-    //         let universityOrOrg = findClosest(e.target, 'workExperience-row').querySelector('.universityOrOrg');
-    //         let responseOrSubjetTaught =findClosest(e.target, 'workExperience-row').querySelector('.responseOrSubjetTaught');
-    //         let closestParentProgram = findClosest(e.target, 'workExperience-row').querySelector('.program');
-    //         if (target.value === 'teach_exp') {
-    //           closestParent.classList.remove('d-none');
-    //           closestParentProgram.classList.remove('d-none');
-    //           universityOrOrg.innerHTML="University / Institute:<span class='required'>*</span>";
-    //           responseOrSubjetTaught.innerHTML ="Responsibility:<span class='required'>*</span>";
-
-    //         } else {
-    //           closestParent.classList.add('d-none');
-    //           closestParentProgram.classList.add('d-none');
-    //           universityOrOrg.innerHTML="Organization Name:<span class='required'>*</span>";
-    //           responseOrSubjetTaught.innerHTML="keys And Responsibility:<span class='required'>*</span>";  
-    //         }
-
-    //       }
-    //       if (target.classList.contains('designation-title')) {
-    //         let closestParent = findClosest(e.target, 'workExperience-row').querySelector('.other');
-    //         if (target.value === 'Other') {
-    //           closestParent.classList.remove('d-none');
-    //         } else {
-    //           closestParent.classList.add('d-none');
-    //         }
-
-    //       }
-    //       if (target.classList.contains('end_Date')) {
-    //         let closestParent = findClosest(target, 'workExperience-row');
-    //         let startValue = closestParent.querySelector('.start_Date').value;
-    //         let endValue = closestParent.querySelector('.end_Date').value;
-    //         let dateDifferenceCount = dateCount(startValue,endValue);
-
-    //         if(dateDifferenceCount>=0){
-    //         let dateDifferenceStr = dateDifference(startValue, endValue);
-    //         closestParent.querySelector('.durationOfTeaching').value=dateDifferenceStr;
-    //         closestParent.querySelector('.startErrorMessage').classList.add('d-none');
-    //         }
-    //         else{
-    //           closestParent.querySelector('.startErrorMessage').classList.remove('d-none');
-    //         }
-    //       }
-    //     })
 
     // **************************************************Workexperience Section end*******************************************************
 
