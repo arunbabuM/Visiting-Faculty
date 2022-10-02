@@ -49,32 +49,30 @@ public class userDao implements UserDaoInterface {
 
     @Override
     public boolean resetPassword(String emailValue) {
-     String sql="select id from public.user where email = ?";
-     int id = 0;
-     try{
-        id = (int)jdbcTemplate.queryForObject(sql,Integer.class,emailValue);
-     } catch(Exception e) {
-       return false;
-     }
-     if(id != 0) {
-        int tokenGenerated = (int) Math.floor(100000 + Math.random() * 900000);
-        httpSession.setAttribute("token", tokenGenerated);
-        httpSession.setAttribute("email", emailValue);
-        userService.sendEmail("Please Enter This Token to Reset Password : " + tokenGenerated , emailValue, 3);
-        return true;
-     }
-     return false;
-    
+        String sql = "select id from public.user where email = ?";
+        int id = 0;
+        try {
+            id = (int) jdbcTemplate.queryForObject(sql, Integer.class, emailValue);
+        } catch (Exception e) {
+            return false;
+        }
+        if (id != 0) {
+            int tokenGenerated = (int) Math.floor(100000 + Math.random() * 900000);
+            httpSession.setAttribute("token", tokenGenerated);
+            httpSession.setAttribute("email", emailValue);
+            userService.sendEmail("Please Enter This Token to Reset Password : " + tokenGenerated, emailValue, 3);
+            return true;
+        }
+        return false;
+
     }
 
-    public int resetPassword1(String password)
-    {
+    public int resetPassword1(String password) {
         String SQL = "update public.user set password_hash = ? where email = ?";
         String email = (String) httpSession.getAttribute("email");
         String encodedPassword = passwordService.encodePassword(password);
-        return jdbcTemplate.update(SQL,encodedPassword ,email);
+        return jdbcTemplate.update(SQL, encodedPassword, email);
     }
-
 
     @Override
     public Object insertPersonalDetails(String personalDetailsData) {
@@ -293,7 +291,7 @@ public class userDao implements UserDaoInterface {
         String sql = "Select lev.level,u.id,u.user_id,r.name from public.user u INNER JOIN user_role ur ON u.id=ur.user_lid INNER JOIN role r ON r.id = ur.role_lid INNER JOIN level lev ON lev.role_lid = r.id AND u.user_id = ?";
         // Integer Password = jdbcTemplate.queryForObject(sql, Integer.class, user_id);
         UserDto userDto = jdbcTemplate.queryForObject(sql, (rs, rownum) -> {
-            return new UserDto(rs.getInt("level"),rs.getInt("id"), rs.getString("user_id"), rs.getString("name"));
+            return new UserDto(rs.getInt("level"), rs.getInt("id"), rs.getString("user_id"), rs.getString("name"));
         }, user_id);
         return userDto;
     }
@@ -350,8 +348,11 @@ public class userDao implements UserDaoInterface {
         }, holder);
 
         Map<String, Object> id = holder.getKeys();
-        int newResumeid = (int) id.get("id");
-        return newResumeid;
+        if (id.get("id") != null) {
+            int newResumeid = (int) id.get("id");
+            return newResumeid;
+        }
+        return 0;
     }
 
     @Override
@@ -368,7 +369,8 @@ public class userDao implements UserDaoInterface {
 
         String sql = "SELECT u.id,u.email,u.user_id,u.password_hash FROM PUBLIC.user u INNER JOIN resume r ON r.user_lid = u.id WHERE r.id=?";
         User user = jdbcTemplate.queryForObject(sql, (rs, rownum) -> {
-            return new User(rs.getInt("id"), rs.getString("user_id"), rs.getString("password_hash"),rs.getString("email"));
+            return new User(rs.getInt("id"), rs.getString("user_id"), rs.getString("password_hash"),
+                    rs.getString("email"));
         }, id);
         return user;
     }
@@ -490,7 +492,7 @@ public class userDao implements UserDaoInterface {
         int organization_lid = array.getJSONObject(0).getInt("organization_lid");
         int rows = jdbcTemplate.update(sql, resume_lid, organization_lid, false);
 
-        if (rows ==  1) {
+        if (rows == 1) {
             String sql2 = "	SELECT ui.email FROM user_application ua INNER JOIN user_info ui ON ua.resume_lid = ui.resume_lid AND ua.resume_lid = ?  LIMIT 1";
             String email = jdbcTemplate.queryForObject(sql2, String.class, resume_lid);
             System.out.println(email);
@@ -522,13 +524,12 @@ public class userDao implements UserDaoInterface {
 
     @Override
     public List<SchoolList> getAllSchools(int user_lid) {
-     
-        
+
         String sql = "SELECT o.organization_id,o.name FROM public.user pu INNER JOIN admin_organization ao ON pu.id = ao.user_lid INNER JOIN organization o ON o.organization_id = ao.organization_lid WHERE ao.user_lid = ?";
 
-        List<SchoolList>  schoolsList = jdbcTemplate.query(sql,(rs,rownum) -> {
-            return new SchoolList(rs.getString("organization_id"),rs.getString("name"));
-        },user_lid);
+        List<SchoolList> schoolsList = jdbcTemplate.query(sql, (rs, rownum) -> {
+            return new SchoolList(rs.getString("organization_id"), rs.getString("name"));
+        }, user_lid);
 
         return schoolsList;
     }
@@ -541,7 +542,7 @@ public class userDao implements UserDaoInterface {
 
     @Override
     public Object updateproforma(String data) {
-       
+
         SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
                 .withFunctionName("update_proforma_status");
 
@@ -550,7 +551,7 @@ public class userDao implements UserDaoInterface {
 
     @Override
     public Object getStatusList(String data) {
-       
+
         SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
                 .withFunctionName("get_status_list");
 
@@ -559,7 +560,7 @@ public class userDao implements UserDaoInterface {
 
     @Override
     public Object getAllProforma(String data) {
-       
+
         SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
                 .withFunctionName("get_all_proforma");
 
@@ -574,7 +575,7 @@ public class userDao implements UserDaoInterface {
 
     @Override
     public Object getExpperfoma(String data) {
-       
+
         SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
                 .withFunctionName("get_application_resume_experience");
 
@@ -583,7 +584,7 @@ public class userDao implements UserDaoInterface {
 
     @Override
     public Object getCommments(int id) {
-         SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
+        SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
                 .withFunctionName("get_comments");
 
         return jdbcCall.executeFunction(Object.class, id);
