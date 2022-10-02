@@ -15,6 +15,7 @@
   
     <title>Reset Password</title>
     <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/images.jpg">
+
     <style>
       :root {
         --login-bg-color: radial-gradient(circle, rgb(143 0 0) 0%, rgb(0 0 0) 100%);

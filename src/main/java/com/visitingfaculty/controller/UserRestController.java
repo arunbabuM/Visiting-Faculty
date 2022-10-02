@@ -48,7 +48,6 @@ public class UserRestController {
 
     @PostMapping("/reset-password-pancard")
     public ResponseEntity<?>  verifyEmail(@RequestBody String data,ResetPassword rp){
-    // String pancard = (String) userDaoInterface.resetPassword(email);
 
      if(userDaoInterface.resetPassword(data)) {
 

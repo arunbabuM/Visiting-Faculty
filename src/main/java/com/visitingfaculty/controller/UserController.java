@@ -59,11 +59,14 @@ public class UserController {
             String role = (String) httpSession.getAttribute("role");
 
             if (role.equals("ROLE_ADMIN")) {
+                m.addAttribute("role" , role);
                 return "dashboard";
             } else if (role.equals("User")) {
                 m.addAttribute("user_id", httpSession.getAttribute("user_id"));
+                m.addAttribute("role" , role);
                 return "faculty/dashboard";
             } else{
+                m.addAttribute("role" , role);
                 m.addAttribute("user_id", httpSession.getAttribute("user_id"));
                 return "upperLevelDashboard";
             }

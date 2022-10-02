@@ -24,7 +24,7 @@ list += `
         <a href="${pageContext.request.contextPath}/visiting-faculty-applications" id="resume-call" class="offset-list-item-link">
             <li><img src="${pageContext.request.contextPath}/icons/programs.png" class="ps-3 pe-2"> Resume</li>
         </a>
-        <a href="${pageContext.request.contextPath}/job-proforma-page" class="offset-list-item-link">
+        <a href="${pageContext.request.contextPath}/view-applications" class="offset-list-item-link">
             <li><img src="${pageContext.request.contextPath}/icons/application.png" height="24" class="ps-3 pe-2"> Applications</li>
         </a>
         <a href="${pageContext.request.contextPath}/proforma" class="offset-list-item-link">
