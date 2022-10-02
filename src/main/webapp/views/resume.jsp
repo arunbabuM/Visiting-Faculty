@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="${pageContext.request.contextPath}/simpleAlert.css">
 
   <title>Resume</title>
-  <link rel="icon" type="image/x-icon" href="images.jpg">
+  <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/images.jpg">
 </head>
 
 <body>
@@ -1188,7 +1188,7 @@
                           <h6>Aadhar card </h6>
                         </div>
                         <div class="col-md-7 col-sm-9">
-                          <p id="aadhar-card-value">\${personal_details[0].aadhar_card_no == "" ? "N.A" : personal_details[0].aadhar_card_no}</p>
+                          <p id="aadhar-card-value">\${personal_details[0].aadhar_card_no == null ? "N.A" : personal_details[0].aadhar_card_no}</p>
                         </div>
                       </div>
                       <div class="row py-1">
@@ -2709,7 +2709,7 @@
             </div>
             <div class="row p-3">
               <div class="col-md-2 ">
-                <p class="h6">Certificate<span class="required">*</span></p>
+                <p class="h6">Certificate</p>
               </div>
               <!--Rana Changes--!>
               <div class="col-md-10"><input class="form-control awardCertificationImage" type="file" 
@@ -6521,8 +6521,6 @@
           workexperienceRow[i].querySelector('.end-date').classList.add('input-border');
           return;
         }
-
-
 
         let workexperience_type = 0;
         if (workexperienceType == "ind_exp") {

@@ -8,22 +8,27 @@
         </a>
     </div>
     <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 p-4">
-        <a href="${pageContext.request.contextPath}/job-proforma-page"
+        <a href="${pageContext.request.contextPath}/view-applications"
             class="card_school_vf text-center d-flex flex-column justify-content-center align-items-center">
             <img src="${pageContext.request.contextPath}/icons/application.png" alt="">
             <p>View Applications </p>
         </a>
     </div>
     <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 p-4">
-        <a href="${pageContext.request.contextPath}/performa"
+        <a href="${pageContext.request.contextPath}/proforma"
             class="card_school_vf text-center d-flex flex-column justify-content-center align-items-center ">
-            <img src="${pageContext.request.contextPath}/icons/pending_report.png" alt="">Proforma For
-            Approval</a>
+            <img src="${pageContext.request.contextPath}/icons/pending_report.png" alt="">PROFORMA FOR
+            APPROVAL</a>
     </div>
     <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 p-4">
         <a href="${pageContext.request.contextPath}/proforma-report"
             class="card_school_vf text-center d-flex flex-column justify-content-center align-items-center ">
             <img src="${pageContext.request.contextPath}/icons/report.png" alt="">PROFORMA REPORT</a>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 p-4">
+        <a href="${pageContext.request.contextPath}/faculty-reg"
+            class="card_school_vf text-center d-flex flex-column justify-content-center align-items-center ">
+            <img src="${pageContext.request.contextPath}/icons/admin.png" height="55" alt="">ADD FACULTY</a>
     </div>
 
 </div>

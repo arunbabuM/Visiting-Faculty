@@ -327,7 +327,7 @@
         if (success.status == 200) {
           location.href = '${pageContext.request.contextPath}/dashboard'
         } else {
-          alert('Check');
+          alert('Please Enter Different Pancard No.');
         }
       })
 

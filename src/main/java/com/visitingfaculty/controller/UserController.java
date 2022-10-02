@@ -112,7 +112,7 @@ public class UserController {
         return "redirect:/login#session-timeout";
     }
 
-    @GetMapping("/performa")
+    @GetMapping("/proforma")
     public String getPerforma(Model m) {
         String user_id = (String) httpSession.getAttribute("user_id");
         if (user_id != null) {
@@ -188,7 +188,7 @@ public class UserController {
         return "redirect:/login#session-timeout";
     }
 
-    @GetMapping("/job-proforma-page")
+    @GetMapping("/view-applications")
     public String getperformerpage() {
         String user_id = (String) httpSession.getAttribute("user_id");
         if (user_id != null) {

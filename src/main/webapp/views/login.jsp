@@ -14,7 +14,7 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" />
 
   <title>Login</title>
-
+  <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/images.jpg">
 
   <style>
     :root {

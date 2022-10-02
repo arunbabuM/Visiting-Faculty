@@ -16,8 +16,8 @@
     <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js" defer></script>
 
 
-    <title>Dashboard</title>
-    <link rel="icon" type="image/x-icon" href="/images.jpg">
+    <title>Proforma For Approval</title>
+    <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/images.jpg">
 
     <style>
         .deanObservationExpand {
@@ -80,9 +80,9 @@
 
         }
 
-        .comment h4,
+        .comment h6,
         .comment span,
-        .darker h4,
+        .darker h6,
         .darker span {
             display: inline;
         }
@@ -414,8 +414,8 @@
                     <td><button data-qual="\${performerinfo.application_lid}" data-id = "1" data-toggle="modal" data-target=".bd-example-modal-lg" type="button" class="qual-btn btn btn-outline-primary text-dark">Graduate</button> </td>
                     <td><button data-qual="\${performerinfo.application_lid}" data-id = "2" data-toggle="modal" data-target=".bd-example-modal-lg" type="button" class="qual-btn btn btn-outline-primary text-dark">Masters</button></td>
                     <td><button data-qual="\${performerinfo.application_lid}" data-id = "3" data-toggle="modal" data-target=".bd-example-modal-lg" type="button" class="qual-btn btn btn-outline-primary text-dark">PHD</button></td>
-                    <td><button data-exp="4" data-id = "\${performerinfo.application_lid}" data-toggle="modal" type="button" class="exp-btn btn btn-outline-primary text-dark">\${performerinfo.teaching_exp}</button></td>
-                    <td><button data-exp="5" data-id = "\${performerinfo.application_lid}" data-toggle="modal" type="button" class="exp-btn btn btn-outline-primary text-dark">\${performerinfo.industrial_exp}</button></td>
+                    <td><button data-exp="5" data-id = "\${performerinfo.application_lid}" data-toggle="modal" type="button" class="exp-btn btn btn-outline-primary text-dark">\${performerinfo.teaching_exp}</button></td>
+                    <td><button data-exp="4" data-id = "\${performerinfo.application_lid}" data-toggle="modal" type="button" class="exp-btn btn btn-outline-primary text-dark">\${performerinfo.industrial_exp}</button></td>
                     <td>\${performerinfo.total_exp}</td>
                     <td>\${performerinfo.module}</td>
                     <td>\${performerinfo.program_name}</td>
@@ -617,24 +617,34 @@
                         data: JSON.stringify(statusObject),
                         contentType: false,
                         success: function (response) {
-                            let selectOptions = JSON.parse(response.value)
-                            $('#proforma-approval-modal').modal('toggle');
-                            let commentbox =
-                                `<textarea class="textarea proforma-comment container" data-id="\${proformaid}" cols="50" rows="5"></textarea>`;
-                            let options =
-                                `<option value="0" selected>Select Status</option>`
-                            for (let option of selectOptions.status_list) {
-                                options +=
-                                    `<option value="\${option.id}">\${option.name}</option>`
+                            if (response != null) {
+
+                                let selectOptions = JSON.parse(response.value)
+                                console.log(selectOptions)
+                                let commentbox =
+                                    `<textarea class="textarea proforma-comment container" data-id="\${proformaid}" cols="50" rows="5"></textarea>`;
+                                let options =
+                                    `<option value="0" selected>Select Status</option>`
+                                if (selectOptions.status_list != null) {
+
+                                    for (let option of selectOptions.status_list) {
+                                        options +=
+                                            `<option value="\${option.id}">\${option.name}</option>`
+                                    }
+                                    let card = document.querySelector(
+                                            '.proforma-approval-body')
+                                        .querySelector(
+                                            'textarea')
+                                    card == null ? '' : card.remove()
+                                    document.querySelector('.proforma-approval-body')
+                                        .insertAdjacentHTML(
+                                            'afterbegin', commentbox)
+                                    document.querySelector('.status-select').innerHTML =
+                                        options
+                                    $('#proforma-approval-modal').modal('toggle');
+                                }
+
                             }
-                            let card = document.querySelector('.proforma-approval-body')
-                                .querySelector(
-                                    'textarea')
-                            card == null ? '' : card.remove()
-                            document.querySelector('.proforma-approval-body')
-                                .insertAdjacentHTML(
-                                    'afterbegin', commentbox)
-                            document.querySelector('.status-select').innerHTML = options
                         },
                         error: function (error) {
                             console.log(error);
@@ -780,7 +790,7 @@
                                     divToAppend += `
                                    <div class="card pb-4">
                                         <div class="text-justify darker mt-4 float-right">
-                                            <h4>\${data.approved_by}</h4>
+                                            <h6>\${data.approved_by}</h6>
                                             <span>- \${data.created_date.split('T')[0]}</span>
                                             <br>
                                             <p>\${data.comment}</p>
@@ -809,7 +819,6 @@
                 if (e.target.classList.contains('comments-cancel-button')) {
 
                     $('#comments-modal').modal('toggle')
-
 
                 }
 
@@ -894,7 +903,7 @@
                                 industryTable += `</tbody></table></div>`;
                                 $('.card').remove();
                                 document.querySelector('.qualification-div').innerHTML =
-                                experienceType == 5 ? teachingExperience : industryTable
+                                    experienceType == 5 ? teachingExperience : industryTable
                                 $(".qualification-display").modal("toggle");
                             } else {
                                 let noexp = `

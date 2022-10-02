@@ -126,6 +126,8 @@ public interface UserDaoInterface {
     Object updateproforma(String data);
 
     Object getAllProforma(String data);
+    
+    Object getAllProformaReport(String data);
 
     Object getStatusList(String data);
 
@@ -134,4 +136,7 @@ public interface UserDaoInterface {
     List<SchoolList> getAllSchools(int user_lid);
 
     Object getExpperfoma(String data);
+   
+    Object getProformaReport(String data);
+
 }

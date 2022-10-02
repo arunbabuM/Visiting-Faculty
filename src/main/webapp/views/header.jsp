@@ -9,7 +9,7 @@
             style="border: none; outline: none; background-color: white;"><i
                 class="fa-solid fa-angles-left"></i></button>
         <ul class="top-navbar__list">
-            <li style="color: #fc6964; font-weight: bold;"><img src="${pageContext.request.contextPath}/icons/admin.png" class="ps-3 pe-2">${role}
+            <li style="color: #fc6964; font-weight: bold;"><img src="${pageContext.request.contextPath}/icons/admin.png" class="ps-3 pe-2">${role == 'User' ? role : role.split("_")[1]}
             </li>
 
             <li><a href="" class="text-dark"><img src="${pageContext.request.contextPath}/icons/notification.png" alt=""> Notification</a></li>
@@ -17,7 +17,7 @@
             <div class="btn-group">
                 <button class="btn btn-white dropdown-toggle" type="button" id="defaultDropdown"
                     data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
-                    <img src="${pageContext.request.contextPath}/icons/user.png" alt=""> Hi! ${role}
+                    <img src="${pageContext.request.contextPath}/icons/user.png" alt=""> Hi! ${role == 'User' ? role : role.split("_")[1]}
                 </button>
                 <ul class="dropdown-menu userprofile-dropdown-menu" aria-labelledby="defaultDropdown">
                     <li><a class="dropdown-item" href="#"><i class="fas fa-user-cog"></i> Settings</a></li>

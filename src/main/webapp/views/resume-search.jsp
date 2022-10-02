@@ -16,7 +16,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/simpleAlert.css">
 
-    <title>Dashboard</title>
+    <title>Resume Search</title>
     <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/images.jpg">
 </head>
 
@@ -56,7 +56,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
             <div class="no-data-alert alert alert-info alert-dismissible fade show d-none">
-                <strong>Error!</strong>No Data Available
+                <strong>Sorry!</strong>No Data Available
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
 
@@ -228,7 +228,7 @@
 
                             $('.table-appending-div').html(tableToAppend)
                         } else {
-                        document.querySelector('.validation-alert').classList.remove('d-none')
+                        document.querySelector('.no-data-alert').classList.remove('d-none')
 
                         }
 
@@ -251,8 +251,6 @@
                     success: function (response) {
                         let data = JSON.parse(response.value)
                         console.log(data)
-                        document.querySelector('.no-data-alert').classList.add('d-none')
-
 
                         if (data.resume_details != null) {
 
@@ -301,7 +299,7 @@
 
                     },
                     error: function (error) {
-                        document.querySelector('.no-data-alert').classList.remove('d-none')
+                        document.querySelector('.validation-alert').classList.remove('d-none')
                         console.log("Error");
                     }
                 })
@@ -310,18 +308,17 @@
 
             $('#search-by-id').on('keyup', function () {
                 let searchByIdValue = document.getElementById('search-by-id').value
-                console.log(searchByIdValue)
 
                     clearTimeout(timeout)
                     const value = this.value
-                    timeout = setTimeout(() => searchFunction(value), 2000)
+                    timeout = setTimeout(() => searchFunction(value.toUpperCase()), 2000)
 
             })
 
             $('#search-by-name').on('keyup', function () {
 
                 clearTimeout(timeout)
-                const value = this.value
+                const value = this.value.toUpperCase()
                 timeout = setTimeout(() => searchFunctionByName(value), 2000)
 
             })
@@ -372,7 +369,6 @@
 
             $(document).on('click', '.view-resume-icon', function () {
 
-                $("#view-resume-modal").modal("toggle");
                 let tr = $(this).closest('tr')
                 let id = tr.data('userlid')
                 $.ajax({
@@ -420,10 +416,15 @@
                                     </table>
                                 </div>
                                        `
+                            $('tab-content').remove()
                             document.querySelector('.modal2-body').innerHTML = ""
                             $('.modal2-body').html(tableToAppend)
+                            $("#view-resume-modal").modal("toggle");
+                            
                         } else {
-                            alert("Data Not Found!!")
+                            document.querySelector('.modal2-body').innerHTML = `<div class="tab-content container"> No Resume's Created</div>`
+                            $("#view-resume-modal").modal("toggle");
+
                         }
                     },
                     error: function (error) {

@@ -13,11 +13,11 @@
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/login.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js" defer></script>
 
 
-    <title>Dashboard</title>
-    <link rel="icon" type="image/x-icon" href="/images.jpg">
+    <title>Proforma Report</title>
+    <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/images.jpg">
 
     <style>
         .deanObservationExpand {
@@ -54,6 +54,38 @@
             padding-right: 5px;
             position: relative;
         }
+
+        .comments {
+            margin-top: 5%;
+            margin-left: 20px;
+        }
+
+        .darker {
+            border: 1px solid #ecb21f;
+            float: right;
+            border-radius: 5px;
+            min-width: 80%;
+            padding-left: 40px;
+            padding-right: 30px;
+            padding-top: 10px;
+        }
+
+        .comment {
+            border: 1px solid rgba(16, 46, 46, 1);
+            float: left;
+            border-radius: 5px;
+            padding-left: 40px;
+            padding-right: 30px;
+            padding-top: 10px;
+
+        }
+
+        .comment h6,
+        .comment span,
+        .darker h6,
+        .darker span {
+            display: inline;
+        }
     </style>
 </head>
 
@@ -63,6 +95,60 @@
 
     <main class="main">
         <jsp:include page="header.jsp" />
+
+
+        <div class="modal fade" id="proforma-approval-modal" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Comment for Proforma Approval</h5>
+                        <button type="button" style="border: none;" class="close2 modal2-cancel-button"
+                            data-dismiss="modal" aria-label="Close">
+                            <span class="close2" aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="proforma-approval-body container" style="width: auto;">
+                        <select class="form-select status-select form-select-lg mb-3">
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="close2 btn btn-secondary modal2-cancel-button"
+                            data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-success proforma-approval-submit-btn"
+                            data-dismiss="modal">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="modal fade" id="comments-modal" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Comment for Proforma Approval</h5>
+                        <button type="button" style="border: none;" class="comments-cancel-button" data-dismiss="modal"
+                            aria-label="Close">
+                            <span class="comments-cancel-button" aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="comments-body container" style="width: auto;">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger comments-cancel-button"
+                            data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-success comments-submit-btn"
+                            data-dismiss="modal">Submit</button>
+                    </div>
+                </div>
+            </div>
+
+        </div> -->
+
+
 
         <div class="main-content">
 
@@ -156,7 +242,7 @@
             </div>
 
 
-            <div class="table-responsive table-wrapper px-2 perfoma-table mt-5 pt-5">
+            <div class="table-responsive table-wrapper px-2 perfoma-table  pt-5">
                 <table class='table table-display table-bordered proforma-report-table' id="proforma-report-table"
                     style="width: 3600px !important;">
                     <thead>
@@ -206,7 +292,7 @@
                             <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalLongTitle">Details</h5>
                                 <button type="button" class="btn btn-secondary btn btn-danger close1"
-                                    data-dismiss="modal"><i class="fa fa-times btn btn-danger"
+                                    data-dismiss="modal"><i class="fa close1 fa-times btn btn-danger"
                                         aria-hidden="true"></i></button>
                             </div>
                             <div class="modal-body qualification-div">
@@ -249,7 +335,6 @@
     <!-- <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.dev.js"></script>
     <!-- <script src="/js/session-timeout.js"></script> -->
-    <script src="${pageContext.request.contextPath}/js/SimpleAlert.js"></script>
     <script src="${pageContext.request.contextPath}/js/script.js"></script>
     <script src="${pageContext.request.contextPath}/js/leftsidebartoggle.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js"
@@ -260,62 +345,67 @@
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/jquery.bootpag.min.js"></script>
+
     <script>
-        let performerinfoobj;
+        $(document).ready(function () {
 
-        let schoolType = '<option value="0" class="school-option" selected>All Schools</option>';
-        let schoolList = 1;
-        let schoolArray = []
+            let performerinfoobj;
 
-        function getAllProforma() {
-            if (schoolList == 1) {
+            let schoolType = '<option value="0" class="school-option" selected>All Schools</option>';
+            let schoolList = 1;
+            let schoolArray = []
+
+
+            function getAllProforma() {
+                if (schoolList == 1) {
+                    $.ajax({
+                        url: '${pageContext.request.contextPath}/get-schools-list',
+                        type: 'POST',
+                        async: false,
+                        contentType: false,
+                        success: function (response) {
+
+                            for (let desig of response) {
+                                let schoolObject = {
+                                    "organization_lid": desig.organization_id
+                                };
+                                console.log(desig.organization_id)
+                                // schoolObject.organization_lid = desig.organization_id;
+                                schoolArray.push(schoolObject);
+
+                                schoolType +=
+                                    `<option class="school-option col-md-10 col-sm-10 col-12" value="\${desig.organization_id}" data-name="\${desig.name}">\${desig.name}
+                                 </option>`
+                            }
+                            document.querySelector('.school-select').insertAdjacentHTML('beforeend',
+                                schoolType);
+                        },
+                        error: function (error) {
+                            console.log("Error::::::::::::", error);
+                        }
+                    })
+                    schoolList++
+
+                }
+
+                //   let proformaObject = {"get_all_proforma" : []}
+                let objForProforma = {}
+                objForProforma.level = Number.parseInt('${level}')
+                objForProforma.organization_lid = schoolArray
+                console.log("JSON>>>>>>>", JSON.stringify(objForProforma))
                 $.ajax({
-                    url: '${pageContext.request.contextPath}/get-schools-list',
+                    url: '${pageContext.request.contextPath}/get-all-proforma-report',
                     type: 'POST',
+                    data: JSON.stringify(objForProforma),
                     async: false,
                     contentType: false,
                     success: function (response) {
-                        console.log(response)
-                        console.log(response.value)
-                        let schoolObject = {}
-                        for (let desig of response) {
-                            schoolObject.organization_lid = desig.organization_id;
-                            schoolArray.push(schoolObject);
-
-                            schoolType +=
-                                `<option class="school-option col-md-10 col-sm-10 col-12" value="\${desig.organization_id}" data-name="\${desig.name}">\${desig.name}
-                </option>`
-                        }
-                        document.querySelector('.school-select').insertAdjacentHTML('beforeend',
-                        schoolType);
-                    },
-                    error: function (error) {
-                        console.log("Error::::::::::::", error);
-                    }
-                })
-                schoolList++
-            }
-
-            //   let proformaObject = {"get_all_proforma" : []}
-            let objForProforma = {}
-            objForProforma.level = Number.parseInt('${level}')
-            objForProforma.organization_lid = schoolArray
-            console.log("JSON>>>>>>>", JSON.stringify(objForProforma))
-            $.ajax({
-                url: '${pageContext.request.contextPath}/get-all-proforma',
-                type: 'POST',
-                data: JSON.stringify(objForProforma),
-                async: false,
-                contentType: false,
-                success: function (response) {
-                    let data = JSON.parse(response.value)
-                    performerinfoobj = data;
-
-                    if (performerinfoobj.proforma_details != null) {
+                        performerinfoobj = JSON.parse(response.value)
                         console.log(performerinfoobj)
-                        let view = ``
-                        for (performerinfo of performerinfoobj.proforma_details) {
-                            view += `
+                        if (performerinfoobj.proforma_details != null) {
+                            let view = ``
+                            for (performerinfo of performerinfoobj.proforma_details) {
+                                view += `
                 <tr>
                     <td>\${performerinfo.created_date.split('T')[0]}</td>
                     <td>\${performerinfo.full_name}</td>
@@ -323,8 +413,8 @@
                     <td><button data-qual="\${performerinfo.application_lid}" data-id = "1" data-toggle="modal" data-target=".bd-example-modal-lg" type="button" class="qual-btn btn btn-outline-primary text-dark">Graduate</button> </td>
                     <td><button data-qual="\${performerinfo.application_lid}" data-id = "2" data-toggle="modal" data-target=".bd-example-modal-lg" type="button" class="qual-btn btn btn-outline-primary text-dark">Masters</button></td>
                     <td><button data-qual="\${performerinfo.application_lid}" data-id = "3" data-toggle="modal" data-target=".bd-example-modal-lg" type="button" class="qual-btn btn btn-outline-primary text-dark">PHD</button></td>
-                    <td>\${performerinfo.teaching_exp}</td>
-                    <td>\${performerinfo.industrial_exp}</td>
+                    <td><button data-exp="5" data-id = "\${performerinfo.application_lid}" data-toggle="modal" type="button" class="exp-btn btn btn-outline-primary text-dark">\${performerinfo.teaching_exp}</button></td>
+                    <td><button data-exp="4" data-id = "\${performerinfo.application_lid}" data-toggle="modal" type="button" class="exp-btn btn btn-outline-primary text-dark">\${performerinfo.industrial_exp}</button></td>
                     <td>\${performerinfo.total_exp}</td>
                     <td>\${performerinfo.module}</td>
                     <td>\${performerinfo.program_name}</td>
@@ -338,60 +428,54 @@
                     <td>1</td>
                     <td>\${performerinfo.aol_obe}</td>
                     <td>\${performerinfo.max_points}</td>
-                    <td>Comments</td>
+                    <td><button data-id = "\${performerinfo.proforma_id}" data-toggle="modal" type="button" class="comments-btn btn btn-outline-primary text-dark">Comments</button></td>
                     <td>Pending</td>
                 <tr>
                 `
+                            }
+                            document.querySelector('.performer-view').innerHTML = view;
                         }
-                        document.querySelector('.performer-view').innerHTML = view;
+                    },
+                    error: function (error) {
+                        console.log("error", error)
                     }
+                });
+            }
+            getAllProforma();
 
+            let graduation = 1;
+            let masters = 1;
+            let phd = 1;
 
+            document.querySelector('.perfoma-table').addEventListener('click', function (e) {
 
+                if (e.target.classList.contains('qual-btn')) {
 
-                },
-                error: function (error) {
-                    console.log("error", error)
-                }
-            });
-        }
-        getAllProforma();
+                    let obj = {
+                        "get_application_qualification": []
+                    }
+                    let data = {}
+                    data.qualification_type_lid = e.target.dataset.id,
+                        data.application_lid = e.target.dataset.qual
+                    obj.get_application_qualification.push(data);
+                    console.log("OBJECTTT", obj)
 
-        let graduation = 1;
-        let masters = 1;
-        let phd = 1;
-        document.querySelector('.perfoma-table').addEventListener('click', function (e) {
+                    $.ajax({
+                        url: '${pageContext.request.contextPath}/get-qual',
+                        type: 'POST',
+                        data: JSON.stringify(obj),
+                        contentType: false,
+                        success: function (response) {
+                            $(".qualification-display").modal("toggle", {
+                                backdrop: "static ",
+                                keyboard: false
+                            });
 
-
-            //For Graduation Modal
-            if (e.target.classList.contains('qual-btn')) {
-
-                console.log('click')
-                let obj = {
-                    "get_application_qualification": []
-                }
-                let data = {}
-                data.qualification_type_lid = e.target.dataset.id,
-                    data.application_lid = e.target.dataset.qual
-                obj.get_application_qualification.push(data);
-                console.log("OBJECTTT", obj)
-
-                $.ajax({
-                    url: '${pageContext.request.contextPath}/get-qual',
-                    type: 'POST',
-                    data: JSON.stringify(obj),
-                    contentType: false,
-                    success: function (response) {
-                        $(".qualification-display").modal("toggle", {
-                            backdrop: "static ",
-                            keyboard: false
-                        });
-
-                        let graduationdetails = JSON.parse(response.value)
-                            .application_resume_qualification;
-                        console.log(graduationdetails);
-                        if (graduationdetails != null) {
-                            let qualdetails = `
+                            let graduationdetails = JSON.parse(response.value)
+                                .application_resume_qualification;
+                            console.log(graduationdetails);
+                            if (graduationdetails != null) {
+                                let qualdetails = `
                         <div class="card">
                             <div class="card-body">
                                 <table class="table table-responsive">
@@ -402,57 +486,60 @@
                                         <th>Year of passing</th>
                                     </thead>
                                     <tbody>`
-                            for (gd of graduationdetails) {
-                                qualdetails += `<tr>
+                                for (gd of graduationdetails) {
+                                    qualdetails += `<tr>
                                             <td>\${gd.institute}</td>
                                             <td>\${gd.topic_of_study}</td>
                                             <td>\${gd.university}</td>
                                             <td>\${gd.rev_timestamp.split('T')[0]}</td>
                                         </tr>`
-                            }
-                            qualdetails += `</tbody>
+                                }
+                                qualdetails += `</tbody>
                                 </table>
                             </div>   
                         </div>
 
                         `
-                            $('.card').remove();
-                            document.querySelector('.qualification-div').insertAdjacentHTML(
-                                'afterend', qualdetails);
-                        } else {
-                            let qualdetails = `
+                                $('.card').remove();
+                                document.querySelector('.qualification-div')
+                                    .insertAdjacentHTML(
+                                        'afterend', qualdetails);
+                            } else {
+                                let qualdetails = `
                         <div class="card">
                         <h4 align="center">No Data Available</h4>
                         </div>
                         `
-                            document.querySelector('.qualification-div').insertAdjacentHTML(
-                                'afterend', qualdetails);
+                                document.querySelector('.qualification-div')
+                                    .insertAdjacentHTML(
+                                        'afterend', qualdetails);
+                            }
+                        },
+                        error: function (error) {
+                            console.log("error", error)
                         }
-                    },
-                    error: function (error) {
-                        console.log("error", error)
-                    }
 
-                });
+                    });
 
-            }
+                }
 
-            if (e.target.classList.contains('feedback-btn')) {
+                if (e.target.classList.contains('feedback-btn')) {
 
-                $.ajax({
-                    url: 'https://dev-portal.svkm.ac.in:8080/vfApi/getFeedback?panCardNo=' + e.target
-                        .dataset.panNo,
-                    type: 'GET',
-                    success: function (response) {
-                        $(".qualification-display").modal("toggle", {
-                            backdrop: "static ",
-                            keyboard: false
-                        });
+                    $.ajax({
+                        url: 'https://dev-portal.svkm.ac.in:8080/vfApi/getFeedback?panCardNo=' +
+                            e.target
+                            .dataset.panNo,
+                        type: 'GET',
+                        success: function (response) {
+                            $(".qualification-display").modal("toggle", {
+                                backdrop: "static ",
+                                keyboard: false
+                            });
 
-                        let feedbackdetails = response;
-                        console.log(feedbackdetails);
-                        if (feedbackdetails != '') {
-                            let feedback = `
+                            let feedbackdetails = response;
+                            console.log(feedbackdetails);
+                            if (feedbackdetails != '') {
+                                let feedback = `
                         <div class="card">
                             <div class="card-body">
                                 <table class="table table-responsive">
@@ -466,8 +553,8 @@
                                         <th>Average</th>
                                     </thead>
                                     <tbody>`
-                            for (gd of feedbackdetails) {
-                                feedback += `<tr>
+                                for (gd of feedbackdetails) {
+                                    feedback += `<tr>
                                             <td>\${gd.school}</td>
                                             <td>\${gd.inst}</td>
                                             <td>\${gd.programName}</td>
@@ -476,121 +563,286 @@
                                             <td>\${gd.acadSession}</td>
                                             <td>\${gd.avg}</td>
                                         </tr>`
-                            }
-                            feedback += `</tbody>
+                                }
+                                feedback += `</tbody>
                                 </table>
                             </div>   
                         </div>
                         `
-                            $('.card').remove();
-                            document.querySelector('.qualification-div').insertAdjacentHTML(
-                                'afterend', feedback);
-                        } else {
-                            let feedback = `
+                                $('.card').remove();
+                                document.querySelector('.qualification-div')
+                                    .insertAdjacentHTML(
+                                        'afterend', feedback);
+                            } else {
+                                let feedback = `
                         <div class="card">
                         <h4 align="center">No Feedback Available</h4>
                         </div>
                         `
-                            $('.card').remove();
-                            document.querySelector('.qualification-div').insertAdjacentHTML(
-                                'afterend', feedback);
-                        }
-                    },
-                    error: function (error) {
-                        console.log("ERROR")
-                    }
-
-                })
-
-            }
-        })
-
-
-        document.querySelector('.main').addEventListener('click', function (e) {
-
-            if (e.target.classList.contains('close1') || e.target.classList.contains('fa-times')) {
-                document.querySelector('.card').remove()
-                $(".qualification-display").modal("toggle");
-            }
-         
-
-
-            if (e.target.classList.contains('school-select')) {
-                let objArray = {
-                    "proforma_details": []
-                }
-                let organization_lid = e.target.value
-                if (organization_lid == 0) {
-                    document.querySelector('.performer-view').innerHTML =  '';
-                    getAllProforma();
-                    return;
-                }
-                let obj = {
-                    "level": '${level}',
-                    "organization_lid": organization_lid
-                }
-                objArray.proforma_details.push(obj)
-
-                $.ajax({
-                    url: '${pageContext.request.contextPath}/performer-view',
-                    type: 'POST',
-                    data: JSON.stringify(objArray),
-                    async: false,
-                    contentType: false,
-                    success: function (response) {
-                        let data = JSON.parse(response.value)
-                        performerinfoobj = data;
-
-                        if (performerinfoobj != null) {
-                            let view = ``
-                            for (performerinfo of performerinfoobj.proforma_details) {
-                                view += `
-                <tr>
-                    <td>\${performerinfo.created_date.split('T')[0]}</td>
-                    <td>\${performerinfo.full_name}</td>
-                    <td>\${performerinfo.pancard_no}</td>
-                    <td><button data-qual="\${performerinfo.application_lid}" data-id = "1" data-toggle="modal" data-target=".bd-example-modal-lg" type="button" class="qual-btn btn btn-outline-primary text-dark">Graduate</button> </td>
-                    <td><button data-qual="\${performerinfo.application_lid}" data-id = "2" data-toggle="modal" data-target=".bd-example-modal-lg" type="button" class="qual-btn btn btn-outline-primary text-dark">Masters</button></td>
-                    <td><button data-qual="\${performerinfo.application_lid}" data-id = "3" data-toggle="modal" data-target=".bd-example-modal-lg" type="button" class="qual-btn btn btn-outline-primary text-dark">PHD</button></td>
-                    <td>\${performerinfo.teaching_exp}</td>
-                    <td>\${performerinfo.industrial_exp}</td>
-                    <td>\${performerinfo.total_exp}</td>
-                    <td>\${performerinfo.module}</td>
-                    <td>\${performerinfo.program_name}</td>
-                    <td>\${performerinfo.acad_session}</td>
-                    <td>\${performerinfo.rate_per_hours}</td>
-                    <td>\${performerinfo.total_no_of_hrs_alloted}</td>
-                    <td>\${performerinfo.no_of_division}</td>
-                    <td>\${performerinfo.student_count_per_division}</td>
-                    <td>\${performerinfo.rate_per_hours * performerinfo.total_no_of_hrs_alloted}</td>
-                    <td><button data-pan-no="\${performerinfo.pancard_no}" class="btn btn-outline-primary feedback-btn">Feedback</button></td>
-                    <td>1</td>
-                    <td>\${performerinfo.aol_obe}</td>}
-                    <td>\${performerinfo.max_points}</td>
-                    <td>Comments</td>
-                    <td>Pending</td>
-                <tr>
-                `
+                                $('.card').remove();
+                                document.querySelector('.qualification-div')
+                                    .insertAdjacentHTML(
+                                        'afterend', feedback);
                             }
-                            document.querySelector('.performer-view').innerHTML = view;
+                        },
+                        error: function (error) {
+                            console.log("ERROR")
                         }
 
+                    })
+
+                }
+            })
 
 
+            document.querySelector('.main').addEventListener('click', function (e) {
 
-                    },
-                    error: function (error) {
-                        console.log("error", error)
+                if (e.target.classList.contains('close1')) {
+                    document.querySelector('.card').remove()
+                    $(".qualification-display").modal("toggle");
+                }
+                if (e.target.classList.contains('close2')) {
+                    document.querySelector('.proforma-approval-body').firstElementChild.remove()
+                    $("#proforma-approval-modal").modal("toggle");
+                }
+
+                if (e.target.classList.contains('school-select')) {
+                    let objArray = {
+                        "proforma_details": []
                     }
-                });
-            }
-        })
+                    let organization_lid = e.target.value
+                    if (organization_lid == 0) {
+                        document.querySelector('.performer-view').innerHTML = '';
+                        getAllProforma();
+                        return;
+                    }
+                    let obj = {
+                        "level": '${level}',
+                        "organization_lid": organization_lid
+                    }
+                    objArray.proforma_details.push(obj)
 
-        if(Number.parseInt("${level}") > 2){
-            document.getElementById('select-div').classList.add('d-none');
-            
-        }
-        
+
+                    $.ajax({
+                        url: '${pageContext.request.contextPath}/proforma-report-view',
+                        type: 'POST',
+                        data: JSON.stringify(objArray),
+                        async: false,
+                        contentType: false,
+                        success: function (response) {
+                            let data = JSON.parse(response.value)
+                            performerinfoobj = data;
+
+                            if (performerinfoobj != null) {
+                                let view = ``
+                                for (performerinfo of performerinfoobj.proforma_details) {
+                                    view += `
+                                    <tr>
+                                        <td>\${performerinfo.created_date.split('T')[0]}</td>
+                                        <td>\${performerinfo.full_name}</td>
+                                        <td>\${performerinfo.pancard_no}</td>
+                                        <td><button data-qual="\${performerinfo.application_lid}" data-id = "1" data-toggle="modal" data-target=".bd-example-modal-lg" type="button" class="qual-btn btn btn-outline-primary text-dark">Graduate</button> </td>
+                                        <td><button data-qual="\${performerinfo.application_lid}" data-id = "2" data-toggle="modal" data-target=".bd-example-modal-lg" type="button" class="qual-btn btn btn-outline-primary text-dark">Masters</button></td>
+                                        <td><button data-qual="\${performerinfo.application_lid}" data-id = "3" data-toggle="modal" data-target=".bd-example-modal-lg" type="button" class="qual-btn btn btn-outline-primary text-dark">PHD</button></td>
+                                        <td><button data-exp="5" data-id = "\${performerinfo.application_lid}" data-toggle="modal" type="button" class="exp-btn btn btn-outline-primary text-dark">\${performerinfo.teaching_exp}</button></td>
+                                        <td><button data-exp="4" data-id = "\${performerinfo.application_lid}" data-toggle="modal" type="button" class="exp-btn btn btn-outline-primary text-dark">\${performerinfo.industrial_exp}</button></td>
+                                        <td>\${performerinfo.total_exp}</td>
+                                        <td>\${performerinfo.module}</td>
+                                        <td>\${performerinfo.program_name}</td>
+                                        <td>\${performerinfo.acad_session}</td>
+                                        <td>\${performerinfo.rate_per_hours}</td>
+                                        <td>\${performerinfo.total_no_of_hrs_alloted}</td>
+                                        <td>\${performerinfo.no_of_division}</td>
+                                        <td>\${performerinfo.student_count_per_division}</td>
+                                        <td>\${performerinfo.rate_per_hours * performerinfo.total_no_of_hrs_alloted}</td>
+                                        <td><button data-pan-no="\${performerinfo.pancard_no}" class="btn btn-outline-primary feedback-btn">Feedback</button></td>
+                                        <td>1</td>
+                                        <td>\${performerinfo.aol_obe}</td>
+                                        <td>\${performerinfo.max_points}</td>
+                                        <td><button data-id = "\${performerinfo.proforma_id}" data-toggle="modal" type="button" class="comments-btn btn btn-outline-primary text-dark">Comments</button></td>
+                                        <td>Pending</td>
+                                    <tr>
+                `
+                                }
+                                document.querySelector('.performer-view').innerHTML = view;
+                            }
+
+
+
+
+                        },
+                        error: function (error) {
+                            console.log("error", error)
+                        }
+                    });
+                }
+
+                //
+                if (e.target.classList.contains('comments-btn')) {
+                    let proforma_lid = e.target.dataset.id
+                    $.ajax({
+                        url: '${pageContext.request.contextPath}/get-comments',
+                        type: 'POST',
+                        data: JSON.stringify({
+                            "proforma_lid": proforma_lid
+                        }),
+                        async: false,
+                        contentType: 'application/json',
+                        success: function (response) {
+                            let divToAppend = ``
+                            let commentData = JSON.parse(response.value);
+                            if (commentData.comments != null) {
+                                console.log(commentData)
+                                for (let data of commentData.comments) {
+                                    divToAppend += `
+                                   <div class="card pb-4">
+                                        <div class="text-justify darker mt-4 float-right">
+                                            <h6>\${data.approved_by}</h6>
+                                            <span>- \${data.created_date.split('T')[0]}</span>
+                                            <br>
+                                            <p>\${data.comment}</p>
+                                        </div>
+                                    </div>`
+                                }
+
+                            } else {
+                                divToAppend += `
+                                   <div class="pb-4">
+                                        <div class="text-justify darker mt-4 float-right">
+                                            <h4>No Comments Available</h4>
+                                        </div>
+                                    </div>`
+                            }
+
+                            $('.card').remove();
+                            document.querySelector('.comments-body').innerHTML =
+                                divToAppend;
+                            $('#comments-modal').modal('toggle');
+                        },
+                        error: function (error) {}
+                    })
+
+                }
+                if (e.target.classList.contains('comments-cancel-button')) {
+
+                    $('#comments-modal').modal('toggle')
+
+                }
+
+
+                if (e.target.classList.contains('exp-btn')) {
+                    let objArray = []
+                    let obj = {
+                        application_lid: e.target.dataset.id,
+                        experience_type_lid: e.target.dataset.exp
+                    }
+                    objArray.push(obj)
+                    let objJson = {
+                        'get_application_experience': objArray
+                    }
+                    console.log(JSON.stringify(objJson));
+                    $.ajax({
+                        url: '${pageContext.request.contextPath}/get-experience',
+                        type: 'POST',
+                        data: JSON.stringify(objJson),
+                        contentType: false,
+                        success: function (response) {
+                            let experienceType = 0;
+                            let expdata = JSON.parse(response.value)
+                                .application_resume_experience;
+                            console.log(expdata)
+
+                            if (expdata != null) {
+
+                                let teachingExperience = `<div class="card">
+                                        <table>
+                                            <thead>
+                                                <th>University/Institute</th>
+                                                <th>Program</th>
+                                                <th>Subject Taught</th>
+                                                <th>Pedagogy</th>
+                                                <th>Designation</th>
+                                                <th>Start Date</th>
+                                                <th>End Date</th>
+                                            </thead>
+                                            </hr>
+                                            <tbody>`
+
+                                let industryTable = `<div class="card">
+                                        <table>
+                                            <thead>
+                                                <th>Organizatione</th>
+                                                <th>Responsibility</th>
+                                                <th>Designation</th>
+                                                <th>Start Date</th>
+                                                <th>End Date</th>
+                                            </thead>
+                                            </hr>
+                                            <tbody>`
+                                for (let exp of expdata) {
+                                    if (exp.experience_type_lid === 5) {
+                                        experienceType = 5;
+                                        teachingExperience += `
+                                <tr>
+                                   <td>\${exp.employer_name}</td>
+                                   <td>\${exp.description}</td>
+                                   <td>\${exp.responsibilities}</td>
+                                   <td>\${exp.padagogy}</td>
+                                   <td>\${exp.designation}</td>
+                                   <td>\${exp.start_date}</td>
+                                   <td>\${exp.end_date}</td>
+                                </tr> `
+                                    } else if (exp.experience_type_lid === 4) {
+                                        experienceType = 4;
+                                        industryTable += `
+                                <tr>
+                                   <td>\${exp.employer_name}</td>
+                                   <td>\${exp.responsibilities}</td>
+                                   <td>\${exp.designation}</td>
+                                   <td>\${exp.start_date}</td>
+                                   <td>\${exp.end_date}</td>
+                                </tr> `
+                                    }
+
+                                }
+
+                                teachingExperience += `</tbody></table></div>`;
+                                industryTable += `</tbody></table></div>`;
+                                $('.card').remove();
+                                document.querySelector('.qualification-div').innerHTML =
+                                    experienceType == 5 ? teachingExperience : industryTable
+                                $(".qualification-display").modal("toggle");
+                            } else {
+                                let noexp = `
+                        <div class="card">
+                            <h4 align="center"> No Data Available </h4>
+                        </div>
+                        `
+                                $('.card').remove();
+                                $(".qualification-display").modal("toggle");
+                                document.querySelector('.qualification-div')
+                                    .insertAdjacentHTML('afterend', noexp);
+
+
+                            }
+
+                        },
+                        error: function (err) {
+                            alert('Refresh the Page and Try Again!!')
+                        }
+                    })
+                }
+
+
+            })
+
+            if (Number.parseInt("${level}") > 2) {
+                document.getElementById('select-div').classList.add('d-none');
+
+            }
+
+
+        });
     </script>
 </body>
 

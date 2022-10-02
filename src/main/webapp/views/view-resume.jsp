@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="${pageContext.request.contextPath}/simpleAlert.css">
 
   <title>Resume</title>
-  <link rel="icon" type="image/x-icon" href="images.jpg">
+  <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/images.jpg">
 </head>
 
 <body>

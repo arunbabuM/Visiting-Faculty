@@ -290,11 +290,10 @@ public class userDao implements UserDaoInterface {
 
     @Override
     public UserDto getUserLid(String user_id) {
-        String sql = "Select lev.level,u.id,u.user_id,r.name,u.organization_lid from public.user u INNER JOIN user_role ur ON u.id=ur.user_lid INNER JOIN role r ON r.id = ur.role_lid INNER JOIN level lev ON lev.role_lid = r.id AND u.user_id = ?";
+        String sql = "Select lev.level,u.id,u.user_id,r.name from public.user u INNER JOIN user_role ur ON u.id=ur.user_lid INNER JOIN role r ON r.id = ur.role_lid INNER JOIN level lev ON lev.role_lid = r.id AND u.user_id = ?";
         // Integer Password = jdbcTemplate.queryForObject(sql, Integer.class, user_id);
         UserDto userDto = jdbcTemplate.queryForObject(sql, (rs, rownum) -> {
-            return new UserDto(rs.getInt("level"),rs.getInt("id"), rs.getString("user_id"), rs.getString("name"),
-             rs.getString("organization_lid"));
+            return new UserDto(rs.getInt("level"),rs.getInt("id"), rs.getString("user_id"), rs.getString("name"));
         }, user_id);
         return userDto;
     }
@@ -589,6 +588,22 @@ public class userDao implements UserDaoInterface {
 
         return jdbcCall.executeFunction(Object.class, id);
 
+    }
+
+    @Override
+    public Object getProformaReport(String data) {
+        SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
+                .withFunctionName("get_proforma_report");
+
+        return jdbcCall.executeFunction(Object.class, data);
+    }
+
+    @Override
+    public Object getAllProformaReport(String data) {
+        SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
+                .withFunctionName("get_all_proforma_report");
+
+        return jdbcCall.executeFunction(Object.class, data);
     }
 
 }

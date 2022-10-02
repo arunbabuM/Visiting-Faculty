@@ -14,7 +14,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
   
     <title>Create Performa</title>
-    <link rel="icon" type="image/x-icon" href="images.jpg">
+    <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/images.jpg">
+
 
     <style>
         .select2-selection {
@@ -699,7 +700,7 @@ document.addEventListener('click', function(e) {
           fetch(url, params).then((data) => {
             if (data.status == 200) {
                 console.log(data);
-                location.href = '${pageContext.request.contextPath}/performa'
+                location.href = '${pageContext.request.contextPath}/proforma'
                 document.getElementById('main-loader').classList.add('d-none');
             } else {
               alert('Check Details Input');

@@ -48,29 +48,7 @@
     <script src="${pageContext.request.contextPath}/js/ajaxApi.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/jquery.bootpag.min.js"></script>
-    <script>
-        $(document).ready(function () {
 
-            // $('#create-resume-button').on('click', function () {
-
-            //     $.ajax({
-            //         type: 'POST',
-            //         url: '/create-resume',
-            //         success: function (response) {
-
-            //             // if(response.status == 200) {
-            //             window.location = '/create-new-resume'
-            //             // }
-
-            //         },
-            //         error: function (error) {
-            //             console.log("ERROR", error);
-            //         }
-            //     })
-            // })
-
-        })
-    </script>
 </body>
 
 </html>

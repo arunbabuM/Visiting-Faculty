@@ -16,7 +16,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/simpleAlert.css">
 
-    <title>Dashboard</title>
+    <title>View Applications</title>
     <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/images.jpg">
 </head>
 
@@ -51,13 +51,13 @@
         <div class="main-content">
 
             <!-- Error Alert -->
-            <div class="validation-alert alert alert-danger alert-dismissible fade show d-none">
+            <div class="validation-alert alert alert-danger alert-dismissible fade in show d-none">
                 <strong>Error!</strong>&nbsp Not Available
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                <button type="button" class="btn-close validation-close-btn"></button>
             </div>
-            <div class="no-data-alert alert alert-info alert-dismissible fade show d-none">
-                <strong>Error!</strong>No Data Available
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <div class="no-data-alert alert alert-info alert-dismissible fade in show d-none">
+                <strong>SORRY!</strong>  No Data Available
+                <button type="button" class="btn-close data-alert-close"></button>
             </div>
 
 
@@ -151,9 +151,13 @@
     <script src="${pageContext.request.contextPath}/js/jquery.bootpag.min.js"></script>
     <script>
         $(document).ready(function () {
-
+            $('.data-alert-close').on('click',function() {
+                document.querySelector('.no-data-alert').classList.add('d-none')
+            })
+            $('.validation-close-btn').on('click',function() {
+                document.querySelector('.validation-alert').classList.add('d-none')
+            })
             let timeout = null;
-
 
             function searchFunction(value) {
                 $.ajax({
@@ -207,7 +211,7 @@
 
                             $('.table-appending-div').html(tableToAppend)
                         } else {
-                            document.querySelector('.validation-alert').classList.remove('d-none')
+                            document.querySelector('.no-data-alert').classList.remove('d-none')
 
                         }
 

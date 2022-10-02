@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.visitingfaculty.dao.UserDaoInterface;
 
 @RestController
-public class PerformerController 
+public class proformaController 
 {
     @Autowired
     UserDaoInterface userDaoInterface;
@@ -30,11 +30,27 @@ public class PerformerController
         return perfomaView;
     }
 
+    @PostMapping(value="/proforma-report-view")
+    public Object proformaReport(@RequestBody String data)
+    {
+        System.err.println(data);
+        Object perfomaView = userDaoInterface.getProformaReport(data);
+        return perfomaView;
+    }
+
     @PostMapping(value="/get-all-proforma")
     public Object getAllProforma(@RequestBody String data)
     {
         System.err.println(data);
         Object perfomaView = userDaoInterface.getAllProforma(data);
+        return perfomaView;
+    }
+
+    @PostMapping(value="/get-all-proforma-report")
+    public Object getAllProformaReport(@RequestBody String data)
+    {
+        System.err.println(data);
+        Object perfomaView = userDaoInterface.getAllProformaReport(data);
         return perfomaView;
     }
 
