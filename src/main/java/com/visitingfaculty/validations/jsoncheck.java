@@ -81,7 +81,6 @@ public class jsoncheck {
 
     }
     public String ConvertFileToBase64(String JsonString) {
-        Boolean check = false;
         JSONObject jsonString = new JSONObject(JsonString);
         // for userinfo
         JSONArray proforma_status = jsonString.getJSONArray("insert_proforma_status");
@@ -94,14 +93,8 @@ public class jsoncheck {
                 String replacedAadharPhoto = userService.uploadPhotos(file);
 
                 JsonString = JsonString.replace(file, replacedAadharPhoto);
-                check = true;
             } 
-        if (check == true) {
-            System.out.println(JsonString);
-            return JsonString;
-        } else {
-            return null;
-        }
+       return JsonString;
 
     }
 

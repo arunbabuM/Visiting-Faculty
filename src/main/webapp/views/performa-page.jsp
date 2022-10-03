@@ -478,7 +478,7 @@
                                 let qualdetails = `
                         <div class="card">
                             <div class="card-body">
-                                <table class="table table-responsive">
+                                <table class="table table-responsive ">
                                     <thead>
                                         <th>Institute</th>
                                         <th>Topic of study</th>
@@ -640,6 +640,9 @@
                                     document.querySelector('.status-select').innerHTML =
                                         options
                                     $('#proforma-approval-modal').modal('toggle');
+                                    if('${level}' == 1) {
+                                        document.querySelector('.status-select').lastElementChild.remove()
+                                    }
                                 }
 
                             }
@@ -659,7 +662,9 @@
                     $("#proforma-approval-modal").modal("toggle");
                 }
                 if (e.target.classList.contains('proforma-approval-submit-btn')) {
+
                     document.getElementById('main-loader').classList.remove('d-none')
+                    document.getElementById("approval-file").classList.remove('border-danger')
                     document.querySelector('.status-select').classList.remove('border-danger');
                     let fileArray = []
 
@@ -673,6 +678,8 @@
                         console.log(profilePhotoBase64)
                     }
                        
+                    } else {
+                        fileArray[0] = null;
                     }
                     let proformaArray = {
                         "insert_proforma_status": []
@@ -687,11 +694,12 @@
                     objectData.status_lid = document.querySelector('.status-select').value
                     objectData.approved_by = '${user_id}'
                     objectData.file_path = fileArray[0]
-                    if (objectData.status_lid < 1 || objectData.status_lid > 4) {
+                    // letTypeValidation = fileArray[0].split(";")[0].split("/")[1] == 'doc' || 'pdf' || 'png' || 'jpg' || 'jpeg';
+                    if (objectData.status_lid < 1 || objectData.status_lid > 4 ) {
                         document.querySelector('.status-select').classList.add('border-danger');
                         document.getElementById('main-loader').classList.add('d-none')
                         return;
-                    }
+                    } 
                     proformaArray.insert_proforma_status.push(objectData);
 
                     $.ajax({
@@ -867,7 +875,7 @@
                             if (expdata != null) {
 
                                 let teachingExperience = `<div class="card">
-                                        <table>
+                                        <table class="table table-display table-bordered">
                                             <thead>
                                                 <th>University/Institute</th>
                                                 <th>Program</th>
@@ -881,7 +889,7 @@
                                             <tbody>`
 
                                 let industryTable = `<div class="card">
-                                        <table>
+                                        <table class="table table-display table-bordered">
                                             <thead>
                                                 <th>Organizatione</th>
                                                 <th>Responsibility</th>
@@ -899,7 +907,7 @@
                                    <td>\${exp.employer_name}</td>
                                    <td>\${exp.description}</td>
                                    <td>\${exp.responsibilities}</td>
-                                   <td>\${exp.padagogy}</td>
+                                   <td>\${exp.padagogy == "" ? 'N.A' : exp.padagogy}</td>
                                    <td>\${exp.designation}</td>
                                    <td>\${exp.start_date}</td>
                                    <td>\${exp.end_date}</td>

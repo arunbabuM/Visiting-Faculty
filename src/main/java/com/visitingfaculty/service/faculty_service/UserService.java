@@ -63,10 +63,9 @@ public class UserService {
     public String uploadPhotos(String base64String) {
 
         String initialFilename = UUID.randomUUID().toString();
-        String initialType = base64String.split(";")[0];
-        String type = initialType.split(":")[1];
+        String type = base64String.split(";")[0].split("/")[1];
         System.out.println(type);
-        String filename = initialFilename + type;
+        String filename = initialFilename + "." + type;
         String base64Image = base64String.split(",")[1];
         byte[] imageBytes = javax.xml.bind.DatatypeConverter.parseBase64Binary(base64Image);
 
