@@ -23,9 +23,8 @@
   <jsp:include page="left-sidebar.jsp" />
   <main class="main">
     <jsp:include page="header.jsp" />
-
+    <h4 class="school-tag d-none pt-5 mt-5">This Application is for : <b id="school-name"></b></h4><hr>
     <div id="body" class="container">
-
       <div class="py-5 d-flex justify-content-center align-items-center">
         <a href="${pageContext.request.contextPath}/dashboard" class="back-button px-2">
           <button class="back-button btn py-2 btn-danger">Back</button>
@@ -1103,11 +1102,10 @@
         let resume = `
       <div class="d-flex justify-content-end">
 
-        <i id="download-btn" class="h1 fa-solid fa-download"></i>
+        <i id="download-btn" class="h1 d-none fa-solid fa-download"></i>
       </div>
 
       <div class="shadow-lg">
-        <h3 class="school-tag d-none">This Application is for : <b id="school-name"></b></h3>
 
         <!--------------------------------------Personal Details Section ---------------------------------------->`
 
@@ -7604,10 +7602,11 @@
         url: '${pageContext.request.contextPath}/get-school-name',
         type: 'POST',
         data:  organization_lid,
+        contentType: false,
         success: function (response) {
-
+          console.log(response)
           document.getElementById('school-name').innerHTML = response
-          document.querySelector('.select-tag').classList.remove('d-none')
+          document.querySelector('.school-tag').classList.remove('d-none')
 
         },
         error: function (error) {

@@ -105,7 +105,7 @@ public interface UserDaoInterface {
     
     int deleteProformaDetail(int id);
    
-    int getSchoolName(int id);
+    String getSchoolName(String id);
 
     Object createJobApplication(String object);
     

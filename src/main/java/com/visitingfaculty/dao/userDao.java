@@ -568,9 +568,9 @@ public class userDao implements UserDaoInterface {
     }
 
     @Override
-    public int getSchoolName(int id) {
+    public String getSchoolName(String id) {
         String sql = "SELECT name FROM organization where organization_id = ?";
-        return jdbcTemplate.update(sql, id);
+        return jdbcTemplate.queryForObject(sql, String.class,id);
     }
 
     @Override

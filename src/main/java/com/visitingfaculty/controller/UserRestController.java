@@ -60,7 +60,6 @@ public class UserRestController {
     @PostMapping("/reset-success")
     public ResponseEntity<?>  resetpassword(@RequestBody String rp,HttpSession httpSession)
     {
-        System.out.println(rp);
         JSONObject jsonString = new JSONObject(rp);
         JSONArray resetData = jsonString.getJSONArray("object");
         String tokenJson = resetData.getJSONObject(0).getString("token");
@@ -105,7 +104,6 @@ public class UserRestController {
             }
             return ResponseEntity.ok("Inserted Successfully");
         }
-        System.out.println("Error");
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 
     }
@@ -115,7 +113,6 @@ public class UserRestController {
 
         // if user not exist then we will generatae a random 6 digit token for
         // verification
-        System.out.println( "USERDATA>>>>>>>>>>>>>" + userDto);
         httpSession.setAttribute("user_id", userDto.getUser_id());
         password = userDto.getPassword();
 
@@ -176,7 +173,6 @@ public class UserRestController {
     @PostMapping("/verify-login")
     public ResponseEntity<?> verifyUserLogin(@RequestBody UserDto userDto, HttpSession httpSession) {
 
-        System.out.println(userDto);
 
         if (loginService.verifyPassword(userDto)) {
 
@@ -219,7 +215,6 @@ public class UserRestController {
     @PostMapping("/get-faculty-by-name")
     public Object searchFacultyByName(String user_id) {
 
-        System.out.println(user_id);
 
         Object data = userDaoInterface.getFacultyResumeByName(user_id);
 
@@ -230,7 +225,6 @@ public class UserRestController {
 
     @PostMapping("/get-admin-application-search")
     public Object adminApplicationSearch(@RequestBody String getApplicationJson) {
-        System.out.println(getApplicationJson);
         Object data = userDaoInterface.getApplicationData(getApplicationJson);
 
         return data;
@@ -274,7 +268,6 @@ public class UserRestController {
     @PostMapping("/update-job-application")
     public ResponseEntity<?> updateJobApplication(@RequestBody String data ,HttpSession httpSession) {
 
-        System.out.println("DATA>>>>>>>>" + data);
            Object dataFromDb = userDaoInterface.updateApplication(data);
 
         if (dataFromDb == null) {
@@ -293,7 +286,6 @@ public class UserRestController {
 
     @PostMapping("registerationFaculty")
     public ResponseEntity<?> getRegisterationFactulty(@RequestBody UserDto data,User user) {
-        System.out.println("DATA" + data);
         if(data.getUser_id() != null) {
 
             String password_hash = passwordService.encodePassword(data.getPassword());
@@ -310,7 +302,6 @@ public class UserRestController {
     
     @PostMapping("/create-proforma")
     public ResponseEntity<?> getPerforma(@RequestBody String data) {
-        System.out.println("Performa"+data);
         userDaoInterface.createProforma(data);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
@@ -328,10 +319,9 @@ public class UserRestController {
     }
 
     @PostMapping("/get-school-name")
-    public ResponseEntity<?> getSchoolName(@RequestBody int organizationId) {
-        
-       userDaoInterface.getSchoolName(organizationId);
-           return ResponseEntity.status(HttpStatus.OK).build();
+    public Object getSchoolName(@RequestBody String organizationId) {
+           
+           return userDaoInterface.getSchoolName(organizationId);
     }
 
     @PostMapping("/get-schools-list")
@@ -346,9 +336,10 @@ public class UserRestController {
 
     @PostMapping("/proforma-approval") 
     public ResponseEntity<?> updateProforma(@RequestBody String data) {
-        System.err.println(data);
-
-        Object dataFromDb = userDaoInterface.updateproforma(data);
+        System.out.println("DATA>>>>>>>>>" + data);
+        String updatedData = jsonchk.ConvertFileToBase64(data);
+        System.out.println("UPDATEDDATA>>>>>>>>>" + updatedData);
+        Object dataFromDb = userDaoInterface.updateproforma(updatedData);
         if (dataFromDb != null) {
            return ResponseEntity.status(HttpStatus.OK).build();
         }
@@ -359,7 +350,6 @@ public class UserRestController {
     @PostMapping("/get-status-list")
     public Object getStatusList(@RequestBody String data) {
 
-        System.out.println(data);
         Object dataFromDb = userDaoInterface.getStatusList(data);
         if(dataFromDb != null) {
             return dataFromDb;

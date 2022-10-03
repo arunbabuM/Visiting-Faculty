@@ -111,6 +111,7 @@
                     <div class="proforma-approval-body container" style="width: auto;">
                         <select class="form-select status-select form-select-lg mb-3">
                         </select>
+                        <input type="file" id="approval-file" required accept=".doc,.docx,.pdf,image/*" class="form-control d-none">
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="close2 btn btn-secondary modal2-cancel-button"
@@ -128,20 +129,17 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Comment for Proforma Approval</h5>
+                        <h5 class="modal-title" id="exampleModalLongTitle">Comments </h5>
                         <button type="button" style="border: none;" class="comments-cancel-button" data-dismiss="modal"
                             aria-label="Close">
                             <span class="comments-cancel-button" aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="comments-body container" style="width: auto;">
-
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger comments-cancel-button"
                             data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-success comments-submit-btn"
-                            data-dismiss="modal">Submit</button>
                     </div>
                 </div>
             </div>
@@ -598,7 +596,7 @@
 
 
             document.querySelector('.main').addEventListener('click', function (e) {
-
+                
                 if (e.target.classList.contains('approval-btn')) {
                     proformaid = e.target.dataset.id
                     console.log("LEVEL>>>>>>>>>>", '${level}')
@@ -661,12 +659,26 @@
                     $("#proforma-approval-modal").modal("toggle");
                 }
                 if (e.target.classList.contains('proforma-approval-submit-btn')) {
-
+                    document.getElementById('main-loader').classList.remove('d-none')
                     document.querySelector('.status-select').classList.remove('border-danger');
+                    let fileArray = []
 
+                    let approvalFile = document.getElementById("approval-file").files[0]
+                    if (approvalFile) {
+                    let filereader = new FileReader();
+                    filereader.readAsDataURL(approvalFile);
+                    filereader.onload =  function  (evt) {
+                        let profilePhotoBase64 =  evt.target.result;
+                        fileArray[0] = profilePhotoBase64
+                        console.log(profilePhotoBase64)
+                    }
+                       
+                    }
                     let proformaArray = {
                         "insert_proforma_status": []
                     }
+
+                    setTimeout(function() {
 
                     let objectData = {}
                     objectData.proforma_lid = document.querySelector('.proforma-comment').dataset.id
@@ -674,8 +686,10 @@
                     objectData.comment = document.querySelector('.proforma-comment').value
                     objectData.status_lid = document.querySelector('.status-select').value
                     objectData.approved_by = '${user_id}'
+                    objectData.file_path = fileArray[0]
                     if (objectData.status_lid < 1 || objectData.status_lid > 4) {
                         document.querySelector('.status-select').classList.add('border-danger');
+                        document.getElementById('main-loader').classList.add('d-none')
                         return;
                     }
                     proformaArray.insert_proforma_status.push(objectData);
@@ -686,16 +700,17 @@
                         data: JSON.stringify(proformaArray),
                         contentType: false,
                         success: function (response) {
-
-                            console.log("Success");
+                            document.getElementById('main-loader').classList.add('d-none')
                             location.reload()
                         },
                         error: function (err) {
-
+                            document.getElementById('main-loader').classList.add('d-none')
                             console.log("Error");
                         }
 
                     })
+                },1200)
+
                 }
 
                 if (e.target.classList.contains('school-select')) {
@@ -727,6 +742,8 @@
 
                             if (performerinfoobj != null) {
                                 let view = ``
+                                if(performerinfoobj.proforma_details != null) {
+
                                 for (performerinfo of performerinfoobj.proforma_details) {
                                     view += `
                                     <tr>
@@ -758,9 +775,11 @@
                 `
                                 }
                                 document.querySelector('.performer-view').innerHTML = view;
+                            } else {
+                                document.querySelector('.performer-view').innerHTML = ""
                             }
 
-
+                            }
 
 
                         },
@@ -907,9 +926,9 @@
                                 $(".qualification-display").modal("toggle");
                             } else {
                                 let noexp = `
-                        <div class="card">
-                            <h4 align="center"> No Data Available </h4>
-                        </div>
+                                <div class="card">
+                                    <h4 align="center"> No Data Available </h4>
+                                </div>
                         `
                                 $('.card').remove();
                                 $(".qualification-display").modal("toggle");
@@ -925,7 +944,13 @@
                         }
                     })
                 }
-
+                if(e.target.classList.contains('status-select')) {
+                    if(e.target.value == 4) {
+                       document.getElementById('approval-file').classList.remove('d-none')
+                    } else {
+                       document.getElementById('approval-file').classList.add('d-none')
+                    }
+                }
 
             })
 

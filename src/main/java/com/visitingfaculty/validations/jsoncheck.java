@@ -80,6 +80,30 @@ public class jsoncheck {
         }
 
     }
+    public String ConvertFileToBase64(String JsonString) {
+        Boolean check = false;
+        JSONObject jsonString = new JSONObject(JsonString);
+        // for userinfo
+        JSONArray proforma_status = jsonString.getJSONArray("insert_proforma_status");
+
+            String file = proforma_status.getJSONObject(0).isNull("file_path") ? "null"
+                    : proforma_status.getJSONObject(0).getString("file_path");
+
+            if (!file.equals("null")) {
+
+                String replacedAadharPhoto = userService.uploadPhotos(file);
+
+                JsonString = JsonString.replace(file, replacedAadharPhoto);
+                check = true;
+            } 
+        if (check == true) {
+            System.out.println(JsonString);
+            return JsonString;
+        } else {
+            return null;
+        }
+
+    }
 
     // **************************************************************************************************---->For
     // Bank Details

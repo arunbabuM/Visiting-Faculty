@@ -334,19 +334,17 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/jquery.bootpag.min.js"></script>
   
-    <script src="${pageContext.request.contextPath}/js/particlejs.min.js"></script>
 
-  
     <!-- Page Level JavaScript Libaries End -->
     <script>
-      window.onload = function () {
-        console.log("Window on load")
-        Particles.init({
-          selector: '.background',
-          connectParticles: true,
-          color: '#ffffff'
-        });
-      };
+      // window.onload = function () {
+      //   console.log("Window on load")
+      //   Particles.init({
+      //     selector: '.background',
+      //     connectParticles: true,
+      //     color: '#ffffff'
+      //   });
+      // };
   
   
       //DYNAMIC CSS

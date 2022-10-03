@@ -238,7 +238,7 @@
               <div class="cust-input-prepend">
                 <i class="fa-solid fa-user"></i>
               </div>
-              <input type="text" name="user_id" placeholder="Pan Card No." required>
+              <input type="text" name="user_id" placeholder="Pan Card No./Username" required>
             </div>
 
             <div class="cust-btn-group mb-3">
