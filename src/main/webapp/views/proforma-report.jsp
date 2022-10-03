@@ -407,7 +407,7 @@
                   console.log(maxpoints)
                                 view += `
                 <tr>
-                    <td>\${performerinfo.created_date.split('T')[0]}</td>
+                    <td>\${performerinfo.created_date}</td>
                     <td>\${performerinfo.full_name}</td>
                     <td>\${performerinfo.pancard_no}</td>
                     <td><button data-qual="\${performerinfo.application_lid}" data-id = "1" data-toggle="modal" data-target=".bd-example-modal-lg" type="button" class="qual-btn btn btn-outline-primary text-dark">Graduate</button> </td>
@@ -491,7 +491,7 @@
                                             <td>\${gd.institute}</td>
                                             <td>\${gd.topic_of_study}</td>
                                             <td>\${gd.university}</td>
-                                            <td>\${gd.rev_timestamp.split('T')[0]}</td>
+                                            <td>\${gd.rev_timestamp}</td>
                                         </tr>`
                                 }
                                 qualdetails += `</tbody>
@@ -638,7 +638,7 @@
                                 for (performerinfo of performerinfoobj.proforma_details) {
                                     view += `
                                     <tr>
-                                        <td>\${performerinfo.created_date.split('T')[0]}</td>
+                                        <td>\${performerinfo.created_date}</td>
                                         <td>\${performerinfo.full_name}</td>
                                         <td>\${performerinfo.pancard_no}</td>
                                         <td><button data-qual="\${performerinfo.application_lid}" data-id = "1" data-toggle="modal" data-target=".bd-example-modal-lg" type="button" class="qual-btn btn btn-outline-primary text-dark">Graduate</button> </td>
@@ -752,7 +752,7 @@ if(skillPoint != null){
                                    <div class="card pb-4">
                                         <div class="text-justify darker mt-4 float-right">
                                             <h6>\${data.approved_by}</h6>
-                                            <span>- \${data.created_date.split('T')[0]}</span>
+                                            <span>- \${data.created_date}</span>
                                             <br>
                                             <p>\${data.comment}</p>
                                         </div>

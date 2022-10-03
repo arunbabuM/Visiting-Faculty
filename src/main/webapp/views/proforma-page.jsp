@@ -408,7 +408,7 @@
                   console.log(maxpoints)
                                 view += `
                 <tr>
-                    <td>\${performerinfo.created_date.split('T')[0]}</td>
+                    <td>\${performerinfo.created_date}</td>
                     <td>\${performerinfo.full_name}</td>
                     <td>\${performerinfo.pancard_no}</td>
                     <td><button data-qual="\${performerinfo.application_lid}" data-id = "1" data-toggle="modal" data-target=".bd-example-modal-lg" type="button" class="qual-btn btn btn-outline-primary text-dark">Graduate</button> </td>
@@ -430,7 +430,7 @@
                     <td>\${performerinfo.aol_obe}</td>
                     <td><button data-skill="\${maxpoints.skill}" data-experience="\${maxpoints.experience}" data-achievement="\${maxpoints.achievement}" data-qualification="\${maxpoints.qualification}" data-totalP="\${maxpoints.total_points}" data-toggle="modal" type="button" class="point-distribution btn btn-outline-primary text-dark">\${maxpoints.total_points}</button></td>
                     <td><button data-id = "\${performerinfo.proforma_id}" data-toggle="modal" type="button" class="comments-btn btn btn-outline-primary text-dark">Comments</button></td>
-                    <td>Pending</td>
+                    <td>Waiting for ${role.split("_")[1]} Approval</td>
                     <td><i data-id="\${performerinfo.proforma_id}" class="fa-solid fa-fast-forward approval-btn" title="Send for Approval"></i></td>
                 <tr>
                 `
@@ -493,7 +493,7 @@
                                             <td>\${gd.institute}</td>
                                             <td>\${gd.topic_of_study}</td>
                                             <td>\${gd.university}</td>
-                                            <td>\${gd.rev_timestamp.split('T')[0]}</td>
+                                            <td>\${gd.year_of_passing}</td>
                                         </tr>`
                                 }
                                 qualdetails += `</tbody>
@@ -665,9 +665,30 @@
                 }
                 if (e.target.classList.contains('proforma-approval-submit-btn')) {
 
+                    document.querySelector('.proforma-comment').classList.remove('border-danger');
                     document.getElementById('main-loader').classList.remove('d-none')
                     document.getElementById("approval-file").classList.remove('border-danger')
                     document.querySelector('.status-select').classList.remove('border-danger');
+
+                    let objectData = {}
+                    objectData.proforma_lid = document.querySelector('.proforma-comment').dataset.id
+                    objectData.level = '${level}'
+                    objectData.comment = document.querySelector('.proforma-comment').value
+                    objectData.status_lid = document.querySelector('.status-select').value
+                    objectData.approved_by = '${user_id}'
+
+                    if (objectData.status_lid < 1 || objectData.status_lid > 4 ) {
+                        document.querySelector('.status-select').classList.add('border-danger');
+                        document.getElementById('main-loader').classList.add('d-none')
+                        return;
+                    } 
+                    if(objectData.status_lid == 2 && objectData.comment.length < 1) {
+                        document.querySelector('.proforma-comment').classList.add('border-danger');
+                        document.querySelector('.proforma-comment').outerHTML += "<p class='text-danger'style='width:auto'>Please Enter Reason</p>"
+                        document.getElementById('main-loader').classList.add('d-none')
+                        return;
+                    }
+
                     let fileArray = []
 
                     let approvalFile = document.getElementById("approval-file").files[0]
@@ -689,19 +710,8 @@
 
                     setTimeout(function() {
 
-                    let objectData = {}
-                    objectData.proforma_lid = document.querySelector('.proforma-comment').dataset.id
-                    objectData.level = '${level}'
-                    objectData.comment = document.querySelector('.proforma-comment').value
-                    objectData.status_lid = document.querySelector('.status-select').value
-                    objectData.approved_by = '${user_id}'
                     objectData.file_path = fileArray[0]
-                    // letTypeValidation = fileArray[0].split(";")[0].split("/")[1] == 'doc' || 'pdf' || 'png' || 'jpg' || 'jpeg';
-                    if (objectData.status_lid < 1 || objectData.status_lid > 4 ) {
-                        document.querySelector('.status-select').classList.add('border-danger');
-                        document.getElementById('main-loader').classList.add('d-none')
-                        return;
-                    } 
+                    
                     proformaArray.insert_proforma_status.push(objectData);
 
                     $.ajax({
@@ -758,7 +768,7 @@
                                              console.log(maxpoints)
                                     view += `
                                     <tr>
-                                        <td>\${performerinfo.created_date.split('T')[0]}</td>
+                                        <td>\${performerinfo.created_date}</td>
                                         <td>\${performerinfo.full_name}</td>
                                         <td>\${performerinfo.pancard_no}</td>
                                         <td><button data-qual="\${performerinfo.application_lid}" data-id = "1" data-toggle="modal" data-target=".bd-example-modal-lg" type="button" class="qual-btn btn btn-outline-primary text-dark">Graduate</button> </td>
@@ -876,7 +886,7 @@
                                    <div class="card pb-4">
                                         <div class="text-justify darker mt-4 float-right">
                                             <h6>\${data.approved_by}</h6>
-                                            <span>- \${data.created_date.split('T')[0]}</span>
+                                            <span>- \${data.created_date}</span>
                                             <br>
                                             <p>\${data.comment}</p>
                                         </div>
