@@ -97,6 +97,7 @@
         resumeinfo = data;
         let personal_details = data.personal_details;
         let bank_details = data.bank_details;
+        let pancardNumber = personal_details[0].pancard_no;
         console.log('Resume info :', resumeinfo);
 
         let resume = `
@@ -916,7 +917,7 @@
         </div>
       </div>`
 
-
+      
         } else {
           resume += `
           <div id="bank-details-div">
@@ -927,12 +928,31 @@
         </div>`
         }
         document.querySelector('#body').insertAdjacentHTML('afterbegin', resume);
+        feedBack(pancardNumber);
       },
 
       error: function (error) {
         console.log("error", error)
       }
     });
+
+    function feedBack(pancardNumber){
+
+             $.ajax({
+                        url: 'https://dev-portal.svkm.ac.in:8080/vfApi/getFeedback?panCardNo=' + pancardNumber,
+                        type: 'GET',
+                        success: function (response) {
+
+                          console.log("Value of the feedback from ajax>>>>>>>>>>>>>>>>>>",response.value)
+    
+                        },
+                        error: function (error) {
+                            console.log("ERROR")
+                        }
+
+                    })
+    
+    }
 
     //----------------------------------function to display images---------------------------------------------------
 

@@ -1028,6 +1028,21 @@ resumetable+= `</tbody>
 document.querySelector('#performa-creation-div').insertAdjacentHTML('afterbegin', resumetable);
 }
 
+console.log("pancard number outside Ajax>>>>>>>>>>>>>>>>>>>",resumeinfo.personal_details[0].pancard_no)
+                  $.ajax({
+                    
+                        url: 'https://dev-portal.svkm.ac.in:8080/vfApi/getFeedback?panCardNo=' + resumeinfo.personal_details[0].pancard_no,
+                        type: 'GET',
+                        success: function (response) {
+
+                          console.log("Value of the feedback from ajax>>>>>>>>>>>>>>>>>>",response.value)
+    
+                        },
+                        error: function (error) {
+                            console.log("ERROR")
+                        }
+
+                    })
 
 
 // function initSelect2LazyLoad(cssSelector) {
