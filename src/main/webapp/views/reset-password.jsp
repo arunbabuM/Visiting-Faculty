@@ -267,7 +267,7 @@
                   <input type="hidden" name="devicecheck" id="devicecheck">
                 </div>
               </div>
-              <div id="password2" class="div mb-3  d-none">
+              <div id="password2-div" class="div mb-3  d-none">
                 <small class="password-2-error-message text-danger d-none">Enter Valid Password</small>
                 <div class="cust-btn-group">
                   <div class="cust-input-prepend">
@@ -498,7 +498,7 @@
               document.getElementById('main-loader').classList.add('d-none');
               document.getElementById('token-div').classList.remove('d-none');
               document.getElementById('pass').classList.remove('d-none');
-              document.getElementById('password2').classList.remove('d-none');
+              document.getElementById('password2-div').classList.remove('d-none');
               document.querySelector('.register-btn').classList.add('d-none');
               document.querySelector('.alert-success').classList.remove('d-none');
               let div = document.querySelectorAll('.removing-input')
