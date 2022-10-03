@@ -14,7 +14,7 @@ public class proformaController
     @Autowired
     UserDaoInterface userDaoInterface;
 
-    @PostMapping(value="/performer-resume")
+    @PostMapping(value="/get-application-data")
     public Object performerResume(@RequestParam(value = "application_lid") int application_lid)
     {
         System.out.println("Resume :"+application_lid);
@@ -22,7 +22,7 @@ public class proformaController
         return resume;
     }
 
-    @PostMapping(value="/performer-view")
+    @PostMapping(value="/proforma-view")
     public Object performerView(@RequestBody String data)
     {
         System.err.println(data);

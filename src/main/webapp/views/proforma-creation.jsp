@@ -165,7 +165,7 @@
 let resumeinfo;
 
     $.ajax({
-      url: '${pageContext.request.contextPath}/performer-resume?application_lid=${application_lid}',
+      url: '${pageContext.request.contextPath}/get-application-data?application_lid=${application_lid}',
       type: 'POST',
       async : false,
       success: function (response) {

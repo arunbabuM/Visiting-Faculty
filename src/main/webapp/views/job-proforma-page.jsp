@@ -197,7 +197,7 @@
                                         <td class="user_id">\${obj.user_id}</td>
                                         <td >\${obj.resume_name}</td>
                                         <td>
-                                                <a class="application-preview" href="${pageContext.request.contextPath}/performa-creation?application_lid=\${obj.appln_id}" style="border:none; outline:none" >
+                                                <a class="application-preview" href="${pageContext.request.contextPath}/proforma-creation?application_lid=\${obj.appln_id}" style="border:none; outline:none" >
                                                 <i class="fa-solid fa-eye view-resume-icon" data-toggle="tooltip" title="View"></i></a>
                                                 
                                             </td>

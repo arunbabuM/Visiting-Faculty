@@ -960,7 +960,7 @@
               <div>
                 <label for="cancelled_cheque_Photo" class="py-md-2">Cancelled Cheque Photo<span
                     class="required">*</span></label>
-                <span id="cancelled_cheque_Photo-message" style="color: red;" class="error"></span>
+                <span id="cheque-photo1" style="color: red;" class="error"></span>
                 <input type="file" name="cancelled_cheque_Photo" id="cancelled_cheque_Photo-insert" class="form-control"
                   onchange="document.getElementById('check-preview-insert').src = window.URL.createObjectURL(this.files[0])">
               </div>
@@ -2825,7 +2825,6 @@
         vjstableelement[i].querySelector('.awardOrganization').classList.remove('input-border');
         vjstableelement[i].querySelector('.awardPlace').classList.remove('input-border');
         vjstableelement[i].querySelector('.awardRecieveDate').classList.remove('input-border');
-        vjstableelement[i].querySelector('.awardCertificationImage').classList.remove('input-border');
         vjstableelement[i].querySelector('.awardOrganizationType').classList.remove('input-border');
 
         let title = vjstableelement[i].querySelector('.awardName').value;
@@ -2840,7 +2839,6 @@
         let checkorganization_name = tabledatacheck(organization_name);
         let checkdescription = tabledatacheck(description);
         let checkachievement_date = checkdate(achievement_date);
-        let checkurl_path = tabledatacheck(url_path);
         let checkorganization_type_lid = checknotnull(organization_type_lid)
 
         //to add the red border according to validations
@@ -2859,10 +2857,7 @@
         } else if (checkorganization_type_lid == false) {
           vjstableelement[i].querySelector('.awardOrganizationType').classList.add('input-border');
           return;
-        } else if (checkurl_path == false) {
-          vjstableelement[i].querySelector('.awardCertificationImage').classList.add('input-border');
-          return;
-        }
+        } 
 
         let photoArray = []
 
@@ -2874,6 +2869,11 @@
             let awardPhotoBase64 = evt.target.result;
             photoArray[i] = awardPhotoBase64
           }
+        } else{
+          setTimeout(function () {
+            photoArray[i] = null
+          }, 1000)
+
         }
 
 
@@ -3108,7 +3108,6 @@
         publicationRow[i].querySelector('.publisher').classList.remove('input-border');
         publicationRow[i].querySelector('.year-of-publication').classList.remove('input-border');
         publicationRow[i].querySelector('.book-title').classList.remove('input-border');
-        publicationRow[i].querySelector('.publication-certification').classList.remove('input-border');
 
         let publicationRole = publicationRow[i].querySelector('.role').value;
         let publicationPublisher = publicationRow[i].querySelector('.publisher').value;
@@ -3135,10 +3134,7 @@
         } else if (checkPublicationBookTitle == false) {
           publicationRow[i].querySelector('.book-title').classList.add('input-border');
           return;
-        } else if (checkPublicationCertificate == false) {
-          publicationRow[i].querySelector('.publication-certification').classList.add('input-border');
-          return;
-        }
+        } 
 
         let photoArray = []
 
@@ -3150,6 +3146,10 @@
             let publicationPhotoBase64 = evt.target.result;
             photoArray[i] = publicationPhotoBase64
           }
+        } else {
+          setTimeout(function () {
+            photoArray[i] = null
+          }, 1000)
         }
 
         setTimeout(function () {
@@ -3741,14 +3741,17 @@
       submitBankDetailsForm.append('micrCode', document.getElementById('bank-micr-code-insert').value)
       submitBankDetailsForm.append('accountNumber', document.getElementById('bank-account-number-insert').value)
       submitBankDetailsForm.append('accountType', accountType1)
-      // submitBankDetailsForm.append('cancelledCheckPhoto', document.getElementById('cancelled_cheque_Photo-insert').value)
+      submitBankDetailsForm.append('cancelledCheckPhoto', document.getElementById('cancelled_cheque_Photo-insert').value)
 
       let facultyBankNameValid = dynamicLengthCheck(submitBankDetailsForm.get('bankName'),'bank-name-message-insert');
       let facultyBankBranchValid = dynamicLengthCheck(submitBankDetailsForm.get('branchName'),'bank-branch-message-insert');
       let facultyAccountNumberValid = dynamicBankAcountNumber(submitBankDetailsForm.get('accountNumber'),'bank-account-number-message-insert');
       let facultyifscValid = dynamicLengthCheck(document.querySelector('#bank-ifsc-code-insert').value,'bank-ifsc-code-message-insert')
+      let cancelledChequeValidation = dynamicLengthCheck(document.querySelector('#cancelled_cheque_Photo-insert').value,'cheque-photo1')
+ 
+      console.log(cancelledChequeValidation)
 
-      if (!facultyBankNameValid || !facultyBankBranchValid || !facultyAccountNumberValid) {
+      if (!facultyBankNameValid || !facultyBankBranchValid || !facultyAccountNumberValid || !cancelledChequeValidation) {
         return;
       }
 
@@ -5419,7 +5422,6 @@
         publicationRow[i].querySelector('.publisher').classList.remove('input-border');
         publicationRow[i].querySelector('.year-of-publication').classList.remove('input-border');
         publicationRow[i].querySelector('.book-title').classList.remove('input-border');
-        publicationRow[i].querySelector('.publication-certification').classList.remove('input-border');
 
         let publicationRole = publicationRow[i].querySelector('.role').value;
         let publicationPublisher = publicationRow[i].querySelector('.publisher').value;
@@ -6033,9 +6035,10 @@
       let facultyBankName1 = dynamicLengthCheck(submitBankDetailsForm.get('bankName'),'bank-name-message');
       let facultyBankBranch1 = dynamicLengthCheck(submitBankDetailsForm.get('branchName'),'bank-branch-message');
       let facultyAccountNumber1 = dynamicBankAcountNumber(submitBankDetailsForm.get('accountNumber'),'bank-account-number-message');
+      let cancelledChequeValidation = dynamicBankAcountNumber(submitBankDetailsForm.get('cancelled_cheque_Photo'),'cancelled_cheque_Photo-message');
 
 
-      if (!facultyBankName1 || !facultyBankBranch1|| !facultyAccountNumber1) {
+      if (!facultyBankName1 || !facultyBankBranch1|| !facultyAccountNumber1 || !cancelledChequeValidation) {
         return;
       }
 

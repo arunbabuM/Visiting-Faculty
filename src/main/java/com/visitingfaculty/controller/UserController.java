@@ -122,7 +122,7 @@ public class UserController {
             m.addAttribute("level", httpSession.getAttribute("level"));
             m.addAttribute("user_id", httpSession.getAttribute("user_id"));
             m.addAttribute("organization_lid", httpSession.getAttribute("organization_lid"));
-            return "performa-page";
+            return "proforma-page";
         }
         return "redirect:/login#session-timeout";
     }
@@ -139,14 +139,14 @@ public class UserController {
         return "redirect:/login#session-timeout";
     }
 
-    @GetMapping("/performa-creation")
+    @GetMapping("/proforma-creation")
     public String getPerformaCreation(@RequestParam(value = "application_lid") int application_lid, Model m) {
         String user_id = (String) httpSession.getAttribute("user_id");
         if (user_id != null) {
             m.addAttribute("application_lid", application_lid);
             m.addAttribute("level", httpSession.getAttribute("level"));
             m.addAttribute("user_id", httpSession.getAttribute("user_id"));
-            return "performa-creation";
+            return "proforma-creation";
         }
         return "redirect:/login#session-timeout";
     }
@@ -195,7 +195,7 @@ public class UserController {
     public String getperformerpage() {
         String user_id = (String) httpSession.getAttribute("user_id");
         if (user_id != null) {
-            return "job-performer-page";
+            return "job-proforma-page";
         }
         return "redirect:/login#session-timeout";
     }

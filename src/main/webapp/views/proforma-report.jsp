@@ -128,7 +128,7 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Comment for Proforma Approval</h5>
+                        <h5 class="modal-title" id="exampleModalLongTitle">Comments</h5>
                         <button type="button" style="border: none;" class="comments-cancel-button" data-dismiss="modal"
                             aria-label="Close">
                             <span class="comments-cancel-button" aria-hidden="true">&times;</span>
@@ -140,8 +140,6 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger comments-cancel-button"
                             data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-success comments-submit-btn"
-                            data-dismiss="modal">Submit</button>
                     </div>
                 </div>
             </div>
@@ -152,7 +150,7 @@
 
         <div class="main-content">
 
-            <div class="col-md-9 text-center pt-4" id="select-div" style="margin: auto;">
+            <div class="col-md-9 text-center pt-4 d-none" id="select-div" style="margin: auto;">
                 <h5 class="py-md-2 "> Select School</h5>
                 <hr>
                 <select class="form-select school-select form-select-lg mb-3">
@@ -695,9 +693,9 @@ if(skillPoint != null){
                     <table>
                         <thead>
                             <th>Skill</th>
-                            <th>experience</th>
-                            <th>achievement</th>
-                            <th>qualification</th>
+                            <th>Experience</th>
+                            <th>Achievement</th>
+                            <th>Qualification</th>
                             <th>Total Points</th>
                         </thead>
                         </hr>
