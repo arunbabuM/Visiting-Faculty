@@ -405,6 +405,8 @@
                         if (performerinfoobj.proforma_details != null) {
                             let view = ``
                             for (performerinfo of performerinfoobj.proforma_details) {
+                                let maxpoints = JSON.parse(performerinfo.max_points_2)
+                  console.log(maxpoints)
                                 view += `
                 <tr>
                     <td>\${performerinfo.created_date.split('T')[0]}</td>
@@ -427,7 +429,7 @@
                     <td><button data-pan-no="\${performerinfo.pancard_no}" class="btn btn-outline-primary feedback-btn">Feedback</button></td>
                     <td>1</td>
                     <td>\${performerinfo.aol_obe}</td>
-                    <td>\${performerinfo.max_points}</td>
+                    <td><button data-skill="\${maxpoints.skill}" data-experience="\${maxpoints.experience}" data-achievement="\${maxpoints.achievement}" data-qualification="\${maxpoints.qualification}" data-totalP="\${maxpoints.total_points}" data-toggle="modal" type="button" class="point-distribution btn btn-outline-primary text-dark">\${maxpoints.total_points}</button></td>
                     <td><button data-id = "\${performerinfo.proforma_id}" data-toggle="modal" type="button" class="comments-btn btn btn-outline-primary text-dark">Comments</button></td>
                     <td>Pending</td>
                 <tr>
@@ -658,7 +660,7 @@
                                         <td><button data-pan-no="\${performerinfo.pancard_no}" class="btn btn-outline-primary feedback-btn">Feedback</button></td>
                                         <td>1</td>
                                         <td>\${performerinfo.aol_obe}</td>
-                                        <td>\${performerinfo.max_points}</td>
+                                        <td><button data-skill="\${maxpoints.skill}" data-experience="\${maxpoints.experience}" data-achievement="\${maxpoints.achievement}" data-qualification="\${maxpoints.qualification}" data-totalP="\${maxpoints.total_points}" data-toggle="modal" type="button" class="point-distribution btn btn-outline-primary text-dark">\${maxpoints.total_points}</button></td>
                                         <td><button data-id = "\${performerinfo.proforma_id}" data-toggle="modal" type="button" class="comments-btn btn btn-outline-primary text-dark">Comments</button></td>
                                         <td>Pending</td>
                                     <tr>
@@ -676,6 +678,60 @@
                         }
                     });
                 }
+
+                if (e.target.classList.contains('point-distribution')) {
+
+let skillPoint = e.target.dataset.skill
+let experiencePoint = e.target.dataset.experience
+let achievementPoint = e.target.dataset.achievement
+let qualificationPoint = e.target.dataset.qualification
+let totalPoint = e.target.innerText
+
+console.log(skillPoint)
+
+if(skillPoint != null){
+
+    let pointDistribution = `<div class="card">
+                    <table>
+                        <thead>
+                            <th>Skill</th>
+                            <th>experience</th>
+                            <th>achievement</th>
+                            <th>qualification</th>
+                            <th>Total Points</th>
+                        </thead>
+                        </hr>
+                        <tbody>`
+
+    pointDistribution +=  `<tr>
+               <td>\${skillPoint}</td>
+               <td>\${experiencePoint}</td>
+               <td>\${achievementPoint}</td>
+               <td>\${qualificationPoint}</td>
+               <td>\${totalPoint}</td>
+            </tr> `
+
+    pointDistribution += `</tbody></table></div>`
+
+           $('.card').remove();
+            document.querySelector('.qualification-div').innerHTML = pointDistribution
+            $(".qualification-display").modal("toggle");
+        } else {
+
+            let noexp = `
+            <div class="card">
+                <h4 align="center"> No Data Available </h4>
+            </div>
+             `
+            $('.card').remove();
+            $(".qualification-display").modal("toggle");
+            document.querySelector('.qualification-div').insertAdjacentHTML('afterend', noexp);
+
+
+        }
+
+
+}
 
                 //
                 if (e.target.classList.contains('comments-btn')) {

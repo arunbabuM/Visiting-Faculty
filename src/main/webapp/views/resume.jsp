@@ -7614,7 +7614,6 @@
         }
       })
 
-
       document.querySelector('.approve-application').addEventListener('click', function(){
         let status = 400;
       if (resumeinfo.bank_details === null || resumeinfo.personal_details === null || resumeinfo
@@ -7630,7 +7629,6 @@
         let org_ID = document.querySelector('.school-type-input').dataset.id
         const application_lid = urlParams.get('application_lid')
         
-
         let object = {}
         object.resume_lid = resume_lid
         object.application_lid = application_lid
@@ -7640,7 +7638,7 @@
         data.create_job_application.push(object)
 
         console.log(JSON.stringify(data))
-      document.getElementById('main-loader').classList.remove('d-none');
+        document.getElementById('main-loader').classList.remove('d-none');
 
         fetch('${pageContext.request.contextPath}/update-job-application', {
             method: "POST",
