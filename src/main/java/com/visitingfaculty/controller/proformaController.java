@@ -69,4 +69,12 @@ public class proformaController
         Object perfomaexp = userDaoInterface.getExpperfoma(data);
         return perfomaexp;
     }
+
+    @PostMapping(value="/get-proforma-filter")
+    public Object performfilter(@RequestBody String data)
+    {
+        System.out.println("data : "+data);
+        Object perfomafilter = userDaoInterface.getProformaFilter(data);
+        return perfomafilter;
+    }
 }

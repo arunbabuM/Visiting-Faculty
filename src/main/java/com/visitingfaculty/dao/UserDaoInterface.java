@@ -139,4 +139,6 @@ public interface UserDaoInterface {
    
     Object getProformaReport(String data);
 
+    Object getProformaFilter(String data);
+
 }
