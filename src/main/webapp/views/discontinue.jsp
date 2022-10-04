@@ -331,36 +331,36 @@
 
 
             function getAllProforma() {
-                if (schoolList == 1) {
-                    $.ajax({
-                        url: '${pageContext.request.contextPath}/get-schools-list',
-                        type: 'POST',
-                        async: false,
-                        contentType: false,
-                        success: function (response) {
+                // if (schoolList == 1) {
+                //     $.ajax({
+                //         url: '${pageContext.request.contextPath}/get-schools-list',
+                //         type: 'POST',
+                //         async: false,
+                //         contentType: false,
+                //         success: function (response) {
 
-                            for (let desig of response) {
-                                let schoolObject = {
-                                    "organization_lid": desig.organization_id
-                                };
-                                console.log(desig.organization_id)
-                                // schoolObject.organization_lid = desig.organization_id;
-                                schoolArray.push(schoolObject);
+                //             for (let desig of response) {
+                //                 let schoolObject = {
+                //                     "organization_lid": desig.organization_id
+                //                 };
+                //                 console.log(desig.organization_id)
+                //                 // schoolObject.organization_lid = desig.organization_id;
+                //                 schoolArray.push(schoolObject);
 
-                                schoolType +=
-                                    `<option class="school-option col-md-10 col-sm-10 col-12" value="\${desig.organization_id}" data-name="\${desig.name}">\${desig.name}
-                                 </option>`
-                            }
-                            document.querySelector('.school-select').insertAdjacentHTML('beforeend',
-                                schoolType);
-                        },
-                        error: function (error) {
-                            console.log("Error::::::::::::", error);
-                        }
-                    })
-                    schoolList++
+                //                 schoolType +=
+                //                     `<option class="school-option col-md-10 col-sm-10 col-12" value="\${desig.organization_id}" data-name="\${desig.name}">\${desig.name}
+                //                  </option>`
+                //             }
+                //             document.querySelector('.school-select').insertAdjacentHTML('beforeend',
+                //                 schoolType);
+                //         },
+                //         error: function (error) {
+                //             console.log("Error::::::::::::", error);
+                //         }
+                //     })
+                //     schoolList++
 
-                }
+                // }
 
                 $.ajax({
                     url: '${pageContext.request.contextPath}/get-all-approved-proforma',
@@ -369,22 +369,28 @@
                     async: false,
                     contentType: false,
                     success: function (response) {
-                        performerinfoobj = JSON.parse(response.value)
+                        let performerinfoobj = JSON.parse(response.value).proforma_details
                         console.log(performerinfoobj)
-                        if (performerinfoobj.proforma_details != null) {
+                        if (performerinfoobj != null) {
                             let view = ``
-                            for (performerinfo of performerinfoobj.proforma_details) {
-                                let maxpoints = JSON.parse(performerinfo.max_points_2)
+                            for (performerinfo of performerinfoobj) {
                                 view += `
                                 <tr class="proforma-tr" >
                                     <td>\${performerinfo.full_name}</td>
                                     <td>\${performerinfo.pancard_no}</td>
                                     <td>\${performerinfo.module}</td>
                                     <td>\${performerinfo.program_name}</td>
-                                    <td>\${performerinfo.acad_session}</td>
-                                    <td><button data-organization-id="\${performerinfo.organization_lid}" data-id="\${performerinfo.proforma_id}" class="discontinue-btn btn btn-outline-danger text-dark"><i class="fa fa-solid fa-ban "></i> DISCONTINUE</button></td>
-                                <tr>
-                                `
+                                    <td>\${performerinfo.acad_session}</td>`
+                                    if(performerinfo.is_discontinued) {
+                                        view += `
+                                    <td><button data-status="false" data-organization-id="\${performerinfo.organization_lid}" data-id="\${performerinfo.proforma_id}" class="discontinue-btn btn btn-outline-success text-dark"><i class="fa fa-solid fa-ban "></i> CONTINUE</button></td>`
+
+                                    } else {
+                                        view += `
+                                    <td><button data-status="true" data-organization-id="\${performerinfo.organization_lid}" data-id="\${performerinfo.proforma_id}" class="discontinue-btn btn btn-outline-danger text-dark"><i class="fa fa-solid fa-ban "></i> DISCONTINUE</button></td>`
+                                    }
+                                view +=`<tr>`
+                                
                             }
                             document.querySelector('.proforma-view').innerHTML = view;
                         }
@@ -399,154 +405,6 @@
             let graduation = 1;
             let masters = 1;
             let phd = 1;
-
-            document.querySelector('.perfoma-table').addEventListener('click', function (e) {
-
-                if (e.target.classList.contains('qual-btn')) {
-
-                    let obj = {
-                        "get_application_qualification": []
-                    }
-                    let data = {}
-                    data.qualification_type_lid = e.target.dataset.id,
-                        data.application_lid = e.target.dataset.qual
-                    obj.get_application_qualification.push(data);
-                    console.log("OBJECTTT", obj)
-
-                    $.ajax({
-                        url: '${pageContext.request.contextPath}/get-qual',
-                        type: 'POST',
-                        data: JSON.stringify(obj),
-                        contentType: false,
-                        success: function (response) {
-                            $(".qualification-display").modal("toggle", {
-                                backdrop: "static ",
-                                keyboard: false
-                            });
-
-                            let graduationdetails = JSON.parse(response.value)
-                                .application_resume_qualification;
-                            console.log(graduationdetails);
-                            if (graduationdetails != null) {
-                                let qualdetails = `
-                        <div class="card">
-                            <div class="card-body">
-                                <table class="table table-responsive">
-                                    <thead>
-                                        <th>Institute</th>
-                                        <th>Topic of study</th>
-                                        <th>University</th>
-                                        <th>Year of passing</th>
-                                    </thead>
-                                    <tbody>`
-                                for (gd of graduationdetails) {
-                                    qualdetails += `<tr>
-                                            <td>\${gd.institute}</td>
-                                            <td>\${gd.topic_of_study}</td>
-                                            <td>\${gd.university}</td>
-                                            <td>\${gd.rev_timestamp}</td>
-                                        </tr>`
-                                }
-                                qualdetails += `</tbody>
-                                </table>
-                            </div>   
-                        </div>
-
-                        `
-                                $('.card').remove();
-                                document.querySelector('.qualification-div')
-                                    .insertAdjacentHTML(
-                                        'afterend', qualdetails);
-                            } else {
-                                let qualdetails = `
-                        <div class="card">
-                        <h4 align="center">No Data Available</h4>
-                        </div>
-                        `
-                                document.querySelector('.qualification-div')
-                                    .insertAdjacentHTML(
-                                        'afterend', qualdetails);
-                            }
-                        },
-                        error: function (error) {
-                            console.log("error", error)
-                        }
-
-                    });
-
-                }
-
-                if (e.target.classList.contains('feedback-btn')) {
-
-                    $.ajax({
-                        url: 'https://dev-portal.svkm.ac.in:8080/vfApi/getFeedback?panCardNo=' +
-                            e.target
-                            .dataset.panNo,
-                        type: 'GET',
-                        success: function (response) {
-                            $(".qualification-display").modal("toggle", {
-                                backdrop: "static ",
-                                keyboard: false
-                            });
-
-                            let feedbackdetails = response;
-                            console.log(feedbackdetails);
-                            if (feedbackdetails != '') {
-                                let feedback = `
-                        <div class="card">
-                            <div class="card-body">
-                                <table class="table table-responsive">
-                                    <thead>
-                                        <th>School</th>
-                                        <th>Institute</th>
-                                        <th>Program Name</th>
-                                        <th>Course Name</th>
-                                        <th>Acad year</th>
-                                        <th>Acad Session</th>
-                                        <th>Average</th>
-                                    </thead>
-                                    <tbody>`
-                                for (gd of feedbackdetails) {
-                                    feedback += `<tr>
-                                            <td>\${gd.school}</td>
-                                            <td>\${gd.inst}</td>
-                                            <td>\${gd.programName}</td>
-                                            <td>\${gd.courseName}</td>
-                                            <td>\${gd.acadYear}</td>
-                                            <td>\${gd.acadSession}</td>
-                                            <td>\${gd.avg}</td>
-                                        </tr>`
-                                }
-                                feedback += `</tbody>
-                                </table>
-                            </div>   
-                        </div>
-                        `
-                                $('.card').remove();
-                                document.querySelector('.qualification-div')
-                                    .insertAdjacentHTML(
-                                        'afterend', feedback);
-                            } else {
-                                let feedback = `
-                        <div class="card">
-                        <h4 align="center">No Feedback Available</h4>
-                        </div>
-                        `
-                                $('.card').remove();
-                                document.querySelector('.qualification-div')
-                                    .insertAdjacentHTML(
-                                        'afterend', feedback);
-                            }
-                        },
-                        error: function (error) {
-                            console.log("ERROR")
-                        }
-
-                    })
-
-                }
-            })
-
 
             document.querySelector('.main').addEventListener('click', function (e) {
 
@@ -563,8 +421,9 @@
                 if (e.target.classList.contains('discontinue-btn')) {
                     let proformaId = e.target.dataset.id
                     let organizationid = e.target.dataset.organizationId
+                    let status = e.target.dataset.status
                     $(".discontinue-body").html(
-                        `<textarea class="textarea proforma-comment container" data-organization-id="\${organizationid}" data-id="\${proformaId}" cols="50" rows="5"></textarea>`
+                        `<textarea class="textarea proforma-comment container" data-status="\${status}" data-organization-id="\${organizationid}" data-id="\${proformaId}" cols="50" rows="5"></textarea>`
                         )
                     $('#discontinue-modal').modal('toggle')
 
@@ -584,6 +443,7 @@
                     objToPush.proforma_lid = commentBox.dataset.id;
                     objToPush.comment = commentValue;
                     objToPush.created_by = '${user_id}';
+                    objToPush.is_discontinued = commentBox.dataset.status;
                     objToPush.organization_lid = commentBox.dataset.organizationId;
                     jsonArray.insert_discontinue.push(objToPush)
                     if (commentValue.length < 1) {
@@ -603,6 +463,7 @@
                         success: function (response) {
 
                             document.getElementById('main-loader').classList.add('d-none');
+                            location.reload()
 
                         },
                         error: function (error) {
