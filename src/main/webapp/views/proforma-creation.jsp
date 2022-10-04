@@ -1025,9 +1025,74 @@ resumetable+= `</tbody>
     </div>
 </div>
     ` 
+        resumetable += `
+        <!----------------------------------------------------- Feedback Section ---------------------------------------------------->
+
+                      <div class="card card-table">
+                           <div class="card-header table-card-header text-uppercase d-flex align-items-center justify-content-between">
+                               <div>
+                                   <h5><i class="fa-solid fa-clipboard"></i>  Feedback </h5>
+                               </div>
+                           </div>
+                             <div class="card-body table-responsive" id="feedback-list">
+                                  <table class="table">
+                                      <thead>
+                                          <th>School</th>
+                                          <th>Institute</th>
+                                          <th>Program Name</th>
+                                          <th>Course Name</th>
+                                          <th>Acad year</th>
+                                          <th>Acad Session</th>
+                                          <th>Average</th>
+                                       </thead>
+                                      <tbody id="feedback-table">
+                                                                    
+                                      </tbody>
+                                 </table>
+                              </div>
+                          </div>
+                        `
+                        
+
 document.querySelector('#performa-creation-div').insertAdjacentHTML('afterbegin', resumetable);
 }
 
+console.log("pancard number outside Ajax>>>>>>>>>>>>>>>>>>>",resumeinfo.personal_details[0].pancard_no)
+                  $.ajax({
+                    
+                        url: 'https://dev-portal.svkm.ac.in:8080/vfApi/getFeedback?panCardNo=' + resumeinfo.personal_details[0].pancard_no,
+                        type: 'GET',
+                        success: function (response) {
+
+                          console.log("Value of the feedback from ajax>>>>>>>>>>>>>>>>>>",response.value)
+                          if(response != ''){
+                          for(data of response){
+                          let feedbackData = `<tr>
+                                                    <td>\${data.school}</td>
+                                                    <td>\${data.inst}</td>
+                                                    <td>\${data.programName}</td>
+                                                    <td>\${data.courseName}</td>
+                                                    <td>\${data.acadYear}</td>
+                                                    <td>\${data.acadSession}</td>
+                                                    <td>\${data.avg}</td>
+                                                </tr>`
+                                                   }
+                          
+                          document.querySelector("#feedback-table").innerHTML = feedbackData
+                          
+                          } else {
+                          
+                          console.log("else of ajax success function for feedback")
+                          document.querySelector("#feedback-list").innerHTML = '<h4 align="center">--- No Feedback Available ---</h4>'
+                          
+                          }
+    
+                        },
+                        error: function (error) {
+                            console.log("ERROR")
+                        }
+
+                    })
 
 
 // function initSelect2LazyLoad(cssSelector) {
