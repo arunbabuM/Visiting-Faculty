@@ -23,7 +23,8 @@
   <jsp:include page="left-sidebar.jsp" />
   <main class="main">
     <jsp:include page="header.jsp" />
-    <h4 class="school-tag d-none pt-5 mt-5">This Application is for : <b id="school-name"></b></h4><hr>
+    <h4 class="school-tag d-none pt-5 mt-5">This Application is for : <b id="school-name"></b></h4>
+    <hr>
     <div id="body" class="container">
       <div class="py-5 d-flex justify-content-center align-items-center">
         <a href="${pageContext.request.contextPath}/dashboard" class="back-button px-2">
@@ -35,9 +36,9 @@
             Select School
           </button>
           <button type="button" class="d-none btn btn-success approve-application" data-toggle="modal"
-          data-target="#exampleModalLong">
-           Approve Application
-         </button>
+            data-target="#exampleModalLong">
+            Approve Application
+          </button>
           <!-- <button type="button" class="btn btn-success create-job-application" data-toggle="modal" data-target="#exampleModalLong">
             Create Job Application
           </button> -->
@@ -69,7 +70,7 @@
 
               <div class="col-md-4 col-sm-12">
                 <div class="form-group">
-                  <label for="first-name" >First Name <span class="required">*</span></label>
+                  <label for="first-name">First Name <span class="required">*</span></label>
                   <span id="first-name-message" style="color: red;" class="error"></span>
                   <input type="text" class="form-control" name="f_name" id="first-name" placeholder="First Name">
                 </div>
@@ -983,7 +984,7 @@
 
     <!-- ************************************************************************Create Application Modal Div******************************************************************************************** -->
     <div id="create-application-modal" style="height: calc(100vh - 150px); margin-top: 150px;" class="d-none">
-      <div id="bank-form-area" >
+      <div id="bank-form-area">
         <div class="container" style="min-height: 300px;">
           <div class="d-flex justify-content-center align-items-center my-4">
             <h2>Create Job Application</h2>
@@ -1001,9 +1002,9 @@
             </div>
           </div>
 
-         
+
         </div>
-        
+
       </div>
       <div class="d-flex justify-content-center">
         <button id="create-application-cancel-button" class="btn btn-danger m-4">Cancel</button>
@@ -1022,8 +1023,7 @@
 
           <div class="row">
             <div class="col-md-12 col-sm-12 d-flex justify-content-center" style="max-height: 50vh;">
-              <img alt="image-uploaded" id="image-uploaded" class="image-uploaded"
-                style="width:100%;">
+              <img alt="image-uploaded" id="image-uploaded" class="image-uploaded" style="width:100%;">
             </div>
           </div>
 
@@ -1527,7 +1527,7 @@
                 </div>`
 
             }
-           
+
           }
         }
         resume += `</div>
@@ -2065,14 +2065,16 @@
             document.getElementById('last-name').value = editPersonalDetailsForm.get('editLastName')
             document.getElementById('date-of-birth').value = editPersonalDetailsForm.get('editDateOfBirth')
             document.getElementById('pan-number').value = editPersonalDetailsForm.get('editPancardNumber')
-            document.getElementById('aadhar-number').value =  resumeinfo.personal_details[0].aadhar_card_no == null ? '' : resumeinfo.personal_details[0].aadhar_card_no;
+            document.getElementById('aadhar-number').value = resumeinfo.personal_details[0].aadhar_card_no ==
+              null ? '' : resumeinfo.personal_details[0].aadhar_card_no;
             document.getElementById('contact-number').value = editPersonalDetailsForm.get('editContactNumber')
             document.getElementById('email').value = editPersonalDetailsForm.get('editEmail')
             document.getElementById('address').value = editPersonalDetailsForm.get('editAddress')
             document.getElementById('city').value = editPersonalDetailsForm.get('editCity')
             document.getElementById('pincode').value = editPersonalDetailsForm.get('editPincode')
             document.getElementById('temp_email').value = (personal_details[0].temp_email)
-            document.getElementById('temporary-address').value = resumeinfo.personal_details[1].address == null ? '' : resumeinfo.personal_details[1].address;
+            document.getElementById('temporary-address').value = resumeinfo.personal_details[1].address ==
+              null ? '' : resumeinfo.personal_details[1].address;
             document.getElementById('country').value = editPersonalDetailsForm.get('editCountry')
 
             if (resumeinfo.personal_details[0].gender_lid == 1) {
@@ -2314,12 +2316,12 @@
         url: '${pageContext.request.contextPath}/get-qualification-type',
         type: 'get',
         success: function (response) {
-          if(flag2 == 1){
-          for (let i = 0; i < response.length; i++) {
-            qualificationType += `<option value="\${response[i].abbr}" >\${response[i].name}</option>`;
+          if (flag2 == 1) {
+            for (let i = 0; i < response.length; i++) {
+              qualificationType += `<option value="\${response[i].abbr}" >\${response[i].name}</option>`;
+            }
+            flag2++;
           }
-          flag2++;
-        }
           let table = `
                       <div class="position-relative qualification_delete_btn d-flex" style="cursor: pointer;"> 
                       <div class="container">
@@ -2857,7 +2859,7 @@
         } else if (checkorganization_type_lid == false) {
           vjstableelement[i].querySelector('.awardOrganizationType').classList.add('input-border');
           return;
-        } 
+        }
 
         let photoArray = []
 
@@ -2869,7 +2871,7 @@
             let awardPhotoBase64 = evt.target.result;
             photoArray[i] = awardPhotoBase64
           }
-        } else{
+        } else {
           setTimeout(function () {
             photoArray[i] = null
           }, 1000)
@@ -3134,7 +3136,7 @@
         } else if (checkPublicationBookTitle == false) {
           publicationRow[i].querySelector('.book-title').classList.add('input-border');
           return;
-        } 
+        }
 
         let photoArray = []
 
@@ -3741,17 +3743,24 @@
       submitBankDetailsForm.append('micrCode', document.getElementById('bank-micr-code-insert').value)
       submitBankDetailsForm.append('accountNumber', document.getElementById('bank-account-number-insert').value)
       submitBankDetailsForm.append('accountType', accountType1)
-      submitBankDetailsForm.append('cancelledCheckPhoto', document.getElementById('cancelled_cheque_Photo-insert').value)
+      submitBankDetailsForm.append('cancelledCheckPhoto', document.getElementById('cancelled_cheque_Photo-insert')
+        .value)
 
-      let facultyBankNameValid = dynamicLengthCheck(submitBankDetailsForm.get('bankName'),'bank-name-message-insert');
-      let facultyBankBranchValid = dynamicLengthCheck(submitBankDetailsForm.get('branchName'),'bank-branch-message-insert');
-      let facultyAccountNumberValid = dynamicBankAcountNumber(submitBankDetailsForm.get('accountNumber'),'bank-account-number-message-insert');
-      let facultyifscValid = dynamicLengthCheck(document.querySelector('#bank-ifsc-code-insert').value,'bank-ifsc-code-message-insert')
-      let cancelledChequeValidation = dynamicLengthCheck(document.querySelector('#cancelled_cheque_Photo-insert').value,'cheque-photo1')
- 
+      let facultyBankNameValid = dynamicLengthCheck(submitBankDetailsForm.get('bankName'),
+        'bank-name-message-insert');
+      let facultyBankBranchValid = dynamicLengthCheck(submitBankDetailsForm.get('branchName'),
+        'bank-branch-message-insert');
+      let facultyAccountNumberValid = dynamicBankAcountNumber(submitBankDetailsForm.get('accountNumber'),
+        'bank-account-number-message-insert');
+      let facultyifscValid = dynamicLengthCheck(document.querySelector('#bank-ifsc-code-insert').value,
+        'bank-ifsc-code-message-insert')
+      let cancelledChequeValidation = dynamicLengthCheck(document.querySelector('#cancelled_cheque_Photo-insert')
+        .value, 'cheque-photo1')
+
       console.log(cancelledChequeValidation)
 
-      if (!facultyBankNameValid || !facultyBankBranchValid || !facultyAccountNumberValid || !cancelledChequeValidation) {
+      if (!facultyBankNameValid || !facultyBankBranchValid || !facultyAccountNumberValid || !
+        cancelledChequeValidation) {
         return;
       }
 
@@ -3826,8 +3835,9 @@
           'cancelled-cheque-photo-preview')) {
         document.getElementById('body').classList.add('d-none');
         document.querySelector('.image-preview-modal').classList.remove('d-none');
-        if(e.target.dataset.image === 'imagedata/null'){
-          document.querySelector(".image-uploaded").src = '${pageContext.request.contextPath}/image/image-not-found.png';
+        if (e.target.dataset.image === 'imagedata/null') {
+          document.querySelector(".image-uploaded").src =
+            '${pageContext.request.contextPath}/image/image-not-found.png';
         } else {
           document.querySelector(".image-uploaded").src = e.target.dataset.image;
         }
@@ -4058,8 +4068,7 @@
 
     //Rana Changes 
     document.querySelector('.qualification-modal').addEventListener('click', function (e) {
-      if (e.target.classList.contains('qualification_delete_btn')) {
-      }
+      if (e.target.classList.contains('qualification_delete_btn')) {}
     });
 
     //Rana Changes 
@@ -4096,22 +4105,22 @@
           }
         }
       })
-      
+
       //Qualidication Details Btn
       function editQualificationDetail(id) {
         //checkboxfunction('qualification-check-box', 'qualification-certificate');
-        
+
         $.ajax({
           url: '${pageContext.request.contextPath}/get-qualification-type',
           type: 'get',
           success: function (response) {
             console.log(response)
-            if(flag1 == 1){
-            for (let i = 0; i < response.length; i++) {
-              qualificationType += `<option value="\${response[i].abbr}" >\${response[i].name}</option>`
+            if (flag1 == 1) {
+              for (let i = 0; i < response.length; i++) {
+                qualificationType += `<option value="\${response[i].abbr}" >\${response[i].name}</option>`
+              }
+              flag1++;
             }
-            flag1++;
-          }
 
             if (resumeinfo.resume_qualification != null) {
               for (qualedit of resumeinfo.resume_qualification) {
@@ -4727,9 +4736,10 @@
                   }
                   document.getElementById('bank-account-type').insertAdjacentHTML("beforeend",
                     bankAccountType)
-                    if(resumeinfo.bank_details){
-                        document.getElementById('bank-account-type').value = resumeinfo.bank_details.bank_account_type_lid
-                    }
+                  if (resumeinfo.bank_details) {
+                    document.getElementById('bank-account-type').value = resumeinfo.bank_details
+                      .bank_account_type_lid
+                  }
 
                 },
                 error: function (error) {
@@ -4789,19 +4799,20 @@
 
       clearError();
 
-      let firstName = dynamiCheckSpecialChar(result.f_name,'first-name-message');
-      let lastName = dynamiCheckSpecialChar(result.l_name,'last-name-message');
+      let firstName = dynamiCheckSpecialChar(result.f_name, 'first-name-message');
+      let lastName = dynamiCheckSpecialChar(result.l_name, 'last-name-message');
       let DOB = personalDetailDateOfBirthValidation(result.date_of_birth);
       let gender = personalDetailGenderValidation(result.gender);
-      let contactNumber = dynamicContactCheck(result.contact_number,'contact-number-message');
-      let temporaryContact = dynamicTempContactNumber(result.temp_contact_number,'temporary-contact-number-message');
-      let email = dynamicEmailCheck(result.email,'email-message');
+      let contactNumber = dynamicContactCheck(result.contact_number, 'contact-number-message');
+      let temporaryContact = dynamicTempContactNumber(result.temp_contact_number,
+        'temporary-contact-number-message');
+      let email = dynamicEmailCheck(result.email, 'email-message');
       let aadhar = personalDetailAadharValidation(result.aadhar_number);
-      let address = dynamicLengthCheck(result.permanent_address,'address-message');
-      let country = dynamicLengthCheck(result.nationality,'country-message');
-      let tempemail = dynamicTempEmail(result.temp_email,'temp-email-message');
+      let address = dynamicLengthCheck(result.permanent_address, 'address-message');
+      let country = dynamicLengthCheck(result.nationality, 'country-message');
+      let tempemail = dynamicTempEmail(result.temp_email, 'temp-email-message');
       let pinvalid = dynamicPin(result.permanent_address_pincode, 'pincode-message');
-      let cityvalid = dynamicLengthCheck(result.permanent_address_city,'city-message');
+      let cityvalid = dynamicLengthCheck(result.permanent_address_city, 'city-message');
 
 
       if (!firstName || !lastName || !contactNumber || !email || !aadhar || !address || !
@@ -5569,8 +5580,8 @@
 
 
     document.querySelector("#research-cancel-button").addEventListener('click', function (e) {
-     
-      let data = findClosest(e.target,'research-row')
+
+      let data = findClosest(e.target, 'research-row')
       console.log(data)
       document.getElementById('body').classList.remove('d-none');
       document.querySelector('.research-modal').classList.add('d-none');
@@ -5662,7 +5673,7 @@
           }
 
           console.log(JSON.stringify(obj))
-        
+
           resumeResearchTable.push(obj);
         }, 1000)
       }
@@ -6031,14 +6042,16 @@
       submitBankDetailsForm.append('cancelledCheckPhoto', document.getElementById('cancelled_cheque_Photo').value)
 
       clearError();
-      let facultyIfscCode1 = dynamicLengthCheck(submitBankDetailsForm.get('ifscCode'),'bank-ifsc-code-message');
-      let facultyBankName1 = dynamicLengthCheck(submitBankDetailsForm.get('bankName'),'bank-name-message');
-      let facultyBankBranch1 = dynamicLengthCheck(submitBankDetailsForm.get('branchName'),'bank-branch-message');
-      let facultyAccountNumber1 = dynamicBankAcountNumber(submitBankDetailsForm.get('accountNumber'),'bank-account-number-message');
-      let cancelledChequeValidation = dynamicBankAcountNumber(submitBankDetailsForm.get('cancelled_cheque_Photo'),'cancelled_cheque_Photo-message');
+      let facultyIfscCode1 = dynamicLengthCheck(submitBankDetailsForm.get('ifscCode'), 'bank-ifsc-code-message');
+      let facultyBankName1 = dynamicLengthCheck(submitBankDetailsForm.get('bankName'), 'bank-name-message');
+      let facultyBankBranch1 = dynamicLengthCheck(submitBankDetailsForm.get('branchName'), 'bank-branch-message');
+      let facultyAccountNumber1 = dynamicBankAcountNumber(submitBankDetailsForm.get('accountNumber'),
+        'bank-account-number-message');
+      let cancelledChequeValidation = dynamicBankAcountNumber(submitBankDetailsForm.get('cancelled_cheque_Photo'),
+        'cancelled_cheque_Photo-message');
 
 
-      if (!facultyBankName1 || !facultyBankBranch1|| !facultyAccountNumber1 || !cancelledChequeValidation) {
+      if (!facultyBankName1 || !facultyBankBranch1 || !facultyAccountNumber1 || !cancelledChequeValidation) {
         return;
       }
 
@@ -6389,28 +6402,28 @@
 
         let status = 400;
         let softid = element.closest('li').dataset.skillid;
-        if(softid) {
+        if (softid) {
 
           fetch('${pageContext.request.contextPath}/delete-softskills', {
-            method: "POST",
-            body: softid,
-            headers: {
-              "Content-Type": "application/json; charset=UTF-8",
-            }
-          })
-          .then(response => status = response.status)
-          .then(response => {
-            if (status === 200) {
-              skillList.insertAdjacentHTML('afterbegin', div);
-              element.closest('li').remove();
-            } else {
-              console.log("Error")
-            }
-          })
-          .catch(exception => console.log(exception));
+              method: "POST",
+              body: softid,
+              headers: {
+                "Content-Type": "application/json; charset=UTF-8",
+              }
+            })
+            .then(response => status = response.status)
+            .then(response => {
+              if (status === 200) {
+                skillList.insertAdjacentHTML('afterbegin', div);
+                element.closest('li').remove();
+              } else {
+                console.log("Error")
+              }
+            })
+            .catch(exception => console.log(exception));
         } else {
           skillList.insertAdjacentHTML('afterbegin', div);
-              element.closest('li').remove();
+          element.closest('li').remove();
         }
       }
     })
@@ -6436,25 +6449,25 @@
                             `
         let status = 400;
         let softid = element.closest('li').dataset.skillid;
-        if(softid) {
+        if (softid) {
 
           fetch('${pageContext.request.contextPath}/delete-softskills', {
-            method: "POST",
-            body: softid,
-            headers: {
-              "Content-Type": "application/json; charset=UTF-8",
-            }
-          })
-          .then(response => status = response.status)
-          .then(response => {
-            if (status === 200) {
-              skillList.insertAdjacentHTML('afterbegin', div)
-              element.closest('li').remove();
-            } else {
-              console.log("Error")
-            }
-          })
-          .catch(exception => console.log(exception));
+              method: "POST",
+              body: softid,
+              headers: {
+                "Content-Type": "application/json; charset=UTF-8",
+              }
+            })
+            .then(response => status = response.status)
+            .then(response => {
+              if (status === 200) {
+                skillList.insertAdjacentHTML('afterbegin', div)
+                element.closest('li').remove();
+              } else {
+                console.log("Error")
+              }
+            })
+            .catch(exception => console.log(exception));
         } else {
           skillList.insertAdjacentHTML('afterbegin', div)
           element.closest('li').remove();
@@ -6896,7 +6909,7 @@
             document.querySelector('.workexperience-data').addEventListener('click', function (e) {
               let designationType = findClosest(e.target, 'workexperience-row').querySelector('.designation-title');
               let designationInput = findClosest(e.target, 'workexperience-row').querySelector(
-              '.designation-input');
+                '.designation-input');
               let designationli = findClosest('e.target', 'workexperience-li')
               if (e.target.classList.contains("designation-input")) {
                 designationType.classList.remove("d-none");
@@ -6912,24 +6925,24 @@
             //     let padagogy1 = findClosest(e.target, 'workexperience-row').querySelector('.workexperience-padagogy-div');
 
 
-          
+
 
             document.querySelector('.work-experience-type').value = expedit.abbr;
             document.querySelector('.designation-title').value = expedit.designation;
-                if(expedit.abbr == "teach_exp") {
-                      
-                      document.querySelector('.org-title').innerHTML = 'University / Institute <span class="required">*</span>'
-                      document.querySelector('.workexperience-program-div').classList.remove('d-none')
-                      document.querySelector('.res-title').innerHTML = 'Subject Taught <span class="required">*</span>'
-                      document.querySelector('.workexperience-padagogy-div').classList.remove('d-none')
-                     
-    
-                } else {
-                  document.querySelector('.org-title').innerHTML = 'Organization <span class="required">*</span>'
-                  document.querySelector('.workexperience-program-div').classList.add('d-none')
-                  document.querySelector('.res-title').innerHTML = 'Responsibility <span class="required">*</span>'
-                  document.querySelector('.workexperience-padagogy-div').classList.add('d-none')
-                }
+            if (expedit.abbr == "teach_exp") {
+
+              document.querySelector('.org-title').innerHTML = 'University / Institute <span class="required">*</span>'
+              document.querySelector('.workexperience-program-div').classList.remove('d-none')
+              document.querySelector('.res-title').innerHTML = 'Subject Taught <span class="required">*</span>'
+              document.querySelector('.workexperience-padagogy-div').classList.remove('d-none')
+
+
+            } else {
+              document.querySelector('.org-title').innerHTML = 'Organization <span class="required">*</span>'
+              document.querySelector('.workexperience-program-div').classList.add('d-none')
+              document.querySelector('.res-title').innerHTML = 'Responsibility <span class="required">*</span>'
+              document.querySelector('.workexperience-padagogy-div').classList.add('d-none')
+            }
 
           }
         }
@@ -6989,7 +7002,7 @@
       }
 
       if ((startDateInput.value).length != 0 && (endDateInput.value).length != 0) {
-        durationValue.value = diffyears 
+        durationValue.value = diffyears
       }
 
     });
@@ -7210,8 +7223,8 @@
       }
 
       if ((startDateInput.value).length != 0 && (endDateInput.value).length != 0) {
-        
-        durationValue.value = diffyears +  "Years";
+
+        durationValue.value = diffyears + "Years";
       }
 
     });
@@ -7421,10 +7434,8 @@
 
     document.querySelector('#create-job-application-faculty').addEventListener('click', function () {
       let status = 400;
-      if (resumeinfo.bank_details === null || resumeinfo.personal_details === null || resumeinfo
-        .resume_achievement === null || resumeinfo.resume_experience === null || resumeinfo.resume_publication ===
-        null || resumeinfo.resume_qualification === null || resumeinfo.resume_researchresume_research === null ||
-        resumeinfo.resume_skill_selected === null) {
+      if (resumeinfo.bank_details === null || resumeinfo.personal_details === null || resumeinfo.resume_achievement === null
+          || resumeinfo.resume_experience === null || resumeinfo.resume_qualification === null || resumeinfo.resume_skill_selected === null) {
         alert("please Fill Complete Details")
       } else {
         let data = {
@@ -7447,7 +7458,7 @@
         data.create_job_application.push(object)
 
         console.log(JSON.stringify(data))
-      document.getElementById('main-loader').classList.remove('d-none');
+        document.getElementById('main-loader').classList.remove('d-none');
 
         fetch('${pageContext.request.contextPath}/create-job-application', {
             method: "POST",
@@ -7477,71 +7488,71 @@
 
     // ************************************************** Drop down to bring school type *******************************************************
 
-    if('${role}' != "User") {
+    if ('${role}' != "User") {
 
-    let schoolType = ` `
-    let schoolList = 1;
-    document.querySelector('.select-school').addEventListener('click', function () {
-      console.log("select button has been clicked")
+      let schoolType = ` `
+      let schoolList = 1;
+      document.querySelector('.select-school').addEventListener('click', function () {
+        console.log("select button has been clicked")
 
-      if (schoolList == 1) {
-        $.ajax({
-          url: '${pageContext.request.contextPath}/get-schools-list',
-          type: 'POST',
-          dataType: 'json',
-          success: function (response) {
-            console.log(response.value)
-            for (let desig of response) {
-              schoolType +=
-                `<li>     
+        if (schoolList == 1) {
+          $.ajax({
+            url: '${pageContext.request.contextPath}/get-schools-list',
+            type: 'POST',
+            dataType: 'json',
+            success: function (response) {
+              console.log(response.value)
+              for (let desig of response) {
+                schoolType +=
+                  `<li>     
                     <div class="school-type-li col-md-10 col-sm-10 col-12" data-name="\${desig.name}" data-id="\${desig.organization_id}" ><a>\${desig.name}</a></div>
                 </li>`
+              }
+              document.querySelector('#school-list').insertAdjacentHTML('beforeend', schoolType);
+            },
+            error: function (error) {
+              console.log("Error::::::::::::", error);
             }
-            document.querySelector('#school-list').insertAdjacentHTML('beforeend', schoolType);
-          },
-          error: function (error) {
-            console.log("Error::::::::::::", error);
-          }
-        })
-        schoolList++
-      }
+          })
+          schoolList++
+        }
 
-      document.getElementById('body').classList.add('d-none');
-      document.getElementById('create-application-modal').classList.remove("d-none")
-    })
-  }
-    if('${role}' == "User") {
+        document.getElementById('body').classList.add('d-none');
+        document.getElementById('create-application-modal').classList.remove("d-none")
+      })
+    }
+    if ('${role}' == "User") {
 
-    let schoolType = ` `
-    let schoolList = 1;
-    document.querySelector('.select-school').addEventListener('click', function () {
+      let schoolType = ` `
+      let schoolList = 1;
+      document.querySelector('.select-school').addEventListener('click', function () {
 
-      if (schoolList == 1) {
-        $.ajax({
-          url: 'https://dev-portal.svkm.ac.in:8080/vfApi/getSchoolsList',
-          type: 'GET',
-          dataType: 'json',
-          success: function (response) {
-            console.log(response.value)
-            for (let desig of response) {
-              schoolType +=
-                `<li>     
+        if (schoolList == 1) {
+          $.ajax({
+            url: 'https://dev-portal.svkm.ac.in:8080/vfApi/getSchoolsList',
+            type: 'GET',
+            dataType: 'json',
+            success: function (response) {
+              console.log(response.value)
+              for (let desig of response) {
+                schoolType +=
+                  `<li>     
                     <div class="school-type-li col-md-10 col-sm-10 col-12" data-name="\${desig.collegeName}" data-id="\${desig.schoolObjId}" ><a>\${desig.collegeName}</a></div>
                 </li>`
+              }
+              document.querySelector('#school-list').insertAdjacentHTML('beforeend', schoolType);
+            },
+            error: function (error) {
+              console.log("Error::::::::::::", error);
             }
-            document.querySelector('#school-list').insertAdjacentHTML('beforeend', schoolType);
-          },
-          error: function (error) {
-            console.log("Error::::::::::::", error);
-          }
-        })
-        schoolList++
-      }
+          })
+          schoolList++
+        }
 
-      document.getElementById('body').classList.add('d-none');
-      document.getElementById('create-application-modal').classList.remove("d-none")
-    })
-  }
+        document.getElementById('body').classList.add('d-none');
+        document.getElementById('create-application-modal').classList.remove("d-none")
+      })
+    }
 
     document.querySelector('.school-type-input').addEventListener('keyup', function () {
       // Declare variables
@@ -7577,9 +7588,11 @@
         document.getElementById('school-list').classList.add("d-none");
       }
 
-      if (e.target.classList.contains("school-type-li") || findClosest(e.target,'school-type-li')) {
-        let id = e.target.classList.contains("school-type-li") ? e.target.dataset.id : e.target.parentElement.dataset.id;
-        let name = e.target.classList.contains("school-type-li") ? e.target.dataset.name : e.target.parentElement.dataset.name
+      if (e.target.classList.contains("school-type-li") || findClosest(e.target, 'school-type-li')) {
+        let id = e.target.classList.contains("school-type-li") ? e.target.dataset.id : e.target.parentElement
+          .dataset.id;
+        let name = e.target.classList.contains("school-type-li") ? e.target.dataset.name : e.target.parentElement
+          .dataset.name
         document.querySelector('.school-type-input').value = name;
         document.querySelector('.school-type-input').dataset.id = id;
         document.querySelector('.school-type-input').dataset.name = name;
@@ -7596,7 +7609,7 @@
 
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
-    if(urlParams.has('application_lid')) {
+    if (urlParams.has('application_lid')) {
       const organization_lid = urlParams.get('organization_lid')
       document.querySelector('.approve-application').classList.remove('d-none')
       document.querySelector('.select-school').classList.add('d-none')
@@ -7604,7 +7617,7 @@
       $.ajax({
         url: '${pageContext.request.contextPath}/get-school-name',
         type: 'POST',
-        data:  organization_lid,
+        data: organization_lid,
         contentType: false,
         success: function (response) {
           console.log(response)
@@ -7617,59 +7630,57 @@
         }
       })
 
-      document.querySelector('.approve-application').addEventListener('click', function(){
+      document.querySelector('.approve-application').addEventListener('click', function () {
         let status = 400;
-      if (resumeinfo.bank_details === null || resumeinfo.personal_details === null || resumeinfo
-        .resume_achievement === null || resumeinfo.resume_experience === null || resumeinfo.resume_publication ===
-        null || resumeinfo.resume_qualification === null || resumeinfo.resume_researchresume_research === null ||
-        resumeinfo.resume_skill_selected === null) {
-        alert("please Fill Complete Details")
-      } else {
-        let data = {
-          "create_job_application": []
-        }
+        if (resumeinfo.bank_details === null || resumeinfo.personal_details === null || resumeinfo
+          .resume_achievement === null || resumeinfo.resume_experience === null ||
+          resumeinfo.resume_qualification === null || resumeinfo.resume_skill_selected === null) {
+          alert("please Fill Complete Details")
+        } else {
+          let data = {
+            "create_job_application": []
+          }
 
-        let org_ID = document.querySelector('.school-type-input').dataset.id
-        const application_lid = urlParams.get('application_lid')
-        
-        let object = {}
-        object.resume_lid = resume_lid
-        object.application_lid = application_lid
-        // object.organization_lid = '${organization_lid}'
-        object.organization_lid = organization_lid
-        object.active = true
-        data.create_job_application.push(object)
+          let org_ID = document.querySelector('.school-type-input').dataset.id
+          const application_lid = urlParams.get('application_lid')
 
-        console.log(JSON.stringify(data))
-        document.getElementById('main-loader').classList.remove('d-none');
+          let object = {}
+          object.resume_lid = resume_lid
+          object.application_lid = application_lid
+          // object.organization_lid = '${organization_lid}'
+          object.organization_lid = organization_lid
+          object.active = true
+          data.create_job_application.push(object)
 
-        fetch('${pageContext.request.contextPath}/update-job-application', {
-            method: "POST",
-            body: JSON.stringify(data),
-            headers: {
-              "Content-Type": "application/json; charset=UTF-8",
-            }
-          })
-          .then(response => status = response.status)
-          .then(response => {
-            if (status === 200) {
-              alert('Job Application Created Succesfully');
-              location.href = "${pageContext.request.contextPath}/dashboard";
+          console.log(JSON.stringify(data))
+          document.getElementById('main-loader').classList.remove('d-none');
 
-            } else {
+          fetch('${pageContext.request.contextPath}/update-job-application', {
+              method: "POST",
+              body: JSON.stringify(data),
+              headers: {
+                "Content-Type": "application/json; charset=UTF-8",
+              }
+            })
+            .then(response => status = response.status)
+            .then(response => {
+              if (status === 200) {
+                alert('Job Application Created Succesfully');
+                location.href = "${pageContext.request.contextPath}/dashboard";
+
+              } else {
+                document.getElementById('main-loader').classList.add('d-none');
+                alert("ERROR")
+              }
+            })
+            .catch(function (error) {
               document.getElementById('main-loader').classList.add('d-none');
-              alert("ERROR")
-            }
-          })
-          .catch(function (error) {
-            document.getElementById('main-loader').classList.add('d-none');
-            alert("error in fetch api")
-          })
+              alert("error in fetch api")
+            })
 
-      }
+        }
       })
     }
-
   </script>
 </body>
 
