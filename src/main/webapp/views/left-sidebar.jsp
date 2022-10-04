@@ -1,22 +1,22 @@
 <aside class="left-sidebar">
 
     <div class="left-sidebar-logo">
-        <a href="${pageContext.request.contextPath}/dashboard"> <img src="${pageContext.request.contextPath}/image/logo-nmims.png" class="nmims-logo"> </a>
+        <a href="${pageContext.request.contextPath}/dashboard"> <img
+                src="${pageContext.request.contextPath}/image/logo-nmims.png" class="nmims-logo"> </a>
     </div>
 
-    <ul class="offset-list offcanvas-body sidebar-body" id="left-sidebar-accordion" >
+    <ul class="offset-list offcanvas-body sidebar-body" id="left-sidebar-accordion">
 
-      
+
 
     </ul>
 </aside>
 
 <script>
+    let list = ``
 
-let list = ``
-
-if("${role}" == "ROLE_ADMIN"){
-list += `
+    if ("${role}" == "ROLE_ADMIN") {
+        list += `
 
         <a href="${pageContext.request.contextPath}/dashboard" class="offset-list-item-link">
             <li><img src="${pageContext.request.contextPath}/icons/speedometer.png" class="ps-3 pe-2"> Dashboard</li>
@@ -42,7 +42,7 @@ list += `
         </a>
 
 `
-    } else if("${role}" == "User") {
+    } else if ("${role}" == "User") {
 
         list += `
         
@@ -58,7 +58,7 @@ list += `
         
         `
     } else {
-        list +=`
+        list += `
         <a href="${pageContext.request.contextPath}/dashboard" class="offset-list-item-link">
             <li><img src="${pageContext.request.contextPath}/icons/speedometer.png" class="ps-3 pe-2"> Dashboard</li>
         </a>
@@ -75,6 +75,5 @@ list += `
         `
     }
 
-document.getElementById('left-sidebar-accordion').innerHTML = list;
-
+    document.getElementById('left-sidebar-accordion').innerHTML = list;
 </script>
