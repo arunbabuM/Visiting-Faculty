@@ -97,6 +97,7 @@
         resumeinfo = data;
         let personal_details = data.personal_details;
         let bank_details = data.bank_details;
+        let pancardNumber = personal_details[0].pancard_no;
         console.log('Resume info :', resumeinfo);
 
         let resume = `
@@ -164,7 +165,7 @@
                           <h6>Date of birth </h6>
                         </div>
                         <div class="col-md-7 col-sm-9">
-                          <p id="date-of-birth-value">\${personal_details[0].date_of_birth}</p>
+                          <p id="date-of-birth-value">\${changeDateFormat(personal_details[0].date_of_birth)}</p>
                         </div>
                       </div>
                       <div class="row py-1">
@@ -324,6 +325,36 @@
         <hr />
         `
         }
+        
+        if("${level}" > 0) {
+                resume += `
+                <!------------------------------------------------ Feedback Section ------------------------------------------------>
+                
+                  <div id="feedback-div">
+                    <div class="d-flex justify-content-center align-items-center" style="color: #740E00;">
+                      <h3><b><i class="fa-solid fa-clipboard"></i>Feedback</b></h3>
+                    </div>
+                      <div class="card">
+                          <div id="feedback-list">
+                                        <table class="table table-responsive">
+                                            <thead>
+                                                <th>School</th>
+                                                <th>Institute</th>
+                                                <th>Program Name</th>
+                                                <th>Course Name</th>
+                                                <th>Acad year</th>
+                                                <th>Acad Session</th>
+                                                <th>Average</th>
+                                            </thead>
+                                            <tbody id="feedback-table">
+                                          
+                                            </tbody>
+                                      </table>
+                              </div>
+                          </div>
+                        </div>
+                      <hr />`
+                        }
 
         resume += `
         <!------------------------------------------------ Qualification Section ------------------------------------------------>
@@ -435,19 +466,65 @@
             let experiencetype = "";
             if (exp.experience_type_lid == 5) {
               experiencetype = "Teaching Experience"
-            } else {
-              experiencetype = "Industrial Experience"
-            }
-            resume += ` <div class="text-block right workexperience-item">
+
+              resume += ` <div class="text-block right workexperience-item">
                   <div class="card-body">
-                    <h2>\${experiencetype}</h2>
+                    <h2>Teaching Experience</h2>
                     <div id="workexperience-display-div" class=" px-3 px-sm-4 px-lg-4 mt-1">
                       <div class="row">
                         <div class="col-12 col-md-6 col-lg-6 col-sm-12">
                           <div class="row pt-lg-3">
                             <div class="col-6  col-md-6 ps-md-0 ps-0 ps-sm-0 col-lg-6 col-sm-6">
-                              <p class="h5 pb-1">Employeer </p>
-                              <p class="h5 py-1">Key role </p>
+                              <p class="h5 pb-1">University </p>
+                              <p class="h5 py-1">Subject taught </p>
+                              <p class="h5 py-1">Designation </p>
+                              <p class="h5 py-1">Program </p>
+                            </div>
+                            <div class="col-6 col-md-6 col-lg-6 col-sm-6">
+                              <p id="">\${exp.employer_name}</p>
+                              <p id="">\${exp.responsibilities}</p>
+                              <p class="" id="">\${exp.designation}</p>
+                              <p class="" id="">\${exp.description}</p>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-6 col-sm-12">
+                          <div class="row pt-lg-3">
+                            <div class="col-6 ps-lg-5 col-md-6 ps-md-0 ps-0 ps-sm-0 col-lg-6 col-sm-6">
+                              <p class="h5 py-1">Start Date </p>
+                              <p class="h5 py-1">End date</p>
+                              <p class="h5 py-1">Duration in Year </p>
+                              <p class="h5 py-1">Pedagogy </p>
+                            </div>
+                            <div class="col-6 ps-md-0 ps-0 col-md-6 col-lg-6 col-sm-6">
+                              <p id="" class="">\${changeDateFormat(exp.start_date)}</p>
+                              <p id="" class="">\${changeDateFormat(exp.end_date)}</p>
+                              <p id="" class="">\${exp.duration}</p>
+                              <p id="" class="">\${exp.padagogy == '' ? "N.A" : exp.padagogy} </p>
+                              <!-- <p id=""><i class="fa-solid fa-ban text-danger"></i></p> -->
+                            </div>
+                          </div>
+                          </div>
+                          </div>
+                          </div>
+                          </div>
+                          <div class="d-none workexperience-edit-box d-flex justify-content-center align-items-center" data-experienceid="\${exp.resume_experience_lid}">
+                             <i class="fa-solid fa-pen fa-2x text-white "></i>
+                          </div>
+                </div>`
+            } else {
+              experiencetype = "Industrial Experience"
+
+              resume += ` <div class="text-block right workexperience-item">
+                  <div class="card-body">
+                    <h2>Industrial Experience</h2>
+                    <div id="workexperience-display-div" class=" px-3 px-sm-4 px-lg-4 mt-1">
+                      <div class="row">
+                        <div class="col-12 col-md-6 col-lg-6 col-sm-12">
+                          <div class="row pt-lg-3">
+                            <div class="col-6  col-md-6 ps-md-0 ps-0 ps-sm-0 col-lg-6 col-sm-6">
+                              <p class="h5 pb-1">Organization </p>
+                              <p class="h5 py-1">Resposibility </p>
                               <p class="h5 py-1">Designation </p>
                             </div>
                             <div class="col-6 col-md-6 col-lg-6 col-sm-6">
@@ -462,11 +539,11 @@
                             <div class="col-6 ps-lg-5 col-md-6 ps-md-0 ps-0 ps-sm-0 col-lg-6 col-sm-6">
                               <p class="h5 py-1">Start Date </p>
                               <p class="h5 py-1">End date</p>
-                              <p class="h5 py-1">Duration in Year </p>
+                              <p class="h5 py-1">Duration in Year</p>
                             </div>
                             <div class="col-6 ps-md-0 ps-0 col-md-6 col-lg-6 col-sm-6">
-                              <p id="" class="">\${exp.start_date}</p>
-                              <p id="" class="">\${exp.end_date}</p>
+                              <p id="" class="">\${changeDateFormat(exp.start_date)}</p>
+                              <p id="" class="">\${changeDateFormat(exp.end_date)}</p>
                               <p id="" class="">\${exp.duration}</p>
                               <!-- <p id=""><i class="fa-solid fa-ban text-danger"></i></p> -->
                             </div>
@@ -479,6 +556,8 @@
                              <i class="fa-solid fa-pen fa-2x text-white "></i>
                           </div>
                 </div>`
+
+            }
           }
         }
         resume += `</div>
@@ -593,7 +672,7 @@
                         </div>
                         <div class="col-6 ps-md-0 ps-0 col-md-6 col-lg-6 col-sm-6">
                           <p class="" id="">\${award.description}</p>
-                          <p class="" id="">\${award.achievement_date}</p>
+                          <p class="" id="">\${changeDateFormat(award.achievement_date)}</p>
                           <p ><i id="award-certificate-display" data-image="imagedata/\${award.url_path}" class="fa-solid fa-image text-success award-certificate-display"></i></p>
                         </div>
                       </div>
@@ -916,7 +995,7 @@
         </div>
       </div>`
 
-
+      
         } else {
           resume += `
           <div id="bank-details-div">
@@ -927,12 +1006,58 @@
         </div>`
         }
         document.querySelector('#body').insertAdjacentHTML('afterbegin', resume);
+        feedBack(pancardNumber);
       },
 
       error: function (error) {
         console.log("error", error)
       }
     });
+
+    function feedBack(pancardNumber){
+
+      if("${level}" > 0) {
+
+             $.ajax({
+                        url: 'https://dev-portal.svkm.ac.in:8080/vfApi/getFeedback?panCardNo=' + pancardNumber,
+                        type: 'GET',
+                        success: function (response) {
+
+                          console.log("Value of the feedback from ajax>>>>>>>>>>>>>>>>>>",response.value)
+
+                          if(response != ''){
+
+                            for(data of response){
+                            let feedbackData = `<tr>
+                                                      <td>\${data.school}</td>
+                                                      <td>\${data.inst}</td>
+                                                      <td>\${data.programName}</td>
+                                                      <td>\${data.courseName}</td>
+                                                      <td>\${data.acadYear}</td>
+                                                      <td>\${data.acadSession}</td>
+                                                      <td>\${data.avg}</td>
+                                                  </tr>`
+                                                     }
+                         
+                          document.querySelector("#feedback-table").innerHTML = feedbackData
+
+                          } else {
+
+                            console.log("else of ajax success function for feedback")
+                            document.querySelector("#feedback-list").innerHTML = '<h4 align="center">--- No Feedback Available ---</h4>'
+
+                          }
+                         
+                        },
+                        error: function (error) {
+
+                            console.log("ERROR")
+
+                        }
+
+                    })
+             }
+    }
 
     //----------------------------------function to display images---------------------------------------------------
 

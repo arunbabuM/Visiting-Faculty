@@ -190,8 +190,9 @@ public class UserRestController {
     }
 
     @PostMapping("/get-user-details")
-    public Object getUserResume(@RequestParam(value = "resume_lid") int resume_lid) {
+    public Object getUserResume(@RequestParam(value = "resume_lid") int resume_lid,Model model,HttpSession httpSession) {
 
+        model.addAttribute("level",  httpSession.getAttribute("level"));
         Object resume = userDaoInterface.getUserResume(resume_lid);
         return resume;
     }
