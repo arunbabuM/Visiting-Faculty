@@ -128,6 +128,8 @@ public interface UserDaoInterface {
     Object getAllProforma(String data);
     
     Object getAllProformaReport(String data);
+    
+    Object getAllApprovedProforma();
 
     Object getStatusList(String data);
 
@@ -138,5 +140,7 @@ public interface UserDaoInterface {
     Object getExpperfoma(String data);
    
     Object getProformaReport(String data);
+
+    Object discontinueFaculty(String data);
 
 }

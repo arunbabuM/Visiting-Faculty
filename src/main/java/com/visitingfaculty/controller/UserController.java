@@ -201,4 +201,14 @@ public class UserController {
         return "redirect:/login#session-timeout";
     }
 
+    @GetMapping("/discotinue-faculty") 
+    public String getDiscontinuePage(Model m) {
+        String user_id = (String) httpSession.getAttribute("user_id");
+        if (user_id != null) {
+            m.addAttribute("role", httpSession.getAttribute("role"));
+            return "discontinue";
+        }
+        return "redirect:/login#session-timeout";
+    }
+
 }

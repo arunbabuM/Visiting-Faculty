@@ -54,6 +54,13 @@ public class proformaController
         return perfomaView;
     }
 
+    @PostMapping(value="/get-all-approved-proforma")
+    public Object getAllApprovedProforma()
+    {
+        Object perfomaView = userDaoInterface.getAllApprovedProforma();
+        return perfomaView;
+    }
+
     @PostMapping(value="/get-qual")
     public Object performerqual(@RequestBody String data)
     {
@@ -67,6 +74,12 @@ public class proformaController
     {
         System.out.println("data : "+data);
         Object perfomaexp = userDaoInterface.getExpperfoma(data);
+        return perfomaexp;
+    }
+    @PostMapping("/discontinue-faculty")
+    public Object discontinueFaculty(@RequestBody String data) {
+        System.out.println("data : "+data);
+        Object perfomaexp = userDaoInterface.discontinueFaculty(data);
         return perfomaexp;
     }
 }

@@ -607,4 +607,20 @@ public class userDao implements UserDaoInterface {
         return jdbcCall.executeFunction(Object.class, data);
     }
 
+    @Override
+    public Object getAllApprovedProforma() {
+        SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
+                .withFunctionName("get_all_approved_proforma");
+
+        return jdbcCall.executeFunction(Object.class);
+    }
+
+    @Override
+    public Object discontinueFaculty(String data) {
+        SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
+                .withFunctionName("discontinue_faculty");
+
+        return jdbcCall.executeFunction(Object.class,data);
+    }
+
 }
