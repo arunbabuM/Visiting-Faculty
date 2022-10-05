@@ -1118,6 +1118,8 @@
         let personal_details = data.personal_details;
         let bank_details = data.bank_details;
         let pancardNumber = personal_details[0].pancard_no;
+        let discontinuedStatus = resumeinfo.discontinue_status
+
         console.log('Resume info :', resumeinfo);
 
         let resume = `
@@ -1144,6 +1146,7 @@
           if ((personal_details[0].temp_email).length == 0) {
             tempEmail = "N.A"
           }
+
 
           resume += `<div class="edit-personal-details">
           <div class="position-relative personal-information-div-wrapper d-flex" style="cursor: pointer;">
@@ -2083,7 +2086,18 @@
           });
 
 
+          if('${level} != 0') {
 
+            if(discontinuedStatus != null) {
+              if(discontinuedStatus[0].is_discontinued) {
+                console.log(discontinuedStatus)
+                divToAppend = ` <div class="text-danger" style="font-size:larger;">This Faculty is Discontinued in Program: \${discontinuedStatus[0].program_name} and Subject:
+                  \${discontinuedStatus[0].module}  </div>
+                  `
+                  $('#body').prepend(divToAppend)
+                }
+              }
+          }
 
 
 

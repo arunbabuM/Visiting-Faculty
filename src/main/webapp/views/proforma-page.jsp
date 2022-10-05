@@ -688,6 +688,12 @@
                         document.getElementById('main-loader').classList.add('d-none')
                         return;
                     }
+                    if(objectData.status_lid == 4 && objectData.comment.length < 1 ) {
+                        document.querySelector('.proforma-comment').classList.add('border-danger');
+                        document.querySelector('.proforma-comment').outerHTML += "<p class='text-danger'style='width:auto'>Please Enter Reason</p>"
+                        document.getElementById('main-loader').classList.add('d-none')
+                        return;
+                    }
 
                     let fileArray = []
 

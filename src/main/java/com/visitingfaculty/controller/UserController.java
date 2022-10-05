@@ -45,6 +45,7 @@ public class UserController {
             User user = userDaoInterface.getUserByResume(resume_lid);
 
             model.addAttribute("resume_lid", resume_lid);
+            model.addAttribute("level", httpSession.getAttribute("level"));
             model.addAttribute("user_lid", user.getId());
             model.addAttribute("user_id", user.getUser_id());
             return "resume";
