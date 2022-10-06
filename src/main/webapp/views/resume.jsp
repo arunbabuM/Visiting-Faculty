@@ -1095,7 +1095,7 @@
 
          if (e.target.id = 'verification-check') {
 
-            if ($(e.target).is(':checked')) {
+            if ($(e.target).is(':checked') && document.querySelector('#school-name').innerText.trim().length == 0) {
               this.querySelector('.select-school').classList.remove('d-none')
             } else {
               this.querySelector('.select-school').classList.add('d-none')
@@ -1114,10 +1114,16 @@
       type: 'POST',
       success: function (response) {
         let data = JSON.parse(response.value)
+
+        console.log(data);
+
+
+
         resumeinfo = data;
         let personal_details = data.personal_details;
+
         let bank_details = data.bank_details;
-        let pancardNumber = personal_details[0].pancard_no;
+        let pancardNumber = personal_details ? personal_details[0].pancard_no : '';
         let discontinuedStatus = resumeinfo.discontinue_status
 
         console.log('Resume info :', resumeinfo);

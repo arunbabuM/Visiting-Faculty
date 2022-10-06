@@ -188,7 +188,7 @@
                 <input class="form-select-lg mb-3 select-date" type="date" style="width: 100%; border: none;"></input>
              </div>
 
-               <!-- <div class="col-md-4 text-center filter " data-filter="4" id="">
+               <!-- <div class="col-md-4 text-center filter " data-filter="5" id="">
                    <h5 >Subject</h5>
                    <hr>
                    <select class="form-select select-subject form-select-lg mb-3">
@@ -196,10 +196,11 @@
                    </select>
                </div> -->
 
-               <div class="col-md-4 text-center filter d-none status-filter" data-filter="5" id="">
+               <div class="col-md-4 text-center filter d-none status-filter" data-filter="4" id="">
                    <h5 >Status</h5>
                    <hr>
-                   <select class="form-select form-select-lg mb-3">
+                   <select class="form-select form-select-lg mb-3 select-status-option">
+                        <option value="0" >--SELECT--</option>
                         <option value="1" >Accepted</option>
                         <option value="2" >Rejected</option>
                    </select>
@@ -1128,6 +1129,7 @@
                         organization_lid: document.querySelector('.school-select ').value,
                         program_id: document.querySelector('.select-program').value == 0 ? null : document.querySelector('.select-program').value,
                         acad_session: document.querySelector('.select-semester').value == '' ? null : document.querySelector('.select-semester').value,
+                        status_lid: document.querySelector('.select-status-option').value == 0 ? null : document.querySelector('.select-status-option').value,
                         module_id: null,
 
                     }

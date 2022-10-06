@@ -97,7 +97,7 @@
         resumeinfo = data;
         let personal_details = data.personal_details;
         let bank_details = data.bank_details;
-        let pancardNumber = personal_details[0].pancard_no;
+        let pancardNumber = personal_details ? personal_details[0].pancard_no : '';
         let discontinuedStatus = resumeinfo.discontinue_status
         console.log('Resume info :', resumeinfo);
 

@@ -538,7 +538,7 @@ document.addEventListener('click', function(e) {
         let confurm = confirm('Do you really want to cancel');
         if(confurm)
         {
-        location.href = '${pageContext.request.contextPath}/job-proforma-page';
+        location.href = '${pageContext.request.contextPath}/view-applications';
         }
     })
 

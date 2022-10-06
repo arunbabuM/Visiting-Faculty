@@ -188,7 +188,7 @@
                 <input class="form-select-lg mb-3 select-date" type="date" style="width: 100%; border: none;"></input>
               </div>
 
-               <!-- <div class="col-md-4 text-center filter " data-filter="4" id="">
+               <!-- <div class="col-md-4 text-center filter " data-filter="5" id="">
                    <h5 >Subject</h5>
                    <hr>
                    <select class="form-select select-subject form-select-lg mb-3">
@@ -196,7 +196,7 @@
                    </select>
                </div> -->
 
-               <div class="col-md-4 text-center filter d-none status-filter" data-filter="5" id="">
+               <div class="col-md-4 text-center filter d-none status-filter" data-filter="4" id="">
                    <h5 >Status</h5>
                    <hr>
                    <select class="form-select form-select-lg mb-3">
