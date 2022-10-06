@@ -76,6 +76,25 @@
             <li><img src="${pageContext.request.contextPath}/icons/logout.png" class="ps-3 pe-2"> Logout</li>
         </a>
         `
+    } else if('${role}' == 'ROLE_CENTRAL') {
+        list += `
+        <a href="${pageContext.request.contextPath}/dashboard" class="offset-list-item-link">
+            <li><img src="${pageContext.request.contextPath}/icons/speedometer.png" class="ps-3 pe-2"> Dashboard</li>
+        </a>
+        <a href="${pageContext.request.contextPath}/proforma" class="offset-list-item-link">
+            <li><img src="${pageContext.request.contextPath}/icons/pending_report.png" height="24" class="ps-3 pe-2"> Proforma For Approval</li>
+        </a>
+        
+        <a href="${pageContext.request.contextPath}/proforma-report" class="offset-list-item-link">
+            <li><img src="${pageContext.request.contextPath}/icons/sidebar-icon.png" height="24" class="ps-3 pe-2"> Proforma Report</li>
+        </a>
+        <a href="${pageContext.request.contextPath}/manual-approval-list" class="offset-list-item-link">
+            <li><img src="${pageContext.request.contextPath}/icons/business-report.png" height="24" class="ps-3 pe-2"> Manual Approval List</li>
+        </a>
+        <a href="${pageContext.request.contextPath}/logout" class="offset-list-item-link">
+            <li><img src="${pageContext.request.contextPath}/icons/logout.png" class="ps-3 pe-2"> Logout</li>
+        </a>
+        `
     } else {
         list += `
         <a href="${pageContext.request.contextPath}/dashboard" class="offset-list-item-link">

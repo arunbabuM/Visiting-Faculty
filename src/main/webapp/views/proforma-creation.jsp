@@ -806,7 +806,7 @@ let resumetable =`
                                                <td>\${qual.topic_of_study}</td>
                                                <td>\${qual.university}</td>
                                                <td>\${qual.institute}</td>
-                                               <td>\${qual.percentile}</td>
+                                               <td>\${qual.percentile == null ?"N.A" : qual.percentile}</td>
                                                <td><p id=""><i id="qualification-certificate-display" data-image="imagedata/\${qual.url_path}"class="fa-solid fa-image text-success qualification-certificate-display"></i></p></td>
                                               </tr> 
                                               `
@@ -1057,17 +1057,20 @@ resumetable+= `</tbody>
 document.querySelector('#performa-creation-div').insertAdjacentHTML('afterbegin', resumetable);
 }
 
+// In order to check (pancard_no: "AIEPR9301D" )
+
 console.log("pancard number outside Ajax>>>>>>>>>>>>>>>>>>>",resumeinfo.personal_details[0].pancard_no)
                   $.ajax({
                     
-                        url: 'https://dev-portal.svkm.ac.in:8080/vfApi/getFeedback?panCardNo=' + resumeinfo.personal_details[0].pancard_no,
+                        url: 'https://dev-portal.svkm.ac.in:8080/vfApi/getFeedback?panCardNo='+ resumeinfo.personal_details[0].pancard_no,
                         type: 'GET',
                         success: function (response) {
 
                           console.log("Value of the feedback from ajax>>>>>>>>>>>>>>>>>>",response.value)
                           if(response != ''){
+                            let feedbackData;
                           for(data of response){
-                          let feedbackData = `<tr>
+                          feedbackData = `<tr>
                                                     <td>\${data.school}</td>
                                                     <td>\${data.inst}</td>
                                                     <td>\${data.programName}</td>

@@ -136,6 +136,7 @@ public class UserController {
         if (user_id != null) {
             m.addAttribute("level", httpSession.getAttribute("level"));
             m.addAttribute("organization_lid", httpSession.getAttribute("organization_lid"));
+            m.addAttribute("role", httpSession.getAttribute("role"));
             return "proforma-report";
         }
         return "redirect:/login#session-timeout";
@@ -212,5 +213,19 @@ public class UserController {
         }
         return "redirect:/login#session-timeout";
     }
+
+    @GetMapping("/manual-approval-list")
+    public String manualApprovalList(Model m) {
+        String user_id = (String) httpSession.getAttribute("user_id");
+        if (user_id != null) {
+            m.addAttribute("level", httpSession.getAttribute("level"));
+            m.addAttribute("role", httpSession.getAttribute("role"));
+            m.addAttribute("user_id", httpSession.getAttribute("user_id"));
+            m.addAttribute("organization_lid", httpSession.getAttribute("organization_lid"));
+            return "manual-approval-page";
+        }
+        return "redirect:/login#session-timeout";
+    }
+
 
 }

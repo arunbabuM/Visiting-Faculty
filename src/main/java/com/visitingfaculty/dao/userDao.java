@@ -638,6 +638,14 @@ public class userDao implements UserDaoInterface {
     }
 
     @Override
+    public Object getProformaFilterReport(String data) {
+        SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
+                .withFunctionName("proforma_filter_report");
+
+        return jdbcCall.executeFunction(Object.class, data);
+    }
+
+    @Override
     public Object getAllApprovedProforma() {
         SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
                 .withFunctionName("get_all_approved_proforma");

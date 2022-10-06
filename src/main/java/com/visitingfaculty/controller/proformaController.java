@@ -92,6 +92,14 @@ public class proformaController
         Object perfomafilter = userDaoInterface.getProformaFilter(data);
         return perfomafilter;
     }
+
+    @PostMapping(value="/get-proforma-report-filter")
+    public Object getProformaFilterReport(@RequestBody String data)
+    {
+        System.out.println("data : "+data);
+        Object perfomafilter = userDaoInterface.getProformaFilterReport(data);
+        return perfomafilter;
+    }
     @PostMapping("/discontinue-faculty")
     public Object discontinueFaculty(@RequestBody String data) {
         System.out.println("data : "+data);

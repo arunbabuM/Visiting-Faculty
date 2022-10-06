@@ -16,7 +16,7 @@
     <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js" defer></script>
 
 
-    <title>Proforma For Approval</title>
+    <title>Proforma Report</title>
     <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/images.jpg">
 
     <style>
@@ -162,7 +162,7 @@
                 <div class="col-md-4 text-center" id="select-div">
                     <h5 > Select School</h5>
                     <hr>
-                    <select class="form-select school-select form-select-lg mb-3">
+                    <select class="form-control school-select">
                     </select>
                 </div>
                 
@@ -373,7 +373,7 @@
                 objForProforma.organization_lid = schoolArray
                 console.log("JSON>>>>>>>", JSON.stringify(objForProforma))
                 $.ajax({
-                    url: '${pageContext.request.contextPath}/get-all-proforma',
+                    url: '${pageContext.request.contextPath}/get-all-proforma-report',
                     type: 'POST',
                     data: JSON.stringify(objForProforma),
                     async: false,
@@ -410,7 +410,7 @@
                     <td>\${performerinfo.aol_obe}</td>
                     <td><button data-skill="\${maxpoints.skill}" data-experience="\${maxpoints.experience}" data-achievement="\${maxpoints.achievement}" data-qualification="\${maxpoints.qualification}" data-totalP="\${maxpoints.total_points}" data-toggle="modal" type="button" class="point-distribution btn btn-outline-primary text-dark">\${maxpoints.total_points}</button></td>
                     <td><button data-id = "\${performerinfo.proforma_id}" data-toggle="modal" type="button" class="comments-btn btn btn-outline-primary text-dark">Comments</button></td>
-                    <td>Waiting for ${role.split("_")[1]} Approval</td>
+                    <td>\${performerinfo.status} By \${performerinfo.modified_by}</td>
                 <tr>
                 `
                             }
@@ -709,9 +709,8 @@
                                         <td>\${performerinfo.aol_obe}</td>
                                         <td><button data-skill="\${maxpoints.skill}" data-experience="\${maxpoints.experience}" data-achievement="\${maxpoints.achievement}" data-qualification="\${maxpoints.qualification}" data-totalP="\${maxpoints.total_points}" data-toggle="modal" type="button" class="point-distribution btn btn-outline-primary text-dark">\${maxpoints.total_points}</button></td>
                                         <td><button data-id = "\${performerinfo.proforma_id}" data-toggle="modal" type="button" class="comments-btn btn btn-outline-primary text-dark">Comments</button></td>
-                                        <td>\#{performerinfo.status}</td>
-                                    <tr>
-                `
+                                        <td>\${performerinfo.status} By \${performerinfo.modified_by}</td>
+                                    <tr>`
                                 }
                                 document.querySelector('.proforma-view').innerHTML = view;
                             } else {
@@ -973,7 +972,7 @@
                  
                              for (let desig of resResult) {
                                      selectProgramList +=
-                                 `<option class="programoptions" data-programid = "\${desig.id}" value="\${desig.id}">     
+                                 `<option data-programid = "\${desig.id}" value="\${desig.id}">     
                                      \${desig.programName}
                                  </option>`
                                  document.querySelector('.program-select').innerHTML = selectProgramList
@@ -990,7 +989,7 @@
             if(e.target.classList.contains('select-program'))
             {
                 let programId = document.querySelector('.select-program').value;
-                let selectSessionList = '<option data-value="0">--SELECT--</option>' 
+                let selectSessionList = '<option value="0" data-value="0">--SELECT--</option>' 
                 if(programId != null)
                 {
                 $.ajax({
@@ -1066,7 +1065,7 @@
                     filterObj.get_filter.push(obj);
                     console.log('OBJ : ',JSON.stringify(filterObj))
                     $.ajax({
-                        url: '${pageContext.request.contextPath}/get-proforma-filter',
+                        url: '${pageContext.request.contextPath}/get-proforma-report-filter',
                         type: 'POST',
                         data: JSON.stringify(filterObj),
                         contentType: false, 
@@ -1077,10 +1076,10 @@
                             if (performerinfoobj != null) {
                                 let view = ``
                                 if(performerinfoobj.proforma_details != null) {
+                                    console.log(performerinfoobj)
 
                                 for (performerinfo of performerinfoobj.proforma_details) {
                                     let maxpoints = JSON.parse(performerinfo.max_points_2)
-                                             console.log(maxpoints)
                                     view += `
                                     <tr>
                                         <td>\${performerinfo.created_date}</td>
@@ -1105,7 +1104,7 @@
                                         <td>\${performerinfo.aol_obe}</td>
                                         <td><button data-skill="\${maxpoints.skill}" data-experience="\${maxpoints.experience}" data-achievement="\${maxpoints.achievement}" data-qualification="\${maxpoints.qualification}" data-totalP="\${maxpoints.total_points}" data-toggle="modal" type="button" class="point-distribution btn btn-outline-primary text-dark">\${maxpoints.total_points}</button></td>
                                         <td><button data-id = "\${performerinfo.proforma_id}" data-toggle="modal" type="button" class="comments-btn btn btn-outline-primary text-dark">Comments</button></td>
-                                        <td>Pending</td>
+                                        <td>\${performerinfo.status} By \${performerinfo.modified_by}</td>
                                     <tr>
                 `
                                 }

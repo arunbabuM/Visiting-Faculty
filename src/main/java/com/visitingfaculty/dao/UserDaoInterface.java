@@ -142,6 +142,8 @@ public interface UserDaoInterface {
     Object getProformaReport(String data);
 
     Object getProformaFilter(String data);
+
+    Object getProformaFilterReport(String data);
    
     Object getReport(String data);
 

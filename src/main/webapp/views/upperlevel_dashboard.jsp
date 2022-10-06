@@ -21,4 +21,13 @@
             <img src="${pageContext.request.contextPath}/icons/report (2).png" height="80px" alt="">DISCONTINUE</a>
         </div>`
     }
+
+    if('${role}' == 'ROLE_CENTRAL') {
+        document.getElementById('upperlevel-dashboard'). innerHTML +=
+        `    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 p-4 ">
+        <a href="${pageContext.request.contextPath}/manual-approval-list"
+            class="card_school_vf text-center d-flex flex-column justify-content-center align-items-center ">
+            <img src="${pageContext.request.contextPath}/icons/business-report.png" height="80px" alt="">MANUAL APPROVAL LIST</a>
+        </div>`
+    }
 </script>

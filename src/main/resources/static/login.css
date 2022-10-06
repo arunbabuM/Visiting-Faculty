@@ -148,7 +148,7 @@ body{
 /* width */
 ::-webkit-scrollbar {
     width: 5px;
-    height: 5px;
+    height: 10px;
 }
 
 /* Track */
@@ -1410,3 +1410,13 @@ width: 12.5%;
   .programoptions{ 
    max-width: 100px;
   }
+
+  .school-option {
+    overflow: hidden;
+    overflow-wrap: break-word;
+    width: 100%;
+    display: inline-block;
+    white-space: pre-line;
+  }
+
+  

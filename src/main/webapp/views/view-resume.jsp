@@ -1040,9 +1040,9 @@
                           console.log("Value of the feedback from ajax>>>>>>>>>>>>>>>>>>",response.value)
 
                           if(response != ''){
-
+                            let feedbackData;
                             for(data of response){
-                            let feedbackData = `<tr>
+                             feedbackData = `<tr>
                                                       <td>\${data.school}</td>
                                                       <td>\${data.inst}</td>
                                                       <td>\${data.programName}</td>

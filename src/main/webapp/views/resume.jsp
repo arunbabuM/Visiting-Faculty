@@ -26,7 +26,7 @@
     <h4 class="school-tag d-none pt-5 mt-5">This Application is for : <b id="school-name"></b></h4>
     <hr >
     <div id="body" class="container">
-      <div class="d-flex justify-content-center align-items-center"  style="background-color: #FFFFFF ; border: 1px solid black; box-shadow: 0 0 15px grey;" >
+      <div class="d-flex justify-content-center align-items-center" id="verification-div" style="background-color: #FFFFFF ; border: 1px solid black; box-shadow: 0 0 15px grey;" >
         <div class="p-4">
           <input type="checkbox" id="verification-check">
           <b> <span class="required">*</span> &nbsp &nbsp &nbsp I hereby declare that the information furnished above is true to the best of my knowledge and belief. If the information is found to be false/distorted/misrepresented, my candidature is liable to be rejected. If already appointed, my appointment is liable to be terminated with immediate effect without any prior intimation or notice period.</b>
@@ -1091,14 +1091,20 @@
   <script id="script-data"></script>
   <script>
 
-      document.querySelector('.container').addEventListener('click', function (e) {
+      document.querySelector('#verification-div').addEventListener('click', function (e) {
 
          if (e.target.id = 'verification-check') {
 
             if ($(e.target).is(':checked') && document.querySelector('#school-name').innerText.trim().length == 0) {
-              this.querySelector('.select-school').classList.remove('d-none')
+              document.querySelector('.select-school').classList.remove('d-none')
             } else {
-              this.querySelector('.select-school').classList.add('d-none')
+              document.querySelector('.select-school').classList.add('d-none')
+            }
+
+            if (urlParams.has('application_lid') && $(e.target).is(':checked')) {
+              document.querySelector('.approve-application').classList.remove('d-none')
+            } else {
+              document.querySelector('.approve-application').classList.add('d-none')
             }
 
          }
@@ -7510,7 +7516,7 @@
 
     document.querySelector('#create-job-application-faculty').addEventListener('click', function () {
       let status = 400;
-      if (resumeinfo.bank_details === null || resumeinfo.personal_details === null || resumeinfo.resume_achievement === null
+      if (resumeinfo.bank_details === null || resumeinfo.personal_details === null 
           || resumeinfo.resume_experience === null || resumeinfo.resume_qualification === null || resumeinfo.resume_skill_selected === null) {
         alert("please Fill Complete Details")
       } else {
@@ -7686,8 +7692,8 @@
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     if (urlParams.has('application_lid')) {
+
       const organization_lid = urlParams.get('organization_lid')
-      document.querySelector('.approve-application').classList.remove('d-none')
       document.querySelector('.select-school').classList.add('d-none')
 
       $.ajax({
@@ -7708,8 +7714,7 @@
 
       document.querySelector('.approve-application').addEventListener('click', function () {
         let status = 400;
-        if (resumeinfo.bank_details === null || resumeinfo.personal_details === null || resumeinfo
-          .resume_achievement === null || resumeinfo.resume_experience === null ||
+        if (resumeinfo.bank_details === null || resumeinfo.personal_details === null|| resumeinfo.resume_experience === null ||
           resumeinfo.resume_qualification === null || resumeinfo.resume_skill_selected === null) {
           alert("please Fill Complete Details")
         } else {
@@ -7762,6 +7767,9 @@
 
 if("${level}" > 0) {
 
+  document.querySelector("#verification-div").classList.add('d-none');
+  document.querySelector(".select-school").classList.remove('d-none');
+
        $.ajax({
                   url: 'https://dev-portal.svkm.ac.in:8080/vfApi/getFeedback?panCardNo=' + pancardNumber,
                   type: 'GET',
@@ -7770,9 +7778,9 @@ if("${level}" > 0) {
                     console.log("Value of the feedback from ajax>>>>>>>>>>>>>>>>>>",response.value)
 
                     if(response != ''){
-
+                      let feedbackData
                       for(data of response){
-                      let feedbackData = `<tr>
+                       feedbackData = `<tr>
                                                 <td>\${data.school}</td>
                                                 <td>\${data.inst}</td>
                                                 <td>\${data.programName}</td>

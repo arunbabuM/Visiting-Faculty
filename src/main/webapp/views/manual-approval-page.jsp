@@ -16,7 +16,7 @@
     <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js" defer></script>
 
 
-    <title>Proforma For Approval</title>
+    <title>Manual Approval</title>
     <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/images.jpg">
 
     <style>
