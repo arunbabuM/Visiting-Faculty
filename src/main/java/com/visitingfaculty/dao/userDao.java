@@ -473,6 +473,14 @@ public class userDao implements UserDaoInterface {
 
         return jdbcCall.executeFunction(Object.class, data);
     }
+   
+    @Override
+    public Object getReport(String data) {
+        SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
+                .withFunctionName("get_proforma_details_report");
+
+        return jdbcCall.executeFunction(Object.class, data);
+    }
 
     @Override
     public Object getQualPerformer(String data) {
@@ -525,13 +533,27 @@ public class userDao implements UserDaoInterface {
     @Override
     public List<SchoolList> getAllSchools(int user_lid) {
 
-        String sql = "SELECT o.organization_id,o.name FROM public.user pu INNER JOIN admin_organization ao ON pu.id = ao.user_lid INNER JOIN organization o ON o.organization_id = ao.organization_lid WHERE ao.user_lid = ?";
+        int level = (int) httpSession.getAttribute("level");
+        System.out.println("level for School : "+level);
 
-        List<SchoolList> schoolsList = jdbcTemplate.query(sql, (rs, rownum) -> {
-            return new SchoolList(rs.getString("organization_id"), rs.getString("name"));
-        }, user_lid);
+        if(level <3)
+        {
+             String sql = "SELECT o.organization_id,o.name FROM public.user pu INNER JOIN admin_organization ao ON pu.id = ao.user_lid INNER JOIN organization o ON o.organization_id = ao.organization_lid WHERE ao.user_lid = ?";
+             List<SchoolList> schoolsList = jdbcTemplate.query(sql, (rs, rownum) -> {
+                 return new SchoolList(rs.getString("organization_id"), rs.getString("name"));
+             }, user_lid);
+             return schoolsList;
+        }
 
-        return schoolsList;
+        else
+        {
+            String sql = "SELECT organization_id, name FROM organization;";   
+            List<SchoolList> schoolsList = jdbcTemplate.query(sql, (rs, rownum) -> {
+                return new SchoolList(rs.getString("organization_id"), rs.getString("name"));
+            });
+            return schoolsList;
+        }
+
     }
 
     @Override
@@ -603,6 +625,14 @@ public class userDao implements UserDaoInterface {
     public Object getAllProformaReport(String data) {
         SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
                 .withFunctionName("get_all_proforma_report");
+
+        return jdbcCall.executeFunction(Object.class, data);
+    }
+
+    @Override
+    public Object getProformaFilter(String data) {
+        SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
+                .withFunctionName("proforma_filter_1");
 
         return jdbcCall.executeFunction(Object.class, data);
     }
