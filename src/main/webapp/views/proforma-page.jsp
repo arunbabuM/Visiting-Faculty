@@ -167,12 +167,6 @@
                 </div>
 
                 <div class="col-md-4 text-center filter" data-filter="1" id="">
-                    <h5 >Date</h5>
-                    <hr>
-                    <input class="form-select-lg mb-3 select-date" type="date" style="width: 100%; border: none;"></input>
-                </div>
-
-                <div class="col-md-4 text-center filter" data-filter="2" id="">
                     <h5>Program</h5>
                     <hr>
                     <select class="form-select select-program form-select-lg mb-3 program-select">
@@ -180,7 +174,7 @@
                     </select>
                 </div>
 
-                <div class="col-md-4 text-center filter" data-filter="3" id="">
+                <div class="col-md-4 text-center filter" data-filter="2" id="">
                    <h5>Semester</h5>
                    <hr>
                    <select class="form-select select-semester form-select-lg mb-3">
@@ -188,21 +182,26 @@
                    </select>
                </div>
 
-               <div class="col-md-4 text-center filter" data-filter="4" id="">
+               <div class="col-md-4 text-center filter" data-filter="3" id="">
+                <h5 >Date</h5>
+                <hr>
+                <input class="form-select-lg mb-3 select-date" type="date" style="width: 100%; border: none;"></input>
+             </div>
+
+               <!-- <div class="col-md-4 text-center filter " data-filter="4" id="">
                    <h5 >Subject</h5>
                    <hr>
                    <select class="form-select select-subject form-select-lg mb-3">
 
                    </select>
-               </div>
+               </div> -->
 
-               <div class="col-md-4 text-center filter" data-filter="5" id="">
+               <div class="col-md-4 text-center filter d-none status-filter" data-filter="5" id="">
                    <h5 >Status</h5>
                    <hr>
                    <select class="form-select form-select-lg mb-3">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
+                        <option value="1" >Accepted</option>
+                        <option value="2" >Rejected</option>
                    </select>
                </div>
        </div>
@@ -218,80 +217,8 @@
             </div>
 
 
-            <div class="main-box main-box-vf p-0 d-none">
-                <div class="row my-3 px-5" style="padding-top: 10px">
-                    <div class="col-lg-3 col-md-6 col-sm-12 px-2 pt-2 select2-wrapper">
-                        <label for="school"> <small>Date: </small>
-                        </label> <input type="date" class="form-control" name="createdDate" id="createdDate">
-                    </div>
-
-
-                    <div class="col-lg-3 col-md-6 col-sm-12 px-2 pt-2 select2-wrapper">
-                        <label for="school"> <small>School: </small>
-                        </label>
-                        <input type="text" class="form-control" name="">
-                    </div>
-
-                    <!-- <div class="col-lg-3 col-md-6 col-sm-12 px-2 pt-2 select2-wrapper">
-                        <label for="school"> <small>School: </small>
-                        </label> <select id="selectSchool"
-                            class="select-school select2-innerwrapper" name="school"
-                            multiple="multiple">
-                            
-                                <option value="00004534">SAMSOE</option>
-                            
-                        </select>
-                    </div> -->
-
-                    <div class="col-lg-3 col-md-6 col-sm-12 px-2 pt-2 select2-wrapper">
-                        <label for="program"> <small>Program: </small>
-                        </label>
-                        <input type="text" class="form-control" name="">
-                    </div>
-
-                    <!-- <div class="col-lg-3 col-md-6 col-sm-12 px-2 pt-2 select2-wrapper">
-                        <label for="program"> <small>Program: </small>
-                        </label> <select id="selectProgram"
-                            class="select-program select2-innerwrapper" name="program"
-                            multiple="multiple">
-        
-                        </select>
-                    </div> -->
-
-
-                    <div class="col-lg-3 col-md-6 col-sm-12 px-2 pt-2 select2-wrapper">
-                        <label for="semester"> <small>Semester: </small>
-                        </label>
-                        <input type="text" class="form-control" name="">
-                    </div>
-                    <!-- <div class="col-lg-3 col-md-6 col-sm-12 px-2 pt-2 select2-wrapper">
-                        <label for="semester"> <small>Semester: </small>
-                        </label> <select id="selectSemester"
-                            class="select-semester select2-innerwrapper" name="semester"
-                            multiple="multiple">
-        
-                        </select>
-                    </div> -->
-
-                    <div class="col-lg-3 col-md-6 col-sm-12 px-2 pt-2 select2-wrapper">
-                        <label for="subject"> <small>Subject: </small>
-                        </label>
-                        <input type="text" class="form-control" name="">
-                    </div>
-                    <!-- <div class="col-lg-3 col-md-6 col-sm-12 px-2 pt-2 select2-wrapper">
-                        <label for="subject"> <small>Subject: </small>
-                        </label> <select id="selectSubject"
-                            class="select-subject select2-innerwrapper" name="subject"
-                            multiple="multiple">
-        
-                        </select>
-                    </div>  -->
-                </div>
-            </div>
-
-
             <div class="table-responsive table-wrapper px-2 perfoma-table  pt-5">
-                <table class='table table-display table-bordered proforma-report-table' id="proforma-report-table"
+                <table class='table table-display table-bordered proforma-table' id="proforma-table"
                     style="width: 3600px !important;">
                     <thead>
                         <tr>
@@ -396,14 +323,18 @@
     <script src="${pageContext.request.contextPath}/js/jquery.bootpag.min.js"></script>
 
     <script>
+
+        if('${level}' == 3)
+        {
+        document.querySelector('.status-filter').classList.remove('d-none')
+        }
+        
         $(document).ready(function () {
 
             let performerinfoobj;
-
             let schoolType = '<option value="0" class="school-option" selected>All Schools</option>';
             let schoolList = 1;
             let schoolArray = []
-
 
             function getAllProforma() {
                 if (schoolList == 1) {
@@ -1080,10 +1011,10 @@
 
             })
 
-            if (Number.parseInt("${level}") > 2) {
-                document.getElementById('select-div').classList.add('d-none');
+            // if (Number.parseInt("${level}") > 2) {
+            //     document.getElementById('select-div').classList.add('d-none');
 
-            }
+            // }
 
 //----------------------------------------------------------------ON CHANGE FUNCTIONS--------------------------------------------------------
 
@@ -1095,7 +1026,7 @@
                let organization_lid = document.querySelector('.school-select').value;
                if(organization_lid != null)
                {
-                 let selectProgramList = '<option data-value="0">--SELECT--</option>';
+                 let selectProgramList = '<option value="0" data-value="0">--SELECT--</option>';
                  $.ajax({   
                          url: 'https://dev-portal.svkm.ac.in:8080/vfApi/getProgramName?characters=&programId=0&schoolObjId=' + organization_lid ,
                          type: 'GET',
@@ -1186,11 +1117,12 @@
                     let obj = {
                         filter_id: findClosest(e.target,'filter').dataset.filter,
                         level: '${level}',
+                        status_lid: 1,
                         filter_date : document.querySelector('.select-date').value,
                         organization_lid: document.querySelector('.school-select ').value,
-                        program_lid: document.querySelector('.select-program').value,
+                        program_id: document.querySelector('.select-program').value == 0 ? null : document.querySelector('.select-program').value,
                         acad_session: document.querySelector('.select-semester').value == '' ? null : document.querySelector('.select-semester').value,
-                        module_id: document.querySelector('.select-subject').value == '' ? null : document.querySelector('.select-subject').value ,
+                        module_id: null,
 
                     }
                     let filterObj = {"get_filter": []};

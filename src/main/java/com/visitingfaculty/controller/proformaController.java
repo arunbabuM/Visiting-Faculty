@@ -29,6 +29,14 @@ public class proformaController
         Object perfomaView = userDaoInterface.getJobView(data);
         return perfomaView;
     }
+   
+    @PostMapping("/proforma-report")
+    public Object proformaReportView(@RequestBody String data)
+    {
+        System.err.println(data);
+        Object perfomaView = userDaoInterface.getReport(data);
+        return perfomaView;
+    }
 
     @PostMapping(value="/proforma-report-view")
     public Object proformaReport(@RequestBody String data)
