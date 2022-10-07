@@ -646,7 +646,6 @@
                     $("#proforma-approval-modal").modal("toggle");
                 }
                 if (e.target.classList.contains('proforma-approval-submit-btn')) {
-
                     document.querySelector('.proforma-comment').classList.remove('border-danger');
                     document.getElementById('main-loader').classList.remove('d-none')
                     document.getElementById("approval-file").classList.remove('border-danger')
@@ -673,6 +672,12 @@
                     if(objectData.status_lid == 4 && objectData.comment.length < 1 ) {
                         document.querySelector('.proforma-comment').classList.add('border-danger');
                         document.querySelector('.proforma-comment').outerHTML += "<p class='text-danger'style='width:auto'>Please Enter Reason</p>"
+                        document.getElementById('main-loader').classList.add('d-none')
+                        return;
+                    }
+
+                    if(objectData.status_lid == 4 && document.getElementById("approval-file").value.length < 1 ) {
+                        document.getElementById("approval-file").classList.add('border-danger');
                         document.getElementById('main-loader').classList.add('d-none')
                         return;
                     }
@@ -736,6 +741,7 @@
                         "organization_lid": organization_lid
                     }
                     objArray.proforma_details.push(obj)
+                    console.log(objArray)
 
                     $.ajax({
                         url: '${pageContext.request.contextPath}/proforma-view',
@@ -746,7 +752,7 @@
                         success: function (response) {
                             let data = JSON.parse(response.value)
                             performerinfoobj = data;
-
+                            console.log(performerinfoobj)
                             if (performerinfoobj != null) {
                                 let view = ``
                                 if(performerinfoobj.proforma_details != null) {
@@ -1144,7 +1150,7 @@
                         success: function(response){
                             let data = JSON.parse(response.value)
                             performerinfoobj = data;
-
+                            console.log(performerinfoobj)
                             if (performerinfoobj != null) {
                                 let view = ``
                                 if(performerinfoobj.proforma_details != null) {
