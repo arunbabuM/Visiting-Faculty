@@ -231,6 +231,13 @@ public class UserRestController {
         return data;
     }
 
+    @PostMapping("/get-admin-application-search-name")
+    public Object adminApplicationSearchName(@RequestBody String getApplicationJson) {
+        Object data = userDaoInterface.getApplicationDataByName(getApplicationJson);
+
+        return data;
+    }
+
     @PostMapping("/create-resume")
     public int createResume(Resume resume) {
 
@@ -362,13 +369,18 @@ public class UserRestController {
     public Object getComments(@RequestBody String data) {
         JSONObject obj = new JSONObject(data);
         int proforma_lid = Integer.parseInt(obj.getString("proforma_lid"));
-
         Object dataFromDb = userDaoInterface.getCommments(proforma_lid);
-
         if(dataFromDb != null) {
             return dataFromDb;
         }
         return null;
+    }
+
+    @PostMapping("/get_discontinue_comments")
+    public Object getDeiscontinueCOmment(@RequestBody String comments) {
+        System.out.println("Commetnts ID : "+comments);
+        Object data = userDaoInterface.discontinueFacultyComment(comments);
+        return data;
     }
 
 }

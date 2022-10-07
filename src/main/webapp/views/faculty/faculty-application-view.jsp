@@ -184,6 +184,7 @@
                                     <th>Name</th>
                                     <th>Pan Card No</th>
                                     <th>Resume Name</th>
+                                    <th>Organization/School Name</th>
                                     <th>Actions</th>
                                 </tr>
                                 </thead>
@@ -193,7 +194,8 @@
                                     <tr data-userlid = "\${obj.organization_lid}">
                                         <td>\${obj.full_name}</td>
                                         <td class="user_id">\${obj.user_id}</td>
-                                        <td class="user_id">\${obj.resume_name}</td>`
+                                        <td class="user_id">\${obj.resume_name}</td>
+                                        <td class="user_id">\${obj.name}</td>`
 
                                         if(!obj.active){
                                             tableToAppend += `

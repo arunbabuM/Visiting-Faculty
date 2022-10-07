@@ -89,6 +89,8 @@ public interface UserDaoInterface {
 
     Object getApplicationData(String getApplicationJson);
 
+    Object getApplicationDataByName(String getApplicationJson);
+
     int deleteQualification(int id);
 
     int deleteaward(int id);
@@ -148,5 +150,7 @@ public interface UserDaoInterface {
     Object getReport(String data);
 
     Object discontinueFaculty(String data);
+
+    Object discontinueFacultyComment(String data);
 
 }

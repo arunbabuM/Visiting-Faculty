@@ -459,6 +459,14 @@ public class userDao implements UserDaoInterface {
     }
 
     @Override
+    public Object getApplicationDataByName(String getApplicationJson) {
+        SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
+                .withFunctionName("admin_application_search_by_name");
+
+        return jdbcCall.executeFunction(Object.class, getApplicationJson);
+    }
+
+    @Override
     public Object getJobResume(int resume_lid) {
         SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
                 .withFunctionName("get_appln_details");
@@ -659,6 +667,14 @@ public class userDao implements UserDaoInterface {
                 .withFunctionName("discontinue_faculty");
 
         return jdbcCall.executeFunction(Object.class,data);
+    }
+
+    @Override
+    public Object discontinueFacultyComment(String data) {
+        SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
+                .withFunctionName("get_discontinued_comments");
+
+        return jdbcCall.executeFunction(Object.class,Integer.parseInt(data));
     }
 
 }

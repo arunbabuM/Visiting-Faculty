@@ -64,10 +64,21 @@
             <div class="row px-lg-5 mx-lg-5 container">
                 <div class="col-md-12">
                     <h3 class="text-center">Search Applications</h3>
-                    <div class="input-group w-50 pt-3" style="margin: auto;">
-                        <input type="search" class="form-control rounded" placeholder="Enter Pancard no."
-                            aria-label="Search" id="search-by-id" aria-describedby="search-addon" />
-                        <button type="button" class="btn btn-outline-primary faculty-search-button">search</button>
+                    <div class="row px-lg-5 mx-lg-5">
+                        <div class="col-md-6">
+                            <div class="input-group ">
+                                <input type="search" class="form-control rounded" placeholder="Enter Pancard no."
+                                    aria-label="Search" id="search-by-id" aria-describedby="search-addon" />
+                                <button type="button" class="btn btn-outline-primary faculty-search-button">search</button>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group col-md-6">
+                                <input type="search" id="search-by-name" class="form-control rounded" placeholder="Enter Name"
+                                    aria-label="Search" aria-describedby="search-addon" />
+                                <button type="button" class="btn btn-outline-primary faculty-search-button-name">search</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -159,7 +170,73 @@
             })
             let timeout = null;
 
-            function searchFunction(value) {
+            function searchNameFunction(value) {
+                $.ajax({
+                    type: 'POST',
+                    url: '${pageContext.request.contextPath}/get-admin-application-search-name',
+                    data: JSON.stringify(value),
+                    processData: false,
+                    contentType: "application/json; charset=UTF-8",
+                    success: function (response) {
+                        let data = JSON.parse(response.value)
+                        console.log(data)
+                        document.querySelector('.validation-alert').classList.add('d-none')
+                         console.log("entered inside loop of ajax succsss")
+                              console.log(response.value)
+                        if (data.application_details != null) {
+
+
+                            let tableToAppend = `
+                            <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                       
+                                <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Pan Card No</th>
+                                    <th>Resume Name</th>
+                                    <th>Organization/School Name</th>
+                                    <th>Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>`
+                            for (let obj of data.application_details) {
+                                
+                                    tableToAppend += `
+                                    <tr data-userlid = "\${obj.user_lid}">
+                                        <td>\${obj.full_name}</td>
+                                        <td class="user_id">\${obj.user_id}</td>
+                                        <td >\${obj.resume_name}</td>
+                                        <td >\${obj.name}</td>
+                                        <td>
+                                                <a class="application-preview" href="${pageContext.request.contextPath}/proforma-creation?application_lid=\${obj.appln_id}" style="border:none; outline:none" >
+                                                <i class="fa-solid fa-eye view-resume-icon" data-toggle="tooltip" title="View"></i></a>
+                                                
+                                            </td>
+                                    </tr>` 
+
+                            }
+
+                            tableToAppend += `  </tbody>
+                                                     </table>
+                                                           </div> `
+
+                            $('.table-appending-div').html(tableToAppend)
+                        } else {
+                            document.querySelector('.no-data-alert').classList.remove('d-none')
+
+                        }
+
+                    },
+                    error: function (error) {
+                        document.querySelector('.validation-alert').classList.remove('d-none')
+                    }
+                })
+                console.log(JSON.stringify(value));
+            }
+
+            function searchIdFunction(value) {
                 $.ajax({
                     type: 'POST',
                     url: '${pageContext.request.contextPath}/get-admin-application-search',
@@ -185,6 +262,7 @@
                                     <th>Name</th>
                                     <th>Pan Card No</th>
                                     <th>Resume Name</th>
+                                    <th>Organization/School Name</th>
                                     <th>Actions</th>
                                 </tr>
                                 </thead>
@@ -196,6 +274,7 @@
                                         <td>\${obj.full_name}</td>
                                         <td class="user_id">\${obj.user_id}</td>
                                         <td >\${obj.resume_name}</td>
+                                        <td >\${obj.name}</td>
                                         <td>
                                                 <a class="application-preview" href="${pageContext.request.contextPath}/proforma-creation?application_lid=\${obj.appln_id}" style="border:none; outline:none" >
                                                 <i class="fa-solid fa-eye view-resume-icon" data-toggle="tooltip" title="View"></i></a>
@@ -218,7 +297,6 @@
                     },
                     error: function (error) {
                         document.querySelector('.validation-alert').classList.remove('d-none')
-                        console.log("entered inside loop of ajax")
                     }
                 })
                 console.log(JSON.stringify(value));
@@ -226,23 +304,45 @@
 
             document.querySelector('.faculty-search-button').addEventListener('click', function () {
                 let searchByIdValue = document.querySelector("#search-by-id").value
+                
 
-                let objectArray = []
-                let object = {
+                let objectArrayForId = []
+                let objectForId = {
                     'organization_lid': "${organization_lid}",
                     'input_text': searchByIdValue.toUpperCase()
                 };
-                objectArray.push(object)
+                objectArrayForId.push(objectForId)
                 
-                let getApplicationJson = {
-                    "get_application": objectArray
+                let getApplicationJsonForId = {
+                    "get_application": objectArrayForId
                 };
-               searchFunction(getApplicationJson)
 
-               console.log(getApplicationJson)
+               
+               searchIdFunction(getApplicationJsonForId)
+
+               console.log(getApplicationJsonForId)
             })
 
-        })
+
+            document.querySelector('.faculty-search-button-name').addEventListener('click', function () {
+                let searchByNameValue = document.querySelector("#search-by-name").value
+            
+            
+                let objectArrayForName = []
+                let objectForName = {
+                    'organization_lid': "${organization_lid}",
+                    'input_text': searchByNameValue.toUpperCase()
+                };
+                objectArrayForName.push(objectForName)
+                
+                let getApplicationJsonForName = {
+                    "get_application": objectArrayForName
+                };
+                searchNameFunction(getApplicationJsonForName)
+
+                console.log(getApplicationJsonForName);
+            });
+        });     
     </script>
 </body>
 

@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.visitingfaculty.dao.UserDaoInterface;
 import com.visitingfaculty.model.User;
-import com.visitingfaculty.dao.UserDaoInterface;
 import com.visitingfaculty.dto.UserDto;
 import com.visitingfaculty.service.PasswordService;
 

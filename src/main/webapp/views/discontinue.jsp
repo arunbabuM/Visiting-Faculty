@@ -102,7 +102,7 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Comment for Discontinue</h5>
+                        <h5 class="modal-title" id="exampleModalLongTitle">Comment for Discontinue / Continue</h5>
                         <button type="button" style="border: none;" class="close2 modal2-cancel-button"
                             data-dismiss="modal" aria-label="Close">
                             <span class="close2" aria-hidden="true">&times;</span>
@@ -120,7 +120,7 @@
             </div>
         </div>
 
-
+<!-- <--------------------Comment Modal------> 
         <div class="modal fade" id="comments-modal" tabindex="-1" role="dialog"
             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -247,6 +247,7 @@
                             <th>Subject</th>
                             <th>Program</th>
                             <th>Acad Session</th>
+                            <th>Comment's</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -254,7 +255,7 @@
 
                     </tbody>
                 </table>
-                <!--------------------------------------------------------------Modal for qualification-------------------------------------------------------->
+                <!--------------------------------------------------------------Modal for Discontinue-------------------------------------------------------->
 
                 <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Large modal</button> -->
 
@@ -380,7 +381,9 @@
                                     <td>\${performerinfo.pancard_no}</td>
                                     <td>\${performerinfo.module}</td>
                                     <td>\${performerinfo.program_name}</td>
-                                    <td>\${performerinfo.acad_session}</td>`
+                                    <td>\${performerinfo.acad_session}</td>
+                                    <td><button class="btn btn-outline-primary text-dark comment-view-btn" data-commentid="\${performerinfo.proforma_id}">Comment's</button></td>
+                                    `
                                     if(performerinfo.is_discontinued) {
                                         view += `
                                     <td><button data-status="false" data-organization-id="\${performerinfo.organization_lid}" data-id="\${performerinfo.proforma_id}" class="discontinue-btn btn btn-outline-success text-dark"><i class="fa fa-solid fa-ban "></i> CONTINUE</button></td>`
@@ -428,6 +431,67 @@
                     $('#discontinue-modal').modal('toggle')
 
                 }
+
+                        // <-----------Cancel Button For Comment-------->
+                if (e.target.classList.contains('comments-cancel-button')) {
+                    $('#comments-modal').modal('toggle')
+                }
+
+                if(e.target.classList.contains('comment-view-btn'))
+                {
+                    let comment_id = e.target.dataset.commentid;
+                    $.ajax({
+                        url: '${pageContext.request.contextPath}/get_discontinue_comments',
+                        type: 'POST',
+                        data: comment_id,
+                        contentType: false,
+                        success: function (response){
+                            
+                            let divToAppend = ``
+                            let commentData = JSON.parse(response.value);
+                            if (commentData.comments != null) {
+                                console.log(commentData)
+                                for (let data of commentData.comments) {
+                                    divToAppend += `
+                                   <div class="card pb-4">
+                                        <div class="text-justify darker mt-4 float-right">
+                                            <h6>\${data.created_by}</h6>
+                                            <span>- \${data.created_date}</span>
+                                            <br>
+                                            <p><b>Comment :</b>\${data.comment}</p>
+                                            <p><b>Status :</b>\${data.is_discontinued ? "Discontinued" : "Continued"}</p>
+                                        </div>
+                                    </div>`
+                                }                                
+                            } 
+                            else 
+                            {
+                                divToAppend += `
+                                   <div class="pb-4">
+                                        <div class="text-justify darker mt-4 float-right">
+                                            <h4>No Comments Available</h4>
+                                        </div>
+                                    </div>`
+                            }
+                            $('.card').remove();
+                            document.querySelector('.comments-body').innerHTML = divToAppend;
+                        $('#comments-modal').modal('toggle');
+                        },
+                        error: function (error){
+                            let divToAppend = ``
+                            divToAppend += `
+                                   <div class="pb-4">
+                                        <div class="text-justify darker mt-4 float-right">
+                                            <h4>No Comments Available</h4>
+                                        </div>
+                                    </div>`
+                            
+                            $('.card').remove();
+                            document.querySelector('.comments-body').innerHTML = divToAppend;       
+                            $("#comments-modal").modal('toggle');
+                        }   
+                    })
+                }
                 if (e.target.classList.contains('discontinue-submit-btn')) {
                     console.log("clickedd")
                     let commentBox = document.querySelector('.proforma-comment')
@@ -454,7 +518,6 @@
                         return;
                     }
 
-                    console.log(JSON.stringify(jsonArray))
                     $.ajax({
                         url: '${pageContext.request.contextPath}/discontinue-faculty',
                         type: 'POST',
