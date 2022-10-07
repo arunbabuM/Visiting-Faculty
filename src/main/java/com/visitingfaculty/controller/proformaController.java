@@ -25,7 +25,6 @@ public class proformaController
     @PostMapping(value="/proforma-view")
     public Object performerView(@RequestBody String data)
     {
-        System.err.println(data);
         Object perfomaView = userDaoInterface.getJobView(data);
         return perfomaView;
     }
@@ -33,7 +32,8 @@ public class proformaController
     @PostMapping("/proforma-report")
     public Object proformaReportView(@RequestBody String data)
     {
-        System.err.println(data);
+        System.err.println("DATA>>>>>>>>>>>>>>" + data);
+
         Object perfomaView = userDaoInterface.getReport(data);
         return perfomaView;
     }
@@ -51,6 +51,13 @@ public class proformaController
     {
         System.err.println(data);
         Object perfomaView = userDaoInterface.getAllProforma(data);
+        return perfomaView;
+    }
+
+    @PostMapping(value="/get-all-rejected-proforma")
+    public Object getAllRejectedProforma()
+    {
+        Object perfomaView = userDaoInterface.getAllRejectedProforma();
         return perfomaView;
     }
 

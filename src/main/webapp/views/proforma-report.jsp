@@ -162,7 +162,7 @@
                 <div class="col-md-4 text-center" id="select-div">
                     <h5 > Select School</h5>
                     <hr>
-                    <select class="form-control school-select">
+                    <select class="form-select form-select-lg school-select mb-3">
                     </select>
                 </div>
                 
@@ -185,7 +185,7 @@
                <div class="col-md-4 text-center filter" data-filter="3" id="">
                 <h5 >Date</h5>
                 <hr>
-                <input class="form-select-lg mb-3 select-date" type="date" style="width: 100%; border: none;"></input>
+                <input class="form-select-lg mb-3 select-date" disabled="true" type="date" style="width: 100%; border: none;"></input>
               </div>
 
                <!-- <div class="col-md-4 text-center filter " data-filter="5" id="">
@@ -330,6 +330,7 @@
         
         $(document).ready(function () {
 
+
             let performerinfoobj;
             let schoolType = '<option value="0" class="school-option" selected>All Schools</option>';
             let schoolList = 1;
@@ -371,7 +372,7 @@
                 let objForProforma = {}
                 objForProforma.level = Number.parseInt('${level}')
                 objForProforma.organization_lid = schoolArray
-                console.log("JSON>>>>>>>", JSON.stringify(objForProforma))
+
                 $.ajax({
                     url: '${pageContext.request.contextPath}/get-all-proforma-report',
                     type: 'POST',
@@ -656,7 +657,8 @@
                     let objArray = {
                         "proforma_details": []
                     }
-                    let organization_lid = e.target.value
+                    let organization_lid = e.target.value;
+                    console.log(organization_lid);
                     if (organization_lid == 0) {
                         document.querySelector('.proforma-view').innerHTML = '';
                         getAllProforma();
@@ -667,6 +669,7 @@
                         "organization_lid": organization_lid
                     }
                     objArray.proforma_details.push(obj)
+                    console.log(objArray);
 
                     $.ajax({
                         url: '${pageContext.request.contextPath}/proforma-report',
@@ -956,6 +959,12 @@
 
         document.querySelector('.main').addEventListener('change', function(e){
 
+            
+            if (document.querySelector('.school-select').value == 0) {
+                document.querySelector('.select-date').setAttribute('disabled',true)
+            } else {
+                document.querySelector('.select-date').removeAttribute('disabled',true)
+            }
 
             if(e.target.classList.contains('school-select'))
             {

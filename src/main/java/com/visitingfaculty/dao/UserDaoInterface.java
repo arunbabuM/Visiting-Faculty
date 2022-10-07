@@ -129,6 +129,8 @@ public interface UserDaoInterface {
 
     Object getAllProforma(String data);
     
+    Object getAllRejectedProforma();
+    
     Object getAllProformaReport(String data);
     
     Object getAllApprovedProforma();

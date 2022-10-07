@@ -185,7 +185,7 @@
                <div class="col-md-4 text-center filter" data-filter="3" id="">
                 <h5 >Date</h5>
                 <hr>
-                <input class="form-select-lg mb-3 select-date" type="date" style="width: 100%; border: none;"></input>
+                <input class="form-select-lg mb-3 select-date" disabled="true" type="date" style="width: 100%; border: none;"></input>
              </div>
 
                <!-- <div class="col-md-4 text-center filter " data-filter="5" id="">
@@ -350,7 +350,6 @@
                                 let schoolObject = {
                                     "organization_lid": desig.organization_id
                                 };
-                                console.log(desig.organization_id)
                                 // schoolObject.organization_lid = desig.organization_id;
                                 schoolArray.push(schoolObject);
 
@@ -373,7 +372,6 @@
                 let objForProforma = {}
                 objForProforma.level = Number.parseInt('${level}')
                 objForProforma.organization_lid = schoolArray
-                console.log("JSON>>>>>>>", JSON.stringify(objForProforma))
                 $.ajax({
                     url: '${pageContext.request.contextPath}/get-all-proforma',
                     type: 'POST',
@@ -387,7 +385,6 @@
                             let view = ``
                             for (performerinfo of performerinfoobj.proforma_details) {
                   let maxpoints = JSON.parse(performerinfo.max_points_2)
-                  console.log(maxpoints)
                                 view += `
                 <tr>
                     <td>\${performerinfo.created_date}</td>
@@ -1034,6 +1031,13 @@
         document.querySelector('.main').addEventListener('change', function(e){
 
 
+                        
+            if (document.querySelector('.school-select').value == 0) {
+                document.querySelector('.select-date').setAttribute('disabled',true)
+            } else {
+                document.querySelector('.select-date').removeAttribute('disabled',true)
+            }
+            
             if(e.target.classList.contains('school-select'))
             {
                let organization_lid = document.querySelector('.school-select').value;

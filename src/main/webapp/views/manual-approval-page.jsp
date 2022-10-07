@@ -158,7 +158,7 @@
             </div> -->
 
             
-            <div class="row">
+            <div class="row d-none">
                 <div class="col-md-4 text-center" id="select-div">
                     <h5 > Select School</h5>
                     <hr>
@@ -375,7 +375,7 @@
                 objForProforma.organization_lid = schoolArray
                 console.log("JSON>>>>>>>", JSON.stringify(objForProforma))
                 $.ajax({
-                    url: '${pageContext.request.contextPath}/get-all-proforma',
+                    url: '${pageContext.request.contextPath}/get-all-rejected-proforma',
                     type: 'POST',
                     data: JSON.stringify(objForProforma),
                     async: false,
@@ -412,10 +412,18 @@
                     <td>\${performerinfo.aol_obe}</td>
                     <td><button data-skill="\${maxpoints.skill}" data-experience="\${maxpoints.experience}" data-achievement="\${maxpoints.achievement}" data-qualification="\${maxpoints.qualification}" data-totalP="\${maxpoints.total_points}" data-toggle="modal" type="button" class="point-distribution btn btn-outline-primary text-dark">\${maxpoints.total_points}</button></td>
                     <td><button data-id = "\${performerinfo.proforma_id}" data-toggle="modal" type="button" class="comments-btn btn btn-outline-primary text-dark">Comments</button></td>
-                    <td>Waiting for ${role.split("_")[1]} Approval</td>
+                    <td>\${performerinfo.status} by \${performerinfo.modified_by}</td>`
+                    if(performerinfo.status_lid != 4){
+                    view += `
                     <td><i data-id="\${performerinfo.proforma_id}" class="fa-solid fa-fast-forward approval-btn" title="Send for Approval"></i></td>
                 <tr>
-                `
+                ` ;
+                } else{
+                    view += `
+                    <td><i class="fa-solid text-success fa-check" title="Approved"></i></td>
+                <tr>
+                ` ;
+                }
                             }
                             document.querySelector('.proforma-view').innerHTML = view;
                         }
@@ -778,7 +786,7 @@
                                         <td>\${performerinfo.aol_obe}</td>
                                         <td><button data-skill="\${maxpoints.skill}" data-experience="\${maxpoints.experience}" data-achievement="\${maxpoints.achievement}" data-qualification="\${maxpoints.qualification}" data-totalP="\${maxpoints.total_points}" data-toggle="modal" type="button" class="point-distribution btn btn-outline-primary text-dark">\${maxpoints.total_points}</button></td>
                                         <td><button data-id = "\${performerinfo.proforma_id}" data-toggle="modal" type="button" class="comments-btn btn btn-outline-primary text-dark">Comments</button></td>
-                                        <td>Waiting for ${role.split("_")[1]} Approval</td>
+                                        <td>\${performerinfo.status} by \${performerinfo.modified_by}</td>
                                         <td><i data-id="\${performerinfo.proforma_id}" class="fa-solid fa-fast-forward approval-btn" title="Send for Approval"></i></td>
                                     <tr>
                 `
@@ -1176,7 +1184,7 @@
                                         <td>\${performerinfo.aol_obe}</td>
                                         <td><button data-skill="\${maxpoints.skill}" data-experience="\${maxpoints.experience}" data-achievement="\${maxpoints.achievement}" data-qualification="\${maxpoints.qualification}" data-totalP="\${maxpoints.total_points}" data-toggle="modal" type="button" class="point-distribution btn btn-outline-primary text-dark">\${maxpoints.total_points}</button></td>
                                         <td><button data-id = "\${performerinfo.proforma_id}" data-toggle="modal" type="button" class="comments-btn btn btn-outline-primary text-dark">Comments</button></td>
-                                        <td>Waiting for ${role.split("_")[1]} Approval</td>
+                                        <td>\${performerinfo.status} by \${performerinfo.modified_by}</td>
                                         <td><i data-id="\${performerinfo.proforma_id}" class="fa-solid fa-fast-forward approval-btn" title="Send for Approval"></i></td>
                                     <tr>
                 `
