@@ -15,11 +15,9 @@ import com.visitingfaculty.service.PasswordService;
 @Service
 public class UserService {
 
-    public static String uploadDirectory =  System.getProperty("user.dir") + "/src/main/webapp/imagedata";   
-    //"/data/tomcat/webapps/vf/imagedata";
+    public static String uploadDirectory =  "/data/tomcat/webapps/vf/imagedata";
+    //System.getProperty("user.dir") + "/src/main/webapp/imagedata";   
 
-   
-   
 
     @Autowired
     private JavaMailSender javaMailSender;

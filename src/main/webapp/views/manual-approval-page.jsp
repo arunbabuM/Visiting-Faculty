@@ -241,6 +241,7 @@
                             <th rowspan="2">Subject Under AOL/OBE</th>
                             <th rowspan="2">Total Points</th>
                             <th rowspan="2">Comments</th>
+                            <th rowspan="2">Uploaded File</th>
                             <th rowspan="2">Status</th>
                             <th rowspan="2">Action</th>
                         </tr>
@@ -412,6 +413,7 @@
                     <td>\${performerinfo.aol_obe}</td>
                     <td><button data-skill="\${maxpoints.skill}" data-experience="\${maxpoints.experience}" data-achievement="\${maxpoints.achievement}" data-qualification="\${maxpoints.qualification}" data-totalP="\${maxpoints.total_points}" data-toggle="modal" type="button" class="point-distribution btn btn-outline-primary text-dark">\${maxpoints.total_points}</button></td>
                     <td><button data-id = "\${performerinfo.proforma_id}" data-toggle="modal" type="button" class="comments-btn btn btn-outline-primary text-dark">Comments</button></td>
+                    <td data-id ="\${performerinfo.proforma_id}">\${performerinfo.status_lid == '4'?  '<a class="fa fa-solid fa-download text-dark fa-2x file-download-btn"></a>' : 'N.A'}</td>
                     <td>\${performerinfo.status} by \${performerinfo.modified_by}</td>`
                     if(performerinfo.status_lid != 4){
                     view += `
@@ -581,6 +583,35 @@
 
                     })
 
+                }
+
+                if (e.target.classList.contains('file-download-btn')) {
+                    let proformaId = e.target.closest('td').dataset.id
+                    $.ajax({
+                        url: '${pageContext.request.contextPath}/download-file',
+                        data: proformaId,
+                        type: 'POST',
+                        contentType: false,
+                        success: function (response) {
+                            e.preventDefault()
+                            fetchFile("${pageContext.request.contextPath}/imagedata/" + response)
+                        },
+                        error: function (error) {
+                            console.log(error)
+                        }
+                    })
+                }
+
+                function fetchFile(url) {
+                    fetch(url).then(res => res.blob()).then(file => {
+                        let tempUrl = URL.createObjectURL(file);
+                        let aTag = document.createElement('a');
+                        aTag.href = tempUrl;
+                        aTag.download = "AcceptanceFile";
+                        document.body.appendChild(aTag);
+                        aTag.click();
+                        aTag.remove();
+                    })
                 }
             })
 
@@ -786,6 +817,7 @@
                                         <td>\${performerinfo.aol_obe}</td>
                                         <td><button data-skill="\${maxpoints.skill}" data-experience="\${maxpoints.experience}" data-achievement="\${maxpoints.achievement}" data-qualification="\${maxpoints.qualification}" data-totalP="\${maxpoints.total_points}" data-toggle="modal" type="button" class="point-distribution btn btn-outline-primary text-dark">\${maxpoints.total_points}</button></td>
                                         <td><button data-id = "\${performerinfo.proforma_id}" data-toggle="modal" type="button" class="comments-btn btn btn-outline-primary text-dark">Comments</button></td>
+                                        <td data-id ="\${performerinfo.proforma_id}">\${performerinfo.status_lid == '4'?  '<a class="fa fa-solid fa-download text-dark fa-2x file-download-btn"></a>' : 'N.A'}</td>
                                         <td>\${performerinfo.status} by \${performerinfo.modified_by}</td>
                                         <td><i data-id="\${performerinfo.proforma_id}" class="fa-solid fa-fast-forward approval-btn" title="Send for Approval"></i></td>
                                     <tr>
@@ -1184,6 +1216,7 @@
                                         <td>\${performerinfo.aol_obe}</td>
                                         <td><button data-skill="\${maxpoints.skill}" data-experience="\${maxpoints.experience}" data-achievement="\${maxpoints.achievement}" data-qualification="\${maxpoints.qualification}" data-totalP="\${maxpoints.total_points}" data-toggle="modal" type="button" class="point-distribution btn btn-outline-primary text-dark">\${maxpoints.total_points}</button></td>
                                         <td><button data-id = "\${performerinfo.proforma_id}" data-toggle="modal" type="button" class="comments-btn btn btn-outline-primary text-dark">Comments</button></td>
+                                        <td data-id ="\${performerinfo.proforma_id}">\${performerinfo.status_lid == '4'?  '<a class="fa fa-solid fa-download text-dark fa-2x file-download-btn"></a>' : 'N.A'}</td> 
                                         <td>\${performerinfo.status} by \${performerinfo.modified_by}</td>
                                         <td><i data-id="\${performerinfo.proforma_id}" class="fa-solid fa-fast-forward approval-btn" title="Send for Approval"></i></td>
                                     <tr>

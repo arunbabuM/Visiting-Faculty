@@ -684,5 +684,13 @@ public class userDao implements UserDaoInterface {
 
         return jdbcCall.executeFunction(Object.class,Integer.parseInt(data));
     }
+    
+    @Override
+    public String getFileURL(int proforma_lid) {
+        String sql = "SELECT ps.file_path FROM proforma_details pd INNER JOIN proforma_status ps ON pd.tag_id = ps.tag_id AND pd.status_lid = 4 AND ps.status_lid = 4 AND pd.proforma_id = ? AND ps.proforma_lid = ? ORDER BY ps.created_date";
+
+        String filePath = jdbcTemplate.queryForObject(sql,String.class,proforma_lid,proforma_lid);
+        return filePath;
+    }
 
 }

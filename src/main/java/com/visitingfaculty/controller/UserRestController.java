@@ -383,4 +383,11 @@ public class UserRestController {
         return data;
     }
 
+    @PostMapping("/download-file")
+    public String downloadFile(@RequestBody String proformaId) {
+        System.out.println("Commetnts ID : "+proformaId);
+        String data = userDaoInterface.getFileURL(Integer.parseInt(proformaId));
+        return data;
+    }
+
 }

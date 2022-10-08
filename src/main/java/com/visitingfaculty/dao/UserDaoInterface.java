@@ -155,4 +155,6 @@ public interface UserDaoInterface {
 
     Object discontinueFacultyComment(String data);
 
+    String getFileURL(int proforma_lid);
+
 }
