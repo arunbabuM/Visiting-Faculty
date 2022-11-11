@@ -723,85 +723,6 @@
 
                 }
 
-                if (e.target.classList.contains('school-select')) {
-                    let objArray = {
-                        "proforma_details": []
-                    }
-                    let organization_lid = e.target.value
-                    if (organization_lid == 0) {
-                        document.querySelector('.proforma-view').innerHTML = '';
-                        getAllProforma();
-                        return;
-                    }
-                    let obj = {
-                        "level": '${level}',
-                        "organization_lid": organization_lid
-                    }
-                    objArray.proforma_details.push(obj)
-                    console.log(objArray)
-
-                    $.ajax({
-                        url: '${pageContext.request.contextPath}/proforma-view',
-                        type: 'POST',
-                        data: JSON.stringify(objArray),
-                        async: false,
-                        contentType: false,
-                        success: function (response) {
-                            let data = JSON.parse(response.value)
-                            performerinfoobj = data;
-                            console.log(performerinfoobj)
-                            if (performerinfoobj != null) {
-                                let view = ``
-                                if(performerinfoobj.proforma_details != null) {
-
-                                for (performerinfo of performerinfoobj.proforma_details) {
-                                    let maxpoints = JSON.parse(performerinfo.max_points_2)
-                                             console.log(maxpoints)
-                                    view += `
-                                    <tr>
-                                        <td>\${performerinfo.created_date}</td>
-                                        <td>\${performerinfo.full_name}</td>
-                                        <td>\${performerinfo.pancard_no}</td>
-                                        <td><button data-qual="\${performerinfo.application_lid}" data-id = "1" data-toggle="modal" data-target=".bd-example-modal-lg" type="button" class="qual-btn btn btn-outline-primary text-dark">Graduate</button> </td>
-                                        <td><button data-qual="\${performerinfo.application_lid}" data-id = "2" data-toggle="modal" data-target=".bd-example-modal-lg" type="button" class="qual-btn btn btn-outline-primary text-dark">Masters</button></td>
-                                        <td><button data-qual="\${performerinfo.application_lid}" data-id = "3" data-toggle="modal" data-target=".bd-example-modal-lg" type="button" class="qual-btn btn btn-outline-primary text-dark">PHD</button></td>
-                                        <td><button data-exp="5" data-id = "\${performerinfo.application_lid}" data-toggle="modal" type="button" class="exp-btn btn btn-outline-primary text-dark">\${performerinfo.teaching_exp}</button></td>
-                                        <td><button data-exp="4" data-id = "\${performerinfo.application_lid}" data-toggle="modal" type="button" class="exp-btn btn btn-outline-primary text-dark">\${performerinfo.industrial_exp}</button></td>
-                                        <td>\${performerinfo.total_exp}</td>
-                                        <td>\${performerinfo.module}</td>
-                                        <td>\${performerinfo.program_name}</td>
-                                        <td>\${performerinfo.acad_session}</td>
-                                        <td>\${performerinfo.rate_per_hours}</td>
-                                        <td>\${performerinfo.total_no_of_hrs_alloted}</td>
-                                        <td>\${performerinfo.no_of_division}</td>
-                                        <td>\${performerinfo.student_count_per_division}</td>
-                                        <td>\${performerinfo.rate_per_hours * performerinfo.total_no_of_hrs_alloted}</td>
-                                        <td><button data-pan-no="\${performerinfo.pancard_no}" class="btn btn-outline-primary feedback-btn">Feedback</button></td>
-                                        <td>1</td>
-                                        <td>\${performerinfo.aol_obe}</td>
-                                        <td><button data-skill="\${maxpoints.skill}" data-experience="\${maxpoints.experience}" data-achievement="\${maxpoints.achievement}" data-qualification="\${maxpoints.qualification}" data-totalP="\${maxpoints.total_points}" data-toggle="modal" type="button" class="point-distribution btn btn-outline-primary text-dark">\${maxpoints.total_points}</button></td>
-                                        <td><button data-id = "\${performerinfo.proforma_id}" data-toggle="modal" type="button" class="comments-btn btn btn-outline-primary text-dark">Comments</button></td>
-                                        <td>Waiting for ${role.split("_")[1]} Approval</td>
-                                        <td><i data-id="\${performerinfo.proforma_id}" class="fa-solid fa-fast-forward approval-btn" title="Send for Approval"></i></td>
-                                    <tr>
-                `
-                                }
-                                document.querySelector('.proforma-view').innerHTML = view;
-                            } else {
-                                document.querySelector('.proforma-view').innerHTML = ""
-                            }
-
-                            }
-
-
-                        },
-                        error: function (error) {
-                            console.log("error", error)
-                        }
-                    });
-
-                    
-                }
                 if (e.target.classList.contains('point-distribution')) {
 
                     let skillPoint = e.target.dataset.skill
@@ -1030,6 +951,86 @@
 
         document.querySelector('.main').addEventListener('change', function(e){
 
+            if (e.target.classList.contains('school-select')) {
+                    let objArray = {
+                        "proforma_details": []
+                    }
+                    let organization_lid = e.target.value
+                    if (organization_lid == 0) {
+                        document.querySelector('.proforma-view').innerHTML = '';
+                        getAllProforma();
+                        return;
+                    }
+                    let obj = {
+                        "level": '${level}',
+                        "organization_lid": organization_lid
+                    }
+                    objArray.proforma_details.push(obj)
+                    console.log(objArray)
+
+                    $.ajax({
+                        url: '${pageContext.request.contextPath}/proforma-view',
+                        type: 'POST',
+                        data: JSON.stringify(objArray),
+                        async: false,
+                        contentType: false,
+                        success: function (response) {
+                            let data = JSON.parse(response.value)
+                            performerinfoobj = data;
+                            console.log(performerinfoobj)
+                            if (performerinfoobj != null) {
+                                let view = ``
+                                if(performerinfoobj.proforma_details != null) {
+
+                                for (performerinfo of performerinfoobj.proforma_details) {
+                                    let maxpoints = JSON.parse(performerinfo.max_points_2)
+                                             console.log(maxpoints)
+                                    view += `
+                                    <tr>
+                                        <td>\${performerinfo.created_date}</td>
+                                        <td>\${performerinfo.full_name}</td>
+                                        <td>\${performerinfo.pancard_no}</td>
+                                        <td><button data-qual="\${performerinfo.application_lid}" data-id = "1" data-toggle="modal" data-target=".bd-example-modal-lg" type="button" class="qual-btn btn btn-outline-primary text-dark">Graduate</button> </td>
+                                        <td><button data-qual="\${performerinfo.application_lid}" data-id = "2" data-toggle="modal" data-target=".bd-example-modal-lg" type="button" class="qual-btn btn btn-outline-primary text-dark">Masters</button></td>
+                                        <td><button data-qual="\${performerinfo.application_lid}" data-id = "3" data-toggle="modal" data-target=".bd-example-modal-lg" type="button" class="qual-btn btn btn-outline-primary text-dark">PHD</button></td>
+                                        <td><button data-exp="5" data-id = "\${performerinfo.application_lid}" data-toggle="modal" type="button" class="exp-btn btn btn-outline-primary text-dark">\${performerinfo.teaching_exp}</button></td>
+                                        <td><button data-exp="4" data-id = "\${performerinfo.application_lid}" data-toggle="modal" type="button" class="exp-btn btn btn-outline-primary text-dark">\${performerinfo.industrial_exp}</button></td>
+                                        <td>\${performerinfo.total_exp}</td>
+                                        <td>\${performerinfo.module}</td>
+                                        <td>\${performerinfo.program_name}</td>
+                                        <td>\${performerinfo.acad_session}</td>
+                                        <td>\${performerinfo.rate_per_hours}</td>
+                                        <td>\${performerinfo.total_no_of_hrs_alloted}</td>
+                                        <td>\${performerinfo.no_of_division}</td>
+                                        <td>\${performerinfo.student_count_per_division}</td>
+                                        <td>\${performerinfo.rate_per_hours * performerinfo.total_no_of_hrs_alloted}</td>
+                                        <td><button data-pan-no="\${performerinfo.pancard_no}" class="btn btn-outline-primary feedback-btn">Feedback</button></td>
+                                        <td>1</td>
+                                        <td>\${performerinfo.aol_obe}</td>
+                                        <td><button data-skill="\${maxpoints.skill}" data-experience="\${maxpoints.experience}" data-achievement="\${maxpoints.achievement}" data-qualification="\${maxpoints.qualification}" data-totalP="\${maxpoints.total_points}" data-toggle="modal" type="button" class="point-distribution btn btn-outline-primary text-dark">\${maxpoints.total_points}</button></td>
+                                        <td><button data-id = "\${performerinfo.proforma_id}" data-toggle="modal" type="button" class="comments-btn btn btn-outline-primary text-dark">Comments</button></td>
+                                        <td>Waiting for ${role.split("_")[1]} Approval</td>
+                                        <td><i data-id="\${performerinfo.proforma_id}" class="fa-solid fa-fast-forward approval-btn" title="Send for Approval"></i></td>
+                                    <tr>
+                `
+                                }
+                                document.querySelector('.proforma-view').innerHTML = view;
+                            } else {
+                                document.querySelector('.proforma-view').innerHTML = ""
+                            }
+
+                            }
+
+
+                        },
+                        error: function (error) {
+                            console.log("error", error)
+                        }
+                    });
+
+                    
+                }
+
 
                         
             if (document.querySelector('.school-select').value == 0) {
@@ -1049,7 +1050,7 @@
                          type: 'GET',
                          async: false,
                          success: function (response) {
-                             let resResult = JSON.parse(response).results;
+                             let resResult = JSON.parse(response);
                  
                              for (let desig of resResult) {
                                      selectProgramList +=
