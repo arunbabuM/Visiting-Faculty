@@ -4844,7 +4844,7 @@
           document.getElementById('bank-name').value = editBankDetailsForm.get('editBankName')
           document.getElementById('bank-branch').value = editBankDetailsForm.get('editBranchName')
           document.getElementById('bank-ifsc-code').value = editBankDetailsForm.get('editIfscCode')
-          document.getElementById('bank-micr-code').value = editBankDetailsForm.get('editMicrCode')
+          document.getElementById('bank-micr-code').value = editBankDetailsForm.get('editMicrCode') == 'N.A' ? '' : editBankDetailsForm.get('editMicrCode')
           document.getElementById('bank-account-number').value = editBankDetailsForm.get('editAccountNumber')
 
           document.getElementById('body').classList.add('d-none');
@@ -6129,11 +6129,8 @@
       let facultyBankBranch1 = dynamicLengthCheck(submitBankDetailsForm.get('branchName'), 'bank-branch-message');
       let facultyAccountNumber1 = dynamicBankAcountNumber(submitBankDetailsForm.get('accountNumber'),
         'bank-account-number-message');
-      let cancelledChequeValidation = dynamicBankAcountNumber(submitBankDetailsForm.get('cancelled_cheque_Photo'),
-        'cancelled_cheque_Photo-message');
 
-
-      if (!facultyBankName1 || !facultyBankBranch1 || !facultyAccountNumber1 || !cancelledChequeValidation) {
+      if (!facultyBankName1 || !facultyBankBranch1 || !facultyAccountNumber1) {
         return;
       }
 

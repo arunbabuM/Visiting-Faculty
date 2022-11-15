@@ -111,7 +111,8 @@
                     <div class="proforma-approval-body container" style="width: auto;">
                         <select class="form-select status-select form-select-lg mb-3">
                         </select>
-                        <input type="file" id="approval-file" required accept=".doc,.docx,.pdf,image/*" class="form-control d-none">
+                        <input type="file" id="approval-file" required accept=".doc,.docx,.pdf,image/*"
+                            class="form-control d-none">
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="close2 btn btn-secondary modal2-cancel-button"
@@ -144,7 +145,7 @@
                 </div>
             </div>
 
-        </div> 
+        </div>
 
 
 
@@ -157,38 +158,39 @@
                 </select>
             </div> -->
 
-            
+
             <div class="row">
                 <div class="col-md-4 text-center" id="select-div">
-                    <h5 > Select School</h5>
+                    <h5> Select School</h5>
                     <hr>
                     <select class="form-select form-select-lg school-select mb-3">
                     </select>
                 </div>
-                
+
                 <div class="col-md-4 text-center filter" data-filter="1" id="">
                     <h5>Program</h5>
                     <hr>
                     <select class="form-select select-program form-select-lg mb-3 program-select">
-                        
+
                     </select>
                 </div>
 
                 <div class="col-md-4 text-center filter" data-filter="2" id="">
-                   <h5>Semester</h5>
-                   <hr>
-                   <select class="form-select select-semester form-select-lg mb-3">
+                    <h5>Semester</h5>
+                    <hr>
+                    <select class="form-select select-semester form-select-lg mb-3">
 
-                   </select>
-               </div>
+                    </select>
+                </div>
 
-               <div class="col-md-4 text-center filter" data-filter="3" id="">
-                <h5 >Date</h5>
-                <hr>
-                <input class="form-select-lg mb-3 select-date" disabled="true" type="date" style="width: 100%; border: none;"></input>
-              </div>
+                <div class="col-md-4 text-center filter" data-filter="3" id="">
+                    <h5>Date</h5>
+                    <hr>
+                    <input class="form-select-lg mb-3 select-date" disabled="true" type="date"
+                        style="width: 100%; border: none;"></input>
+                </div>
 
-               <!-- <div class="col-md-4 text-center filter " data-filter="5" id="">
+                <!-- <div class="col-md-4 text-center filter " data-filter="5" id="">
                    <h5 >Subject</h5>
                    <hr>
                    <select class="form-select select-subject form-select-lg mb-3">
@@ -196,15 +198,17 @@
                    </select>
                </div> -->
 
-               <div class="col-md-4 text-center filter d-none status-filter" data-filter="4" id="">
-                   <h5 >Status</h5>
-                   <hr>
-                   <select class="form-select form-select-lg mb-3">
-                        <option value="1" >Accepted</option>
-                        <option value="2" >Rejected</option>
-                   </select>
-               </div>
-       </div>
+                <div class="col-md-4 text-center filter status-filter" data-filter="4" id="">
+                    <h5>Status</h5>
+                    <hr>
+                    <select class="form-select select-status-filter form-select-lg mb-3">
+                        <option value="0">--SELECT--</option>
+                        <option value="1">Accepted</option>
+                        <option value="2">Rejected</option>
+                        <option value="4">Forcefully Accepted</option>
+                    </select>
+                </div>
+            </div>
 
             <!-- Error Alert -->
             <div class="validation-alert alert alert-danger alert-dismissible fade show d-none">
@@ -240,6 +244,7 @@
                             <th rowspan="2">Subject Under AOL/OBE</th>
                             <th rowspan="2">Total Points</th>
                             <th rowspan="2">Comments</th>
+                            <th rowspan="2">Uploaded File</th>
                             <th rowspan="2">Status</th>
                         </tr>
                         <tr>
@@ -323,13 +328,12 @@
 
     <script>
 
-        if('${level}' == 3)
-        {
-        document.querySelector('.status-filter').classList.remove('d-none')
-        }
-        
         $(document).ready(function () {
 
+
+            if('${level}' == 1 || '${level}' == 2){
+            document.querySelector('.select-status-filter').setAttribute('disabled',true);
+            }
 
             let performerinfoobj;
             let schoolType = '<option value="0" class="school-option" selected>All Schools</option>';
@@ -385,8 +389,8 @@
                         if (performerinfoobj.proforma_details != null) {
                             let view = ``
                             for (performerinfo of performerinfoobj.proforma_details) {
-                  let maxpoints = JSON.parse(performerinfo.max_points_2)
-                  console.log(maxpoints)
+                                let maxpoints = JSON.parse(performerinfo.max_points_2)
+                                console.log(maxpoints)
                                 view += `
                 <tr>
                     <td>\${performerinfo.created_date}</td>
@@ -437,6 +441,36 @@
 
 
             document.querySelector('.perfoma-table').addEventListener('click', function (e) {
+
+
+                if (e.target.classList.contains('file-download-btn')) {
+                    let proformaId = e.target.closest('td').dataset.id
+                    $.ajax({
+                        url: '${pageContext.request.contextPath}/download-file',
+                        data: proformaId,
+                        type: 'POST',
+                        contentType: false,
+                        success: function (response) {
+                            e.preventDefault()
+                            fetchFile("${pageContext.request.contextPath}/imagedata/" + response)
+                        },
+                        error: function (error) {
+                            console.log(error)
+                        }
+                    })
+                }
+
+                function fetchFile(url) {
+                    fetch(url).then(res => res.blob()).then(file => {
+                        let tempUrl = URL.createObjectURL(file);
+                        let aTag = document.createElement('a');
+                        aTag.href = tempUrl;
+                        aTag.download = "AcceptanceFile";
+                        document.body.appendChild(aTag);
+                        aTag.click();
+                        aTag.remove();
+                    })
+                }
 
 
                 if (e.target.classList.contains('qual-btn')) {
@@ -592,7 +626,7 @@
                     document.querySelector('.card').remove()
                     $(".qualification-display").modal("toggle");
                 }
-               
+
                 if (e.target.classList.contains('proforma-approval-submit-btn')) {
 
                     document.querySelector('.proforma-comment').classList.remove('border-danger');
@@ -607,14 +641,15 @@
                     objectData.status_lid = document.querySelector('.status-select').value
                     objectData.approved_by = '${user_id}'
 
-                    if (objectData.status_lid < 1 || objectData.status_lid > 4 ) {
+                    if (objectData.status_lid < 1 || objectData.status_lid > 4) {
                         document.querySelector('.status-select').classList.add('border-danger');
                         document.getElementById('main-loader').classList.add('d-none')
                         return;
-                    } 
-                    if(objectData.status_lid == 2 && objectData.comment.length < 1) {
+                    }
+                    if (objectData.status_lid == 2 && objectData.comment.length < 1) {
                         document.querySelector('.proforma-comment').classList.add('border-danger');
-                        document.querySelector('.proforma-comment').outerHTML += "<p class='text-danger'style='width:auto'>Please Enter Reason</p>"
+                        document.querySelector('.proforma-comment').outerHTML +=
+                            "<p class='text-danger'style='width:auto'>Please Enter Reason</p>"
                         document.getElementById('main-loader').classList.add('d-none')
                         return;
                     }
@@ -623,14 +658,14 @@
 
                     let approvalFile = document.getElementById("approval-file").files[0]
                     if (approvalFile) {
-                    let filereader = new FileReader();
-                    filereader.readAsDataURL(approvalFile);
-                    filereader.onload =  function  (evt) {
-                        let profilePhotoBase64 =  evt.target.result;
-                        fileArray[0] = profilePhotoBase64
-                        console.log(profilePhotoBase64)
-                    }
-                       
+                        let filereader = new FileReader();
+                        filereader.readAsDataURL(approvalFile);
+                        filereader.onload = function (evt) {
+                            let profilePhotoBase64 = evt.target.result;
+                            fileArray[0] = profilePhotoBase64
+                            console.log(profilePhotoBase64)
+                        }
+
                     } else {
                         fileArray[0] = null;
                     }
@@ -638,28 +673,30 @@
                         "insert_proforma_status": []
                     }
 
-                    setTimeout(function() {
+                    setTimeout(function () {
 
-                    objectData.file_path = fileArray[0]
-                    
-                    proformaArray.insert_proforma_status.push(objectData);
+                        objectData.file_path = fileArray[0]
 
-                    $.ajax({
-                        url: '${pageContext.request.contextPath}/proforma-approval',
-                        type: 'POST',
-                        data: JSON.stringify(proformaArray),
-                        contentType: false,
-                        success: function (response) {
-                            document.getElementById('main-loader').classList.add('d-none')
-                            location.reload()
-                        },
-                        error: function (err) {
-                            document.getElementById('main-loader').classList.add('d-none')
-                            console.log("Error");
-                        }
+                        proformaArray.insert_proforma_status.push(objectData);
 
-                    })
-                },1200)
+                        $.ajax({
+                            url: '${pageContext.request.contextPath}/proforma-approval',
+                            type: 'POST',
+                            data: JSON.stringify(proformaArray),
+                            contentType: false,
+                            success: function (response) {
+                                document.getElementById('main-loader').classList
+                                    .add('d-none')
+                                location.reload()
+                            },
+                            error: function (err) {
+                                document.getElementById('main-loader').classList
+                                    .add('d-none')
+                                console.log("Error");
+                            }
+
+                        })
+                    }, 1200)
 
                 }
 
@@ -693,12 +730,14 @@
 
                             if (performerinfoobj != null) {
                                 let view = ``
-                                if(performerinfoobj.proforma_details != null) {
+                                if (performerinfoobj.proforma_details != null) {
 
-                                for (performerinfo of performerinfoobj.proforma_details) {
-                                    let maxpoints = JSON.parse(performerinfo.max_points_2)
-                                             console.log(maxpoints)
-                                    view += `
+                                    for (performerinfo of performerinfoobj
+                                        .proforma_details) {
+                                        let maxpoints = JSON.parse(performerinfo
+                                            .max_points_2)
+                                        console.log(maxpoints)
+                                        view += `
                                     <tr>
                                         <td>\${performerinfo.created_date}</td>
                                         <td>\${performerinfo.full_name}</td>
@@ -722,13 +761,15 @@
                                         <td>\${performerinfo.aol_obe}</td>
                                         <td><button data-skill="\${maxpoints.skill}" data-experience="\${maxpoints.experience}" data-achievement="\${maxpoints.achievement}" data-qualification="\${maxpoints.qualification}" data-totalP="\${maxpoints.total_points}" data-toggle="modal" type="button" class="point-distribution btn btn-outline-primary text-dark">\${maxpoints.total_points}</button></td>
                                         <td><button data-id = "\${performerinfo.proforma_id}" data-toggle="modal" type="button" class="comments-btn btn btn-outline-primary text-dark">Comments</button></td>
+                                        <td data-id ="\${performerinfo.proforma_id}">\${performerinfo.status_lid == '4'?  '<a class="fa fa-solid fa-download text-dark fa-2x file-download-btn"></a>' : 'N.A'}</td>
                                         <td>\${performerinfo.status} By \${performerinfo.modified_by}</td>
                                     <tr>`
+                                    }
+                                    document.querySelector('.proforma-view').innerHTML =
+                                        view;
+                                } else {
+                                    document.querySelector('.proforma-view').innerHTML = ""
                                 }
-                                document.querySelector('.proforma-view').innerHTML = view;
-                            } else {
-                                document.querySelector('.proforma-view').innerHTML = ""
-                            }
 
                             }
 
@@ -739,7 +780,7 @@
                         }
                     });
 
-                    
+
                 }
                 if (e.target.classList.contains('point-distribution')) {
 
@@ -751,7 +792,7 @@
 
                     console.log(skillPoint)
 
-                    if(skillPoint != null){
+                    if (skillPoint != null) {
 
                         let pointDistribution = `<div class="card">
                                         <table>
@@ -765,7 +806,7 @@
                                             </hr>
                                             <tbody>`
 
-                        pointDistribution +=  `<tr>
+                        pointDistribution += `<tr>
                                    <td>\${skillPoint}</td>
                                    <td>\${experiencePoint}</td>
                                    <td>\${achievementPoint}</td>
@@ -775,22 +816,23 @@
 
                         pointDistribution += `</tbody></table></div>`
 
-                               $('.card').remove();
-                                document.querySelector('.qualification-div').innerHTML = pointDistribution
-                                $(".qualification-display").modal("toggle");
-                            } else {
+                        $('.card').remove();
+                        document.querySelector('.qualification-div').innerHTML = pointDistribution
+                        $(".qualification-display").modal("toggle");
+                    } else {
 
-                                let noexp = `
+                        let noexp = `
                                 <div class="card">
                                     <h4 align="center"> No Data Available </h4>
                                 </div>
                                  `
-                                $('.card').remove();
-                                $(".qualification-display").modal("toggle");
-                                document.querySelector('.qualification-div').insertAdjacentHTML('afterend', noexp);
+                        $('.card').remove();
+                        $(".qualification-display").modal("toggle");
+                        document.querySelector('.qualification-div').insertAdjacentHTML('afterend',
+                            noexp);
 
 
-                            }
+                    }
 
 
                 }
@@ -950,11 +992,11 @@
                         }
                     })
                 }
-                if(e.target.classList.contains('status-select')) {
-                    if(e.target.value == 4) {
-                       document.getElementById('approval-file').classList.remove('d-none')
+                if (e.target.classList.contains('status-select')) {
+                    if (e.target.value == 4) {
+                        document.getElementById('approval-file').classList.remove('d-none')
                     } else {
-                       document.getElementById('approval-file').classList.add('d-none')
+                        document.getElementById('approval-file').classList.add('d-none')
                     }
                 }
 
@@ -965,16 +1007,20 @@
 
             // }
 
-//----------------------------------------------------------------ON CHANGE FUNCTIONS--------------------------------------------------------
+            //----------------------------------------------------------------ON CHANGE FUNCTIONS--------------------------------------------------------
 
-        document.querySelector('.main').addEventListener('change', function(e){
+            document.querySelector('.main').addEventListener('change', function (e) {
 
-            
-            if (document.querySelector('.school-select').value == 0) {
-                document.querySelector('.select-date').setAttribute('disabled',true)
-            } else {
-                document.querySelector('.select-date').removeAttribute('disabled',true)
-            }
+
+                if (document.querySelector('.school-select').value == 0) {
+                    document.querySelector('.select-date').setAttribute('disabled', true)
+                    document.querySelector('.select-status-filter').setAttribute('disabled', true)
+                    
+                } else {
+                    document.querySelector('.select-date').removeAttribute('disabled', true)
+                    document.querySelector('.select-status-filter').removeAttribute('disabled',true);
+
+                }
 
             if(e.target.classList.contains('school-select'))
             {
@@ -994,112 +1040,119 @@
                                  `<option data-programid = "\${desig.id}" value="\${desig.id}">     
                                      \${desig.programName}
                                  </option>`
-                                 document.querySelector('.program-select').innerHTML = selectProgramList
-                                 
-                             }
-                         },
-                         error: function (error) {
-                             return error;
-                         }
-               });
-               }
-            }
+                                    document.querySelector('.program-select').innerHTML =
+                                        selectProgramList
 
-            if(e.target.classList.contains('select-program'))
-            {
-                let programId = document.querySelector('.select-program').value;
-                let selectSessionList = '<option value="0" data-value="0">--SELECT--</option>' 
-                if(programId != null)
-                {
-                $.ajax({
-                        url: 'https://dev-portal.svkm.ac.in:8080/vfApi/getacadSession?programId=' + programId,
-                        type: 'GET',
-                        success: function (response) {
-                            let resResult = JSON.parse(response).data;
-                        
-                            for (let session of resResult) {
-                            
-                                selectSessionList +=
-                                    `<option data-semister="\${session.acadSession}">     
+                                }
+                            },
+                            error: function (error) {
+                                return error;
+                            }
+                        });
+                    }
+                }
+
+                if (e.target.classList.contains('select-program')) {
+                    let programId = document.querySelector('.select-program').value;
+                    let selectSessionList = '<option value="0" data-value="0">--SELECT--</option>'
+                    if (programId != null) {
+                        $.ajax({
+                            url: 'https://dev-portal.svkm.ac.in:8080/vfApi/getacadSession?programId=' +
+                                programId,
+                            type: 'GET',
+                            success: function (response) {
+                                let resResult = JSON.parse(response).data;
+
+                                for (let session of resResult) {
+
+                                    selectSessionList +=
+                                        `<option data-semister="\${session.acadSession}">     
                                         \${session.acadSession}
                                     </option>`
-                                document.querySelector('.select-semester').innerHTML = selectSessionList;
-                            }                        
-                        },
-                        error: function (error) {
-                            return error;
-                        }
-                })
+                                    document.querySelector('.select-semester').innerHTML =
+                                        selectSessionList;
+                                }
+                            },
+                            error: function (error) {
+                                return error;
+                            }
+                        })
+                    }
                 }
-            }
 
-            if(e.target.classList.contains('select-semester'))
-            {
-                let programId =  document.querySelector('.select-program').value;
-                let sessionName =  document.querySelector('.select-semester').value;
-                let selectSubjectList = '<option data-value="0">--SELECT--</option>';
-                console.log('subject :', programId)
-                console.log('sessionName :', sessionName)
+                if (e.target.classList.contains('select-semester')) {
+                    let programId = document.querySelector('.select-program').value;
+                    let sessionName = document.querySelector('.select-semester').value;
+                    let selectSubjectList = '<option data-value="0">--SELECT--</option>';
+                    console.log('subject :', programId)
+                    console.log('sessionName :', sessionName)
 
-                $.ajax({
-                        url: 'https://dev-portal.svkm.ac.in:8080/vfApi/getSubjectName?programId=' + programId + '&semester=' + sessionName ,
+                    $.ajax({
+                        url: 'https://dev-portal.svkm.ac.in:8080/vfApi/getSubjectName?programId=' +
+                            programId + '&semester=' + sessionName,
                         type: 'GET',
                         success: function (response) {
-                            console.log('response->',response)           
-                            if(!response) {
+                            console.log('response->', response)
+                            if (!response) {
                                 response = '[]';
                             }
                             let resResult = JSON.parse(response);
                             for (let sub of resResult) {
-                                if(sub.moduleName != null) {
-                
+                                if (sub.moduleName != null) {
+
                                     selectSubjectList +=
-                                    `<option data-value="\${sub.moduleName}" data-id="\${sub.moduleId}">     
+                                        `<option data-value="\${sub.moduleName}" data-id="\${sub.moduleId}">     
                                         \${sub.moduleName}
                                         </option>`
-                                 document.querySelector('.select-subject').innerHTML = selectSubjectList;
-                                 }
+                                    document.querySelector('.select-subject').innerHTML =
+                                        selectSubjectList;
+                                }
                             }
                         },
                         error: function (error) {
                             return error;
                         }
-            })
-            }
+                    })
+                }
 
-            if(e.target.classList.contains('filter') || findClosest(e.target,'filter'))
-                {
+                if (e.target.classList.contains('filter') || findClosest(e.target, 'filter')) {
                     let obj = {
-                        filter_id: findClosest(e.target,'filter').dataset.filter,
+                        filter_id: findClosest(e.target, 'filter').dataset.filter,
                         level: '${level}',
-                        status_lid: 1,
-                        filter_date : document.querySelector('.select-date').value,
+                        status_lid: document.querySelector('.select-status-filter').value,
+                        filter_date: document.querySelector('.select-date').value,
                         organization_lid: document.querySelector('.school-select ').value,
-                        program_id: document.querySelector('.select-program').value == 0 ? null : document.querySelector('.select-program').value,
-                        acad_session: document.querySelector('.select-semester').value == '' ? null : document.querySelector('.select-semester').value,
+                        program_id: document.querySelector('.select-program').value == 0 ? null :
+                            document.querySelector('.select-program').value,
+                        acad_session: document.querySelector('.select-semester').value == '' ?
+                            null : document.querySelector('.select-semester').value,
                         module_id: null,
 
                     }
-                    let filterObj = {"get_filter": []};
+                    let filterObj = {
+                        "get_filter": []
+                    };
                     filterObj.get_filter.push(obj);
-                    console.log('OBJ : ',JSON.stringify(filterObj))
+                    console.log('OBJ : ', JSON.stringify(filterObj))
                     $.ajax({
                         url: '${pageContext.request.contextPath}/get-proforma-report-filter',
                         type: 'POST',
                         data: JSON.stringify(filterObj),
-                        contentType: false, 
-                        success: function(response){
+                        contentType: false,
+                        success: function (response) {
                             let data = JSON.parse(response.value)
                             performerinfoobj = data;
 
                             if (performerinfoobj != null) {
                                 let view = ``
-                                if(performerinfoobj.proforma_details != null) {
+                                if (performerinfoobj.proforma_details != null) {
                                     console.log(performerinfoobj)
 
-                                for (performerinfo of performerinfoobj.proforma_details) {
-                                    let maxpoints = JSON.parse(performerinfo.max_points_2)
-                                    view += `
+                                    for (performerinfo of performerinfoobj
+                                        .proforma_details) {
+                                        let maxpoints = JSON.parse(performerinfo
+                                            .max_points_2)
+                                        view += `
                                     <tr>
                                         <td>\${performerinfo.created_date}</td>
                                         <td>\${performerinfo.full_name}</td>
@@ -1123,32 +1176,31 @@
                                         <td>\${performerinfo.aol_obe}</td>
                                         <td><button data-skill="\${maxpoints.skill}" data-experience="\${maxpoints.experience}" data-achievement="\${maxpoints.achievement}" data-qualification="\${maxpoints.qualification}" data-totalP="\${maxpoints.total_points}" data-toggle="modal" type="button" class="point-distribution btn btn-outline-primary text-dark">\${maxpoints.total_points}</button></td>
                                         <td><button data-id = "\${performerinfo.proforma_id}" data-toggle="modal" type="button" class="comments-btn btn btn-outline-primary text-dark">Comments</button></td>
+                                        <td data-id ="\${performerinfo.proforma_id}">\${performerinfo.status_lid == '4'?  '<a class="fa fa-solid fa-download text-dark fa-2x file-download-btn"></a>' : 'N.A'}</td>
                                         <td>\${performerinfo.status} By \${performerinfo.modified_by}</td>
                                     <tr>
                 `
+                                    }
+                                    document.querySelector('.proforma-view').innerHTML = ""
+                                    document.querySelector('.proforma-view').innerHTML =
+                                        view;
+                                } else {
+                                    document.querySelector('.proforma-view').innerHTML = ""
                                 }
-                                document.querySelector('.proforma-view').innerHTML = ""
-                                document.querySelector('.proforma-view').innerHTML = view;
-                            } else {
-                                document.querySelector('.proforma-view').innerHTML = ""
-                            }
 
                             }
-                        },  
+                        },
                         error: function (error) {
                             console.log(error);
                         }
                     })
                 }
 
-        })
+            })
 
 
 
         });
-
-
-
     </script>
 </body>
 
