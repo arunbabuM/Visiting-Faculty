@@ -1,11 +1,14 @@
 package com.visitingfaculty.controller;
 
+import java.io.File;
+import java.security.interfaces.RSAPrivateKey;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
@@ -20,6 +23,7 @@ import com.visitingfaculty.model.Resume;
 import com.visitingfaculty.model.SchoolList;
 import com.visitingfaculty.model.User;
 import com.visitingfaculty.model.user_skills.UserSkillsFromDB;
+import com.visitingfaculty.service.JavaCrypto;
 import com.visitingfaculty.service.PasswordService;
 import com.visitingfaculty.service.faculty_service.UserLoginService;
 import com.visitingfaculty.service.faculty_service.UserService;
@@ -27,6 +31,9 @@ import com.visitingfaculty.validations.jsoncheck;
 
 @RestController
 public class UserRestController {
+
+    @Value("${privateKeyLocation}")
+    String privateKeyLocation;
 
     @Autowired
     UserService userService;
@@ -172,6 +179,22 @@ public class UserRestController {
 
     @PostMapping("/verify-login")
     public ResponseEntity<?> verifyUserLogin(@RequestBody UserDto userDto, HttpSession httpSession) {
+
+        String decodedUsername = null;
+        String decodedPassword = null;     
+        File privateKeyFile = new File(privateKeyLocation);
+        RSAPrivateKey privKey;
+        try {
+            privKey = JavaCrypto.readPrivateKey(privateKeyFile);
+            decodedUsername = JavaCrypto.getDecipheredText(privKey,userDto.getUser_id());
+            decodedPassword = JavaCrypto.getDecipheredText(privKey, userDto.getPassword());
+            userDto.setUser_id(decodedUsername);
+            userDto.setPassword(decodedPassword);
+            
+        } catch (Exception e) {
+            System.out.println("Decoded Exception");
+            System.out.println("Exception : "+ e);
+        }
 
 
         if (loginService.verifyPassword(userDto)) {

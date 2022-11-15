@@ -238,14 +238,14 @@
               <div class="cust-input-prepend">
                 <i class="fa-solid fa-user"></i>
               </div>
-              <input type="text" name="user_id" placeholder="Pan Card No./Username" required>
+              <input type="text" name="user_id" id="user_id" placeholder="Pan Card No./Username" required>
             </div>
 
             <div class="cust-btn-group mb-3">
               <div class="cust-input-prepend">
                 <i class="fas fa-key"></i>
               </div>
-              <input type="password" name="password" placeholder="Password" required>
+              <input type="password" name="password" id="password" placeholder="Password" required>
               <input type="hidden" name="devicecheck" id="devicecheck">
             </div>
 
@@ -298,6 +298,76 @@
 
   <!-- Page Level JavaScript Libaries End -->
   <script>
+
+  //--------------------------------------------------------------------------------------------------------------------------------------
+
+let publicKey = "${publicKey}";
+
+let isEnc = false;
+
+
+function getMessageEncoding(plainText) {
+    let enc = new TextEncoder();
+    return enc.encode(plainText);
+}
+
+async function encryptMessage(textToEncode, publicKey) {
+    let encoded = getMessageEncoding(textToEncode);
+    
+    let key = await importRsaKey(publicKey);
+
+    let ciphertext = await window.crypto.subtle.encrypt({
+            name: "RSA-OAEP"
+        },
+        key,
+        encoded
+    ).catch(e => {
+  alert("Something went wrong! If issue persist, please try using the latest updated Chrome browser.")
+});
+
+    let base64String = btoa(String.fromCharCode.apply(null, new Uint8Array(ciphertext)));
+    
+    return base64String;
+
+}
+
+
+async function importRsaKey(publicKey) {
+    const binaryDerString = window.atob(publicKey);
+    const binaryDer = str2ab(binaryDerString);
+
+    return window.crypto.subtle.importKey(
+        "spki",
+        binaryDer, {
+            name: "RSA-OAEP",
+            hash: "SHA-256"
+        },
+        true,
+        ["encrypt"]
+    );
+}
+
+function _arrayBufferToBase64(buffer) {
+    var binary = '';
+    var bytes = new Uint8Array(buffer);
+    var len = bytes.byteLength;
+    for (var i = 0; i < len; i++) {
+        binary += String.fromCharCode(bytes[i]);
+    }
+    return window.btoa(binary);
+}
+
+function str2ab(str) {
+    const buf = new ArrayBuffer(str.length);
+    const bufView = new Uint8Array(buf);
+    for (let i = 0, strLen = str.length; i < strLen; i++) {
+        bufView[i] = str.charCodeAt(i);
+    }
+    return buf;
+}
+
+  //-------------------------------------------------------------------------------------------------------------------------------------- 
+
     // window.onload = function () {
     //   console.log("Window on load")
     //   Particles.init({
@@ -351,23 +421,33 @@
     let loginButton = document.querySelector('.login-btn')
     let status = 400;
 
-    loginButton.addEventListener('click', function (e) {
+    loginButton.addEventListener('click',async function (e) {
       
       document.getElementById('main-loader').classList.remove('d-none')
       e.preventDefault();
 
-      let myForm = document.getElementById('login-form')
-      let formData = new FormData(myForm)
+      // let myForm = document.getElementById('login-form')
+      // let formData = new FormData(myForm)
 
-      let result = {};
-      for (let entry of formData.entries()) {
-        result[entry[0]] = entry[1];
+      // let result = {};
+      // for (let entry of formData.entries()) {
+      //   result[entry[0]] = entry[1];
+      // }
+      // console.log(JSON.stringify(result))
+
+      let username = document.querySelector('#user_id').value;
+      let password = document.querySelector('#password').value;
+      encryptedUsername = await encryptMessage(username, publicKey);
+			encryptedPass = await encryptMessage(password, publicKey);
+      encryptresult = {
+        user_id : encryptedUsername,
+        password : encryptedPass,
+        devicecheck : ''
       }
-      console.log(JSON.stringify(result))
 
       fetch('${pageContext.request.contextPath}/verify-login', {
           method: "POST",
-          body: JSON.stringify(result),
+          body: JSON.stringify(encryptresult),
           headers: {
 
             "Content-Type": "application/json; charset=UTF-8",
