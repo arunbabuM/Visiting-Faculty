@@ -51,8 +51,8 @@
         <div class="main-content">
 
             <!-- Error Alert -->
-            <div class="validation-alert alert alert-danger alert-dismissible fade show d-none">
-                <strong>Error!</strong>&nbsp Not Available
+            <div class="validation-alert alert alert-info alert-dismissible fade show d-none">
+                <strong>Note!</strong>&nbsp Not Available
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
             <div class="no-data-alert alert alert-info alert-dismissible fade show d-none">

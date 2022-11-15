@@ -70,6 +70,8 @@ public class UserController {
                 m.addAttribute("role" , role);
                 return "dashboard";
             } else if (role.equals("User")) {
+                int count = userDaoInterface.isResumeCreated(user_id);
+                m.addAttribute("resumeCount", count);
                 m.addAttribute("user_id", httpSession.getAttribute("user_id"));
                 m.addAttribute("role" , role);
                 return "faculty/dashboard";
@@ -92,7 +94,7 @@ public class UserController {
     }
 
     @GetMapping("/visiting-faculty-applications")
-    public String getFacultyApplcation() {
+    public String getFacultyApplcation(Model m) {
         String user_id = (String) httpSession.getAttribute("user_id");
         if (user_id != null) {
             return "resume-search";

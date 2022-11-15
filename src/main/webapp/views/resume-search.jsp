@@ -172,7 +172,7 @@
                     },
                     success: function (response) {
                         let data = JSON.parse(response.value)
-                        console.log(data)
+                        console.log("Available Resumes :",data)
                         document.querySelector('.validation-alert').classList.add('d-none')
 
                         if (data.resume_details != null) {
@@ -192,6 +192,7 @@
                                 </thead>
                                 <tbody>`
                             for (let obj of data.resume_details) {
+                                console.log('length : '+obj.f_name);
                                 if (obj.f_name == null) {
                                     tableToAppend += `
                                     <tr data-userlid = "\${obj.user_lid}">
@@ -200,10 +201,12 @@
                                         <td>
                                             <a class="application-preview" style="border:none; outline:none" >
                                             <i class="fa-solid fa-eye view-resume-icon" data-toggle="tooltip" title="View Resume"></i></a>
-                                            <a  class="" style="border:none; outline:none" >
-                                         <i class="fa-solid fa-plus create-resume-button" data-toggle="tooltip" title="Create Resume"></i></a>
-                                         
-                                        </td>
+                                            <a  class="" style="border:none; outline:none" >`
+                        //Added to Hide Create Resume After Once Created 
+                                        if(obj.f_name == null){
+                        tableToAppend += ` <i style="color: green;" class="fa-solid fa-plus create-resume-button" data-toggle="tooltip" title="Create Resume"></i></a>`
+                                        }
+                        tableToAppend +=  `</td>
                                     </tr>`
                                 } else {
                                     tableToAppend += `
@@ -213,10 +216,12 @@
                                         <td>
                                                 <a class="application-preview" style="border:none; outline:none" >
                                                 <i class="fa-solid fa-eye view-resume-icon" data-toggle="tooltip" title="View Resume"></i></a>
-                                                <a  class="" style="border:none; outline:none" >
-                                            <i class="fa-solid fa-plus create-resume-button" data-toggle="tooltip" title="Create Resume"></i></a>
-                                          
-                                            </td>
+                                                <a  class="" style="border:none; outline:none" >`
+                        //Added to Hide Create Resume After Once Created 
+                                if(obj.f_name == null){
+                                    tableToAppend +=`<i style="color: green;" class="fa-solid fa-plus create-resume-button" data-toggle="tooltip" title="Create Resume"></i></a>`
+                                }      
+                                    tableToAppend +=  `</td>
                                     </tr>`
                                 }
 

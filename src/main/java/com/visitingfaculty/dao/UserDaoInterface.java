@@ -157,4 +157,6 @@ public interface UserDaoInterface {
 
     String getFileURL(int proforma_lid);
 
+    public int isResumeCreated(String username);
+
 }

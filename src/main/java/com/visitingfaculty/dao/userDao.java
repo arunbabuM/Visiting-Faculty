@@ -693,4 +693,10 @@ public class userDao implements UserDaoInterface {
         return filePath;
     }
 
+    @Override
+    public int isResumeCreated(String username){
+        String sql = "select count(*) from public.user u inner join resume r on u.id = r.user_lid where u.user_id = ?;";
+        int count = (int) jdbcTemplate.queryForObject(sql, Integer.class, username);
+        return count;
+    }
 }
