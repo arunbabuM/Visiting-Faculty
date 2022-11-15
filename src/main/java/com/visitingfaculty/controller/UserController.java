@@ -5,12 +5,16 @@ import javax.servlet.http.HttpSession;
 import org.json.JSONObject;
 import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.visitingfaculty.dao.UserDaoInterface;
 import com.visitingfaculty.model.User;
+import com.visitingfaculty.service.JavaCrypto;
 
 @Controller
 public class UserController {
@@ -21,8 +25,12 @@ public class UserController {
     @Autowired
     HttpSession httpSession;
 
+    @Value("${publicKeyLocation}")
+	private String publicKeyLocation;
+
     @GetMapping("/login")
-    public String getLoginPage() {
+    public String getLoginPage(Model m) {
+        m.addAttribute("publicKey", JavaCrypto.getPublicKeyFromFile(publicKeyLocation));
         return "login";
     }
 
@@ -62,6 +70,8 @@ public class UserController {
                 m.addAttribute("role" , role);
                 return "dashboard";
             } else if (role.equals("User")) {
+                int count = userDaoInterface.isResumeCreated(user_id);
+                m.addAttribute("resumeCount", count);
                 m.addAttribute("user_id", httpSession.getAttribute("user_id"));
                 m.addAttribute("role" , role);
                 return "faculty/dashboard";
@@ -84,7 +94,7 @@ public class UserController {
     }
 
     @GetMapping("/visiting-faculty-applications")
-    public String getFacultyApplcation() {
+    public String getFacultyApplcation(Model m) {
         String user_id = (String) httpSession.getAttribute("user_id");
         if (user_id != null) {
             return "resume-search";
