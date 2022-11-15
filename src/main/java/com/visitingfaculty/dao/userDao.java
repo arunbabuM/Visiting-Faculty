@@ -695,6 +695,9 @@ public class userDao implements UserDaoInterface {
 
     @Override
     public Object getFacultyApplicationStatus(String apln_id) {
+        SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate).withFunctionName("get_faculty_application_status");
+        return jdbcCall.executeFunction(Object.class, Integer.parseInt(apln_id));
+   }
         
     @Override
     public int isResumeCreated(String username){
@@ -702,10 +705,7 @@ public class userDao implements UserDaoInterface {
         int count = (int) jdbcTemplate.queryForObject(sql, Integer.class, username);
         return count;
     }
-        SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate).withFunctionName("get_faculty_application_status");
-         return jdbcCall.executeFunction(Object.class, Integer.parseInt(apln_id));
 
-    }
 
     @Override
     public Object generateOfferLetter(String apln_id) {
