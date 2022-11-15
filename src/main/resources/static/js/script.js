@@ -994,7 +994,7 @@ function dynamicIFSCCheck(value, message) {
 
 function dynamicBankAcountNumber(value, message) {
   document.getElementById(message).innerHTML = '';
-  if ((checkLength(value) <= 10) || (checkLength(value) > 16)) {
+  if ((value.length <= 10) || value.length > 16) {
     document.getElementById(message).innerHTML = 'Invalid';
     condition = false;
   } else {

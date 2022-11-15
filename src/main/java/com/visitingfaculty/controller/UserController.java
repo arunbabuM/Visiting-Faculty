@@ -1,9 +1,9 @@
 package com.visitingfaculty.controller;
 
 import java.util.Map;
-
 import javax.servlet.http.HttpSession;
-
+import org.json.JSONObject;
+import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -234,6 +234,21 @@ public class UserController {
             return "manual-approval-page";
         }
         return "redirect:/login#session-timeout";
+    }
+
+    @GetMapping("/offer-letter")
+    public String generateOfferLetter(@RequestParam(value = "apln_id") String apln_id, Model model) {
+        String user_id = (String) httpSession.getAttribute("user_id");
+        if (user_id != null) {
+            Object offerLetter = userDaoInterface.generateOfferLetter(apln_id);
+            model.addAttribute("offerLetter", offerLetter);
+            // JSONObject jsonObject =  new JSONObject(offerLetter);  
+            // JSONArray resetData = jsonObject.getJSONArray("offer_letter_details");
+            // String name = resetData.getJSONObject(0).getString("name");
+            return "offer-letter";
+        }
+        return "redirect:/login#session-timeout";
+       
     }
 
 

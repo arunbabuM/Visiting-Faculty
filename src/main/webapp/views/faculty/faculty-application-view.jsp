@@ -138,6 +138,25 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+
+        <!-- Modal to display status -->
+        <div class="modal fade" id="status-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="status-modal-label">Status</h5>
+                </div>
+                <div class="modal-body" id="status-appending-div">
+                
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary closeBtn" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+            </div>
+        </div>
 
     </main>
 
@@ -183,7 +202,7 @@
                                 <tr>
                                     <th>Name</th>
                                     <th>Pan Card No</th>
-                                    <th>Resume Name</th>
+                                    <th>Status</th>
                                     <th>Organization/School Name</th>
                                     <th>Actions</th>
                                 </tr>
@@ -194,7 +213,7 @@
                                     <tr data-userlid = "\${obj.organization_lid}">
                                         <td>\${obj.full_name}</td>
                                         <td class="user_id">\${obj.user_id}</td>
-                                        <td class="user_id">\${obj.resume_name}</td>
+                                        <td class="user_id"><button class="btn btn-outline-primary status" data-application-id = "\${obj.appln_id}">\${obj.resume_name}</button></td>
                                         <td class="user_id">\${obj.name}</td>`
 
                                         if(!obj.active){
@@ -250,6 +269,108 @@
                    url : ''
                 })
             })
+
+            $(document).on('click', '.status', function () {
+            $('#status-appending-div').html('')
+            let apln_id = $(this).attr('data-application-id')
+            $('#status-modal').modal("toggle")
+           
+            $.ajax({
+                    type: 'POST',
+                    url: '${pageContext.request.contextPath}/get-faculty-application-status',
+                    data: {
+                        apln_id: apln_id
+                    },
+                    success: function (response) {
+
+                        let data = JSON.parse(response.value)
+
+                            if (data.application_status_details != null) {
+
+                                let tableToAppend = `<div class="tab-content" id="statusTableContent">
+                                                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                            
+                                                        <table class="table table-bordered">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>Date</th>
+                                                            <th>Name</th>
+                                                            <th>Pancard Number</th>
+                                                            <th>Subject</th>
+                                                            <th>Program</th>
+                                                            <th>Acad session</th>
+                                                            <th>Status</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>`
+
+                            for(let obj of data.application_status_details){
+
+                                tableToAppend += `<tr>
+                                                    <td>\${obj.created_date}</td>
+                                                    <td>\${obj.full_name}</td>
+                                                    <td>\${obj.pancard_no}</td>
+                                                    <td>\${obj.module}</td>
+                                                    <td>\${obj.program_name}</td>
+                                                    <td>\${obj.acad_session}</td>`
+
+                                if(obj.level >= 6 || (obj.level == 3 && obj.status_lid == 4)) {
+
+                                        tableToAppend += `<td> <a class="text-success" href="${pageContext.request.contextPath}/offer-letter?apln_id=\${apln_id}" > Offer letter </a> </td>
+                                    </tr>`
+
+                                } else {
+
+                                        tableToAppend += `<td> On Process </td>
+                                    </tr>`
+
+                                }
+                            }
+
+                            tableToAppend += `  </tbody>
+                                                        </table>
+                                                            </div> `
+
+                                $('#status-appending-div').html(tableToAppend);
+
+                        } else{
+
+                            $('#status-appending-div').html(`<h4 class="text-center">--- No Application Has Created ---</h4>`);
+
+                        }
+                    },
+                    error: function (error) {
+
+                        console.log(error);
+
+                    }
+                })
+
+            })
+
+            $(document).on('click', '.closeBtn', function () {
+            $('#status-modal').modal("toggle")
+            })
+
+            // $(document).on('click', '.generate-offer-letter', function () {
+            //     let apln_id = $(this).attr('data-id') 
+
+            //     $.ajax({
+            //         type: 'POST',
+            //         url: '${pageContext.request.contextPath}/offer-letter',
+            //         data: {
+            //             apln_id: apln_id
+            //         },
+            //         success: function (response) {
+            //             console.log(response)
+            //         },
+            //         error: function (error) {
+            //             console.log(error)
+            //         }
+            //     })
+
+            // })
+
         })
     </script>
 </body>
