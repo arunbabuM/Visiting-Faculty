@@ -685,4 +685,18 @@ public class userDao implements UserDaoInterface {
         return jdbcCall.executeFunction(Object.class,Integer.parseInt(data));
     }
 
+    @Override
+    public Object getFacultyApplicationStatus(String apln_id) {
+        
+        SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate).withFunctionName("get_faculty_application_status");
+         return jdbcCall.executeFunction(Object.class, Integer.parseInt(apln_id));
+
+    }
+
+    @Override
+    public Object generateOfferLetter(String apln_id) {
+        SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate).withFunctionName("get_detail_for_offer_letter");
+        return jdbcCall.executeFunction(Object.class, Integer.parseInt(apln_id));
+    }
+
 }

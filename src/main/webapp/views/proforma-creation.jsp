@@ -195,7 +195,7 @@ function searchProgramApi(query, targetProgramSearch) {
         success: function (response) {
             console.log("organization_id>>>>>>>>>>" , organization_lid)
             console.log("response>>> ", response)
-            let resResult = JSON.parse(response).results;
+            let resResult = JSON.parse(response);
 
             for (let desig of resResult) {
                     selectProgramList +=

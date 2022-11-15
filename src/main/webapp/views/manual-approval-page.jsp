@@ -1047,7 +1047,7 @@
                          type: 'GET',
                          async: false,
                          success: function (response) {
-                             let resResult = JSON.parse(response).results;
+                             let resResult = JSON.parse(response);
                  
                              for (let desig of resResult) {
                                      selectProgramList +=

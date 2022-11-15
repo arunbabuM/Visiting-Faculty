@@ -79,6 +79,10 @@ public interface UserDaoInterface {
 
     Object getFacultyApplications(String user_id);
 
+    Object getFacultyApplicationStatus(String apln_id);
+
+    Object generateOfferLetter(String apln_id);
+
     Object getFacultyResumeByName(String user_id);
 
     int insertResume(Resume resume);
