@@ -213,7 +213,7 @@
                                     <tr data-userlid = "\${obj.organization_lid}">
                                         <td>\${obj.full_name}</td>
                                         <td class="user_id">\${obj.user_id}</td>
-                                        <td class="user_id"><button class="btn btn-outline-primary status" data-application-id = "\${obj.appln_id}">\${obj.resume_name}</button></td>
+                                        <td class="user_id"><button class="btn btn-outline-primary status" data-proforma-id = "\${obj.proforma_id}">\${obj.resume_name}</button></td>
                                         <td class="user_id">\${obj.name}</td>`
 
                                         if(!obj.active){
@@ -272,14 +272,14 @@
 
             $(document).on('click', '.status', function () {
             $('#status-appending-div').html('')
-            let apln_id = $(this).attr('data-application-id')
+            let prof_id = $(this).attr('data-proforma-id')
             $('#status-modal').modal("toggle")
            
             $.ajax({
                     type: 'POST',
                     url: '${pageContext.request.contextPath}/get-faculty-application-status',
                     data: {
-                        apln_id: apln_id
+                        prof_id: prof_id
                     },
                     success: function (response) {
 
@@ -314,9 +314,9 @@
                                                     <td>\${obj.program_name}</td>
                                                     <td>\${obj.acad_session}</td>`
 
-                                if(obj.level >= 6 || (obj.level == 3 && obj.status_lid == 4)) {
+                                if(obj.level > 6 || (obj.level == 3 && obj.status_lid == 4)) {
 
-                                        tableToAppend += `<td> <a class="text-success" href="${pageContext.request.contextPath}/offer-letter?apln_id=\${apln_id}" > Offer letter </a> </td>
+                                        tableToAppend += `<td> <a class="text-success" href="${pageContext.request.contextPath}/offer-letter?prof_id=\${obj.proforma_id}" > Offer letter </a> </td>
                                     </tr>`
 
                                 } else {
@@ -335,7 +335,7 @@
 
                         } else{
 
-                            $('#status-appending-div').html(`<h4 class="text-center">--- No Application Has Created ---</h4>`);
+                            $('#status-appending-div').html(`<h4 class="text-center">--- Waiting for Proforma Creation by Admin ---</h4>`);
 
                         }
                     },

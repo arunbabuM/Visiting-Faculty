@@ -694,9 +694,9 @@ public class userDao implements UserDaoInterface {
     }
 
     @Override
-    public Object getFacultyApplicationStatus(String apln_id) {
+    public Object getFacultyApplicationStatus(String prof_id) {
         SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate).withFunctionName("get_faculty_application_status");
-        return jdbcCall.executeFunction(Object.class, Integer.parseInt(apln_id));
+        return jdbcCall.executeFunction(Object.class, Integer.parseInt(prof_id));
    }
         
     @Override
@@ -708,9 +708,21 @@ public class userDao implements UserDaoInterface {
 
 
     @Override
-    public Object generateOfferLetter(String apln_id) {
+    public Object generateOfferLetter(String prof_id) {
         SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate).withFunctionName("get_detail_for_offer_letter");
-        return jdbcCall.executeFunction(Object.class, Integer.parseInt(apln_id));
+        return jdbcCall.executeFunction(Object.class, Integer.parseInt(prof_id));
+    }
+
+    @Override
+    public Object GetCreatedOfferLetter(String user_id) {
+        SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate).withFunctionName("get_created_offer_letter");
+        return jdbcCall.executeFunction(Object.class, (user_id));
+    }
+
+    @Override
+    public int updateOfferLetter(String status, String comment, String prof_id) {
+        String SQL = "UPDATE offer_letter_details SET status = ? , reason = ? WHERE proforma_id = ?";
+        return jdbcTemplate.update(SQL, Integer.parseInt(status), comment, Integer.parseInt(prof_id));
     }
 
 }

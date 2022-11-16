@@ -416,9 +416,9 @@
                     <td><button data-id = "\${performerinfo.proforma_id}" data-toggle="modal" type="button" class="comments-btn btn btn-outline-primary text-dark">Comments</button></td>
                     <td data-id ="\${performerinfo.proforma_id}">\${performerinfo.status_lid == '4'?  '<a class="fa fa-solid fa-download text-dark fa-2x file-download-btn"></a>' : 'N.A'}</td>
                 `
-                if(performerinfo.level >= 6 || (performerinfo.level == 3 && performerinfo.status_lid == 4)) {
+                if(performerinfo.level > 6 || (performerinfo.level == 3 && performerinfo.status_lid == 4)) {
 
-                    view += `<td> <a class="text-success" href="${pageContext.request.contextPath}/offer-letter?apln_id=\${performerinfo.appln_id}" > Offer letter </a> </td>
+                    view += `<td> <a class="text-success" href="${pageContext.request.contextPath}/offer-letter?prof_id=\${performerinfo.proforma_id}" > Offer letter </a> </td>
                     </tr>`
 
                     } else {
@@ -760,11 +760,11 @@
                                         <td><button data-skill="\${maxpoints.skill}" data-experience="\${maxpoints.experience}" data-achievement="\${maxpoints.achievement}" data-qualification="\${maxpoints.qualification}" data-totalP="\${maxpoints.total_points}" data-toggle="modal" type="button" class="point-distribution btn btn-outline-primary text-dark">\${maxpoints.total_points}</button></td>
                                         <td><button data-id = "\${performerinfo.proforma_id}" data-toggle="modal" type="button" class="comments-btn btn btn-outline-primary text-dark">Comments</button></td>
                                         <td data-id ="\${performerinfo.proforma_id}">\${performerinfo.status_lid == '4'?  '<a class="fa fa-solid fa-download text-dark fa-2x file-download-btn"></a>' : 'N.A'}</td>
-                                        <td>\${performerinfo.status} By \${performerinfo.modified_by}</td>
+                                        
                                         `
-                                        if(performerinfo.level >= 6 || (performerinfo.level == 3 && performerinfo.status_lid == 4)) {
+                                        if(performerinfo.level > 6 || (performerinfo.level == 3 && performerinfo.status_lid == 4)) {
 
-                                            view += `<td> <a class="text-success" href="${pageContext.request.contextPath}/offer-letter?apln_id=\${performerinfo.appln_id}" > Offer letter </a> </td>
+                                            view += `<td> <a class="text-success" href="${pageContext.request.contextPath}/offer-letter?prof_id=\${performerinfo.proforma_id}" > Offer letter </a> </td>
                                             </tr>`
 
                                             } else {
@@ -1185,11 +1185,11 @@
                                         <td><button data-skill="\${maxpoints.skill}" data-experience="\${maxpoints.experience}" data-achievement="\${maxpoints.achievement}" data-qualification="\${maxpoints.qualification}" data-totalP="\${maxpoints.total_points}" data-toggle="modal" type="button" class="point-distribution btn btn-outline-primary text-dark">\${maxpoints.total_points}</button></td>
                                         <td><button data-id = "\${performerinfo.proforma_id}" data-toggle="modal" type="button" class="comments-btn btn btn-outline-primary text-dark">Comments</button></td>
                                         <td data-id ="\${performerinfo.proforma_id}">\${performerinfo.status_lid == '4'?  '<a class="fa fa-solid fa-download text-dark fa-2x file-download-btn"></a>' : 'N.A'}</td>
-                                        <td>\${performerinfo.status} By \${performerinfo.modified_by}</td>
+                                        
                                         `
-                                    if(performerinfo.level >= 6 || (performerinfo.level == 3 && performerinfo.status_lid == 4)) {
+                                    if(performerinfo.level > 6 || (performerinfo.level == 3 && performerinfo.status_lid == 4)) {
 
-                                        view += `<td> <a class="text-success" href="${pageContext.request.contextPath}/offer-letter?apln_id=\${performerinfo.appln_id}" > Offer letter </a> </td>
+                                        view += `<td> <a class="text-success" href="${pageContext.request.contextPath}/offer-letter?prof_id=\${performerinfo.proforma_id}" > Offer letter </a> </td>
                                         </tr>`
 
                                         } else {

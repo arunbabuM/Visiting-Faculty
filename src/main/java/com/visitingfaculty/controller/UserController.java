@@ -237,10 +237,10 @@ public class UserController {
     }
 
     @GetMapping("/offer-letter")
-    public String generateOfferLetter(@RequestParam(value = "apln_id") String apln_id, Model model) {
+    public String generateOfferLetter(@RequestParam(value = "prof_id") String prof_id, Model model) {
         String user_id = (String) httpSession.getAttribute("user_id");
         if (user_id != null) {
-            Object offerLetter = userDaoInterface.generateOfferLetter(apln_id);
+            Object offerLetter = userDaoInterface.generateOfferLetter(prof_id);
             model.addAttribute("offerLetter", offerLetter);
             // JSONObject jsonObject =  new JSONObject(offerLetter);  
             // JSONArray resetData = jsonObject.getJSONArray("offer_letter_details");
@@ -249,6 +249,12 @@ public class UserController {
         }
         return "redirect:/login#session-timeout";
        
+    }
+    @GetMapping("/offer-accept-reject")
+    public String offerAcceptReject(Model m){
+        String user_id = (String) httpSession.getAttribute("user_id");
+        m.addAttribute("user_id", user_id);
+        return "faculty/offerAcceptReject";
     }
 
 

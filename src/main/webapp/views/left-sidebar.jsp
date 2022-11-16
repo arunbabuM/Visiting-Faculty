@@ -52,6 +52,12 @@
         <a id="resume-call" class="offset-list-item-link view-resume-icon" style="cursor: pointer;">
             <li><img src="${pageContext.request.contextPath}/icons/programs.png" class="ps-3 pe-2"> Resume</li>
         </a>
+        <a href="${pageContext.request.contextPath}/faculty-application-view" class="offset-list-item-link">
+            <li><img src="${pageContext.request.contextPath}/icons/report.png" height="24"  class="ps-3 pe-2"> Application</li>
+        </a>
+        <a href="${pageContext.request.contextPath}/offer-accept-reject" class="offset-list-item-link">
+            <li><img src="${pageContext.request.contextPath}/icons/pending_report.png" height="24"  class="ps-3 pe-2"> Offer Letter</li>
+        </a>
         <a href="${pageContext.request.contextPath}/logout" class="offset-list-item-link">
             <li><img src="${pageContext.request.contextPath}/icons/logout.png" class="ps-3 pe-2"> Logout</li>
         </a>

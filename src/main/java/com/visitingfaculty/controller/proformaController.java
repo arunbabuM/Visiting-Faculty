@@ -1,11 +1,15 @@
 package com.visitingfaculty.controller;
 
+import javax.servlet.http.HttpSession;
+
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.visitingfaculty.dao.UserDaoInterface;
 
 @RestController
@@ -13,6 +17,10 @@ public class proformaController
 {
     @Autowired
     UserDaoInterface userDaoInterface;
+
+    @Autowired
+    HttpSession httpSession;
+    
 
     @PostMapping(value="/get-application-data")
     public Object performerResume(@RequestParam(value = "application_lid") int application_lid)
@@ -112,5 +120,24 @@ public class proformaController
         System.out.println("data : "+data);
         Object perfomaexp = userDaoInterface.discontinueFaculty(data);
         return perfomaexp;
+    }
+
+    @PostMapping("/get_created_offer_letter")
+    public Object GetCreatedOfferLetter(@RequestBody String data) {
+        String user_id = (String) httpSession.getAttribute("user_id");
+        Object createdOfferLetter = userDaoInterface.GetCreatedOfferLetter(user_id);
+        return createdOfferLetter;
+    }
+
+    @PostMapping("/update_offer_letter")
+    public int updateOfferLetter(@RequestBody String data) {
+        JSONObject json = new JSONObject(data);
+        String prof_id = json.getString("prof_id");
+        String comment = json.getString("comment");
+        String status = json.getString("status");
+        int count = userDaoInterface.updateOfferLetter(status, comment, prof_id);
+        System.out.println("data recieved for offer letter" + count);
+    
+        return count;
     }
 }
