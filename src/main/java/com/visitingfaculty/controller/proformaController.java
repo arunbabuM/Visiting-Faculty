@@ -140,4 +140,11 @@ public class proformaController
     
         return count;
     }
+
+    @PostMapping("/get-created-offer-letter-admin-side")
+    public Object getCreatedOfferLetterAdminSide(@RequestBody String data) {
+        String user_id = (String) httpSession.getAttribute("user_id");
+        Object createdOfferLetterFromAdmin = userDaoInterface.getCreatedOfferLetterAdminSide(user_id);
+        return createdOfferLetterFromAdmin;
+    }
 }

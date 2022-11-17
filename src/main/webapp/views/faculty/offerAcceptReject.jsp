@@ -16,7 +16,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/simpleAlert.css">
 
-    <title>Dashboard</title>
+    <title>Offer Letter</title>
     <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/images.jpg">
 </head>
 
@@ -195,7 +195,15 @@ aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             $(document).on('click','.offerSubmitBtn',function(){
                 let prof_id = $(this).attr('data-id');
                 let comment = $('.offer-comment').val();
-                let status = $('.status-select').val()
+                let status = $('.status-select').val();
+
+                document.querySelector('.offer-comment').classList.remove('border-danger')
+                if(status == 2){
+                    if(!comment){
+                        document.querySelector('.offer-comment').classList.add('border-danger')
+                        return;
+                    }
+                }
 
                 $.ajax({
                     type: 'POST',

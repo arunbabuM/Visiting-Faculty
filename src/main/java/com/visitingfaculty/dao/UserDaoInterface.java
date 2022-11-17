@@ -167,4 +167,6 @@ public interface UserDaoInterface {
 
     public int updateOfferLetter(String prof_id, String comment, String status);
 
+    public Object getCreatedOfferLetterAdminSide(String user_id);
+
 }

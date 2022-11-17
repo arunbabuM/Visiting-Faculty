@@ -1440,7 +1440,7 @@
               if (qual.abbr == 'phd') {
                 resume += `<p class="h5 py-1">Status </p>`
               }
-              resume += `<p class="h5 py-1">Certificate</p>
+              resume += `<p class="h5 py-1">Certificate:</p>
                             </div>
                             <div class="col-6 ps-md-0 ps-0 col-md-6 col-lg-6 col-sm-6">
                               <p class="" id="">\${qual.institute}</p>
@@ -1708,7 +1708,7 @@
                         <div class="col-6 ps-lg-5 col-md-6 ps-md-0 ps-0 ps-sm-0 col-lg-6 col-sm-6">
                           <p class="h5 pb-1">Place </p>
                           <p class="h5 pb-1">Recieved date </p>
-                          <p class="h5 py-1">Certificate </p>
+                          <p class="h5 py-1">Certificate: </p>
                         </div>
                         <div class="col-6 ps-md-0 ps-0 col-md-6 col-lg-6 col-sm-6">
                           <p class="" id="">\${award.description}</p>
@@ -1778,7 +1778,7 @@
                         <div class="col-6 ps-lg-5 col-md-6 ps-md-0 ps-0 ps-sm-0 col-lg-6 col-sm-6">
                           <p class="h5 pb-1">Publisher </p>
                           <p class="h5 pb-1">Publication Year</p>
-                          <p class="h5 py-1">Certificate </p>
+                          <p class="h5 py-1">Certificate:</p>
                         </div>
                         <div class="col-6 col-md-6 col-lg-6 col-sm-6">
                           <p class="" id="">\${public.publisher}</p>
@@ -1854,7 +1854,7 @@
                         <div class="col-6 ps-lg-5 col-md-6 ps-md-0 ps-0 ps-sm-0 col-lg-6 col-sm-6">
                           <p class="h5 pb-1">Description </p>
                           <p class="h5 pb-1">Category </p>
-                          <p class="h5 py-1">Certificate </p>
+                          <p class="h5 py-1">Certificate:</p>
                         </div>
                         <div class="col-6 ps-md-0 ps-0 col-md-6 col-lg-6 col-sm-6">
                           <p class="" id="">\${research.description}</p>
@@ -1946,7 +1946,7 @@
                         <div class="col-12 col-md-6 col-lg-6 col-sm-12">
                           <div class="row pt-lg-3">
                             <div class="col-6  col-md-6 ps-md-0 ps-0 ps-sm-0 col-lg-6 col-sm-6">
-                              <p class="h5 pb-1">Certificate</p>
+                              <p class="h5 pb-1">Certificate:</p>
                             </div>
                             <div class="col-6 col-md-6 col-lg-6 col-sm-6">
                               <p ><i id="professional-certificate-display" data-image="imagedata/\${qual.url_path}" class="fa-solid fa-image text-success professional-certificate-display"></i></p>
@@ -2471,7 +2471,7 @@
                       </div>
                       <div class="row p-3">
                         <div class="col-md-2 ">
-                          <p class="h6">Certificate</p>
+                          <p class="h6">Certificate:</p>
                         </div>
                         <div class="col-md-10"><input class="form-control qualification-certificate"
                             onchange="this.nextElementSibling.firstElementChild.src = window.URL.createObjectURL(this.files[0])"
@@ -2565,7 +2565,7 @@
       </div>
       <div class="row p-3">
         <div class="col-md-2 ">
-          <p class="h6">Certificate</p>
+          <p class="h6">Certificate:</p>
         </div>
         <div class="col-md-10"><input class="form-control qualification-certificate"
             onchange="this.nextElementSibling.firstElementChild.src = window.URL.createObjectURL(this.files[0])"
@@ -2791,7 +2791,7 @@
             </div>
             <div class="row p-3">
               <div class="col-md-2 ">
-                <p class="h6">Certificate</p>
+                <p class="h6">Certificate:</p>
               </div>
               <!--Rana Changes--!>
               <div class="col-md-10"><input class="form-control awardCertificationImage" type="file" 
@@ -2870,7 +2870,7 @@
                 </div>
                 <div class="row p-3">
                   <div class="col-md-2 ">
-                    <p class="h6">Certificate<span class="required">*</span></p>
+                    <p class="h6">Certificate:</p>
                   </div>
                   <!--Rana Changes--!>
                   <div class="col-md-10"><input class="form-control awardCertificationImage" type="file" 
@@ -3082,7 +3082,7 @@
             </div>
             <div class="row p-3">
               <div class="col-md-2 ">
-                <p class="h6">Certificate<span class="required">*</span></p>
+                <p class="h6">Certificate:</p>
               </div>
               <!--Rana Chanegs--!>
               <div class="col-md-10"><input class="form-control publication-certification" type="file"
@@ -3159,7 +3159,7 @@
           </div>
           <div class="row p-3">
             <div class="col-md-2 ">
-              <p class="h6">Certificate<span class="required">*</span></p>
+              <p class="h6">Certificate:</p>
             </div>
             <!--Rana Chanegs--!>
             <div class="col-md-10"><input class="form-control publication-certification" type="file"
@@ -3329,7 +3329,7 @@
           </div>
           <div class="row p-3">
             <div class="col-md-2 ">
-              <p class="h6">Certificate<span class="required">*</span></p>
+              <p class="h6">Certificate:</p>
             </div>
             <!--Rana Changes--!>
             <div class="col-md-10"><input class="form-control research_photo" type="file"
@@ -3394,7 +3394,7 @@
           </div>
           <div class="row p-3">
             <div class="col-md-2 ">
-              <p class="h6">Certificate<span class="required">*</span></p>
+              <p class="h6">Certificate:</p>
             </div>
             <!--Rana Changes--!>
             <div class="col-md-10"><input class="form-control research_photo" type="file"
@@ -4277,7 +4277,7 @@
                       </div>
                       <div class="row p-3">
                         <div class="col-md-2 ">
-                          <p class="h6">Certificate</p>
+                          <p class="h6">Certificate:</p>
                         </div>
                         <div class="col-md-10"><input type="checkbox" class="qualification-check-box me-1" id="qualification-check-box">Update Certificate?<input value="\${qualedit.url_path}" class="d-none form-control qualification-certificate"
                             onchange="this.nextElementSibling.firstElementChild.src = window.URL.createObjectURL(this.files[0])"
@@ -4529,7 +4529,7 @@
                 </div>
                 <div class="row p-3">
                   <div class="col-md-2 ">
-                    <p class="h6">Certificate<span class="required">*</span></p>
+                    <p class="h6">Certificate:</p>
                   </div>
                   <div class="col-md-10"><input type='checkbox' class='award-check-box'>Update Photo?<input class="d-none form-control awardCertificationImage" type="file" 
                      onchange="this.nextElementSibling.firstElementChild.src = window.URL.createObjectURL(this.files[0])">
@@ -4641,7 +4641,7 @@
                 </div>
                 <div class="row p-3">
                   <div class="col-md-2 ">
-                    <p class="h6">Certificate<span class="required">*</span></p>
+                    <p class="h6">Certificate:</p>
                   </div>
                   <!--Rana Chanegs--!>
                   <div class="col-md-10"><input type='checkbox' class='publication-check-box'>Update Photo?<input class="d-none form-control publication-certification" type="file"
@@ -4750,7 +4750,7 @@
                 </div>
                 <div class="row p-3">
                   <div class="col-md-2 ">
-                    <p class="h6">Certificate<span class="required">*</span></p>
+                    <p class="h6">Certificate:</p>
                   </div>
                   <div class="col-md-10"><input type='checkbox' class='reserach-check-box'>Update Photo?<input class="d-none form-control research_photo" type="file"
                     onchange="this.nextElementSibling.firstElementChild.src = window.URL.createObjectURL(this.files[0])">

@@ -257,5 +257,10 @@ public class UserController {
         return "faculty/offerAcceptReject";
     }
 
+    @GetMapping("/created-offer-letter-admin")
+    public String createdOfferLetterAdmin(Model m){
+        return "createdOfferLetterAdmin";
+    }
+
 
 }

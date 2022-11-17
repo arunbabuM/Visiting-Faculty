@@ -13,7 +13,7 @@
     </div>
     <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 p-4">
         <a href="${pageContext.request.contextPath}/offer-accept-reject" class="card_school_vf text-center show-offer-letter d-flex flex-column justify-content-center align-items-center ">
-            <img src="${pageContext.request.contextPath}/icons/pending_report.png" alt="">Offer Letter</a>
+            <img src="${pageContext.request.contextPath}/icons/offerLetter.png" height="55" alt="">Offer Letter</a>
     </div>
     <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 p-4 createResumediv">
         <!-- <a

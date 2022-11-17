@@ -725,4 +725,11 @@ public class userDao implements UserDaoInterface {
         return jdbcTemplate.update(SQL, Integer.parseInt(status), comment, Integer.parseInt(prof_id));
     }
 
+    @Override
+    public Object getCreatedOfferLetterAdminSide(String user_id) {
+        SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
+                .withFunctionName("get_created_offer_letter_admin_side");
+        return jdbcCall.executeFunction(Object.class, user_id);
+    }
+
 }
