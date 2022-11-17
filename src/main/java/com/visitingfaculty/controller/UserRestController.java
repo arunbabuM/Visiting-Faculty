@@ -238,9 +238,9 @@ public class UserRestController {
     }
 
     @PostMapping("/get-faculty-application-status")
-    public Object getFacultyApplicationStatus(String apln_id) {
+    public Object getFacultyApplicationStatus(String prof_id) {
 
-        Object data = userDaoInterface.getFacultyApplicationStatus(apln_id);
+        Object data = userDaoInterface.getFacultyApplicationStatus(prof_id);
         return data;
     }
 

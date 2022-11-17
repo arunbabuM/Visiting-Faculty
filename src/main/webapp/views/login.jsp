@@ -252,7 +252,7 @@
             <!-- <label>Is trusted device</label>
             <input type="checkbox" name="is_trusted" id="is_trusted"> -->
             <button class="btn btn-dark login-btn"><i class="fas fa-sign-in-alt"></i> Sign In</button>
-            <div class="py-2">New User?<a style="text-decoration: none;" href="${pageContext.request.contextPath}/register"> Sign Up</a> </div>
+            <!-- <div class="py-2">New User?<a style="text-decoration: none;" href="${pageContext.request.contextPath}/register"> Sign Up</a> </div> -->
             <div id="forgot-password" class=""><a class="text-danger" href="${pageContext.request.contextPath}/reset-password">Forgot your password?</a> </div>
             <!-- <button type="button" class="btn btn-dark test-btn"><i class="fas fa-sign-in-alt"></i> Test Btn</button> -->
           </form>

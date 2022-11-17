@@ -79,9 +79,9 @@ public interface UserDaoInterface {
 
     Object getFacultyApplications(String user_id);
 
-    Object getFacultyApplicationStatus(String apln_id);
+    Object getFacultyApplicationStatus(String prof_id);
 
-    Object generateOfferLetter(String apln_id);
+    Object generateOfferLetter(String prof_id);
 
     Object getFacultyResumeByName(String user_id);
 
@@ -162,5 +162,11 @@ public interface UserDaoInterface {
     String getFileURL(int proforma_lid);
 
     public int isResumeCreated(String username);
+
+    public Object GetCreatedOfferLetter(String user_id);
+
+    public int updateOfferLetter(String prof_id, String comment, String status);
+
+    public Object getCreatedOfferLetterAdminSide(String user_id);
 
 }
