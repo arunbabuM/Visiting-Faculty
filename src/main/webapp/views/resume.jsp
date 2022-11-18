@@ -1090,6 +1090,7 @@
   <script src="${pageContext.request.contextPath}/js/jquery.bootpag.min.js"></script>
   <script id="script-data"></script>
   <script>
+      const allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
 
       document.querySelector('#verification-div').addEventListener('click', function (e) {
 
@@ -1222,7 +1223,7 @@
                           <h6>Aadhar card </h6>
                         </div>
                         <div class="col-md-7 col-sm-9">
-                          <p id="aadhar-card-value">\${personal_details[0].aadhar_card_no == null ? "N.A" : personal_details[0].aadhar_card_no}</p>
+                          <p id="aadhar-card-value">\${personal_details[0].aadhar_card_no == "" ? "N.A" : personal_details[0].aadhar_card_no}</p>
                         </div>
                       </div>
                       <div class="row py-1">
@@ -2145,7 +2146,7 @@
             editPersonalDetailsForm.append('editGender', document.getElementById('gender-value').innerText)
             document.getElementById('first-name').value = editPersonalDetailsForm.get('editFirstName')
             document.getElementById('last-name').value = editPersonalDetailsForm.get('editLastName')
-            document.getElementById('date-of-birth').value = editPersonalDetailsForm.get('editDateOfBirth')
+            document.getElementById('date-of-birth').value = resumeinfo.personal_details[0].date_of_birth
             document.getElementById('pan-number').value = editPersonalDetailsForm.get('editPancardNumber')
             document.getElementById('aadhar-number').value = resumeinfo.personal_details[0].aadhar_card_no ==
               null ? '' : resumeinfo.personal_details[0].aadhar_card_no;
@@ -4895,7 +4896,41 @@
       let tempemail = dynamicTempEmail(result.temp_email, 'temp-email-message');
       let pinvalid = dynamicPin(result.permanent_address_pincode, 'pincode-message');
       let cityvalid = dynamicLengthCheck(result.permanent_address_city, 'city-message');
+      let profilePhotoInput = document.getElementById("photo");
+      let aadharPhotoInput = document.getElementById("aadhar-photo");
+      let panPhotoInput = document.getElementById("pan-photo");
+      const photoValue = profilePhotoInput.value;
+      const aadharValue = aadharPhotoInput.value;
+      const panValue = panPhotoInput.value;
+      console.log("PHOTO VALUE <><><><" , photoValue)
+      console.log("PHOTO Length <><><><" , photoValue.length);
 
+       if(photoValue.length > 1)  {
+
+         if (!allowedExtensions.exec(photoValue)) {
+             alert('Invalid file type has uploaded for passport photo');
+             photoValue.value = '';
+             return false;
+         }
+       }     
+
+      if(aadharValue.length > 1)  {
+
+        if (!allowedExtensions.exec(aadharValue)) {
+          alert('Invalid file type has uploaded for Aadhar photo');
+          aadharValue.value = '';
+          return false;
+        }
+      }
+
+      if(panValue.length > 1)  {
+
+        if (!allowedExtensions.exec(panValue)) {
+          alert('Invalid file type has uploaded for Pancard photo');
+          panValue.value = '';
+          return false;
+        }
+      }
 
       if (!firstName || !lastName || !contactNumber || !email || !aadhar || !address || !
         country || !DOB || !tempemail || !gender || !pinvalid || !cityvalid) {
