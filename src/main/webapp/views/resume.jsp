@@ -7081,7 +7081,7 @@
       let durationValue = findClosest(e.target, 'workexperience-row').querySelector('.duration-of-teaching');
       let durationMessage = findClosest(e.target, 'workexperience-row').querySelector(
         '.duration-of-teaching-message');
-      let difference = Math.abs((new Date(dateFormatCalculation(endDateInput.value))) - (new Date(
+      let difference = Math.abs((new Date(dateFormatCalculation(endDateInput.value ? endDateInput.value : today))) - (new Date(
         dateFormatCalculation(startDateInput.value))))
       let diffDays = Math.ceil(difference / (1000 * 60 * 60 * 24));
       let diffmonths = Math.floor(diffDays / 31);
@@ -7124,7 +7124,7 @@
       }
 
       if ((startDateInput.value).length != 0 && (endDateInput.value).length != 0) {
-        durationValue.value = diffyears
+        durationValue.value = diffyears + "Years";
       }
 
     });
@@ -7302,7 +7302,7 @@
       let durationValue = findClosest(e.target, 'workexperience-row').querySelector('.duration-of-teaching');
       let durationMessage = findClosest(e.target, 'workexperience-row').querySelector(
         '.duration-of-teaching-message');
-      let difference = Math.abs((new Date(dateFormatCalculation(endDateInput.value))) - (new Date(
+      let difference = Math.abs((new Date(dateFormatCalculation(endDateInput.value ? endDateInput.value : today))) - (new Date(
         dateFormatCalculation(startDateInput.value))))
       let diffDays = Math.ceil(difference / (1000 * 60 * 60 * 24));
       let diffmonths = Math.floor(diffDays / 31);
