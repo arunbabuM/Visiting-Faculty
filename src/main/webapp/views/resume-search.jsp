@@ -427,7 +427,7 @@
                             $("#view-resume-modal").modal("toggle");
                             
                         } else {
-                            document.querySelector('.modal2-body').innerHTML = `<div class="tab-content container"> No Resume's Created</div>`
+                            document.querySelector('.modal2-body').innerHTML = `<div class="tab-content container"><h5 class="text-center mt-3 mb-3" > -- No resume has been created -- </h5></div>`
                             $("#view-resume-modal").modal("toggle");
 
                         }
