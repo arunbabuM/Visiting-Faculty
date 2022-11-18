@@ -240,7 +240,7 @@
                             <th rowspan="2">Student Count</th>
                             <th rowspan="2">Total Amount Rs.</th>
                             <th rowspan="2">Faculty Feedback</th>
-                            <th rowspan="2">Total Subjects alloted in a Term</th>
+                            <!-- <th rowspan="2">Total Subjects alloted in a Term</th> -->
                             <th rowspan="2">Subject Under AOL/OBE</th>
                             <th rowspan="2">Total Points</th>
                             <th rowspan="2">Comments</th>
@@ -392,33 +392,41 @@
                                 let maxpoints = JSON.parse(performerinfo.max_points_2)
                                 console.log(maxpoints)
                                 view += `
-                            <tr>
-                                <td>\${performerinfo.created_date}</td>
-                                <td>\${performerinfo.full_name}</td>
-                                <td>\${performerinfo.pancard_no}</td>
-                                <td><button data-qual="\${performerinfo.application_lid}" data-id = "1" data-toggle="modal" data-target=".bd-example-modal-lg" type="button" class="qual-btn btn btn-outline-primary text-dark">Graduate</button> </td>
-                                <td><button data-qual="\${performerinfo.application_lid}" data-id = "2" data-toggle="modal" data-target=".bd-example-modal-lg" type="button" class="qual-btn btn btn-outline-primary text-dark">Masters</button></td>
-                                <td><button data-qual="\${performerinfo.application_lid}" data-id = "3" data-toggle="modal" data-target=".bd-example-modal-lg" type="button" class="qual-btn btn btn-outline-primary text-dark">PHD</button></td>
-                                <td><button data-exp="5" data-id = "\${performerinfo.application_lid}" data-toggle="modal" type="button" class="exp-btn btn btn-outline-primary text-dark">\${performerinfo.teaching_exp}</button></td>
-                                <td><button data-exp="4" data-id = "\${performerinfo.application_lid}" data-toggle="modal" type="button" class="exp-btn btn btn-outline-primary text-dark">\${performerinfo.industrial_exp}</button></td>
-                                <td>\${performerinfo.total_exp}</td>
-                                <td>\${performerinfo.module}</td>
-                                <td>\${performerinfo.program_name}</td>
-                                <td>\${performerinfo.acad_session}</td>
-                                <td>\${performerinfo.rate_per_hours}</td>
-                                <td>\${performerinfo.total_no_of_hrs_alloted}</td>
-                                <td>\${performerinfo.no_of_division}</td>
-                                <td>\${performerinfo.student_count_per_division}</td>
-                                <td>\${performerinfo.rate_per_hours * performerinfo.total_no_of_hrs_alloted}</td>
-                                <td><button data-pan-no="\${performerinfo.pancard_no}" class="btn btn-outline-primary feedback-btn">Feedback</button></td>
-                                <td>1</td>
-                                <td>\${performerinfo.aol_obe}</td>
-                                <td><button data-skill="\${maxpoints.skill}" data-experience="\${maxpoints.experience}" data-achievement="\${maxpoints.achievement}" data-qualification="\${maxpoints.qualification}" data-totalP="\${maxpoints.total_points}" data-toggle="modal" type="button" class="point-distribution btn btn-outline-primary text-dark">\${maxpoints.total_points}</button></td>
-                                <td><button data-id="\${performerinfo.proforma_id}" data-toggle="modal" type="button" class="comments-btn btn btn-outline-primary text-dark">Comments</button></td>
-                                <td data-id ="\${performerinfo.proforma_id}">\${performerinfo.status_lid == '4'?  '<a class="fa fa-solid fa-download text-dark fa-2x file-download-btn"></a>' : 'N.A'}</td>
-                                <td>\${performerinfo.status} By \${performerinfo.modified_by}</td>
-                            <tr>
-                            `
+                <tr>
+                    <td>\${performerinfo.created_date}</td>
+                    <td>\${performerinfo.full_name}</td>
+                    <td>\${performerinfo.pancard_no}</td>
+                    <td><button data-qual="\${performerinfo.application_lid}" data-id = "1" data-toggle="modal" data-target=".bd-example-modal-lg" type="button" class="qual-btn btn btn-outline-primary text-dark">Graduate</button> </td>
+                    <td><button data-qual="\${performerinfo.application_lid}" data-id = "2" data-toggle="modal" data-target=".bd-example-modal-lg" type="button" class="qual-btn btn btn-outline-primary text-dark">Masters</button></td>
+                    <td><button data-qual="\${performerinfo.application_lid}" data-id = "3" data-toggle="modal" data-target=".bd-example-modal-lg" type="button" class="qual-btn btn btn-outline-primary text-dark">PHD</button></td>
+                    <td><button data-exp="5" data-id = "\${performerinfo.application_lid}" data-toggle="modal" type="button" class="exp-btn btn btn-outline-primary text-dark">\${performerinfo.teaching_exp}</button></td>
+                    <td><button data-exp="4" data-id = "\${performerinfo.application_lid}" data-toggle="modal" type="button" class="exp-btn btn btn-outline-primary text-dark">\${performerinfo.industrial_exp}</button></td>
+                    <td>\${performerinfo.total_exp}</td>
+                    <td>\${performerinfo.module}</td>
+                    <td>\${performerinfo.program_name}</td>
+                    <td>\${performerinfo.acad_session}</td>
+                    <td>\${performerinfo.rate_per_hours}</td>
+                    <td>\${performerinfo.total_no_of_hrs_alloted}</td>
+                    <td>\${performerinfo.no_of_division}</td>
+                    <td>\${performerinfo.student_count_per_division}</td>
+                    <td>\${performerinfo.rate_per_hours * performerinfo.total_no_of_hrs_alloted}</td>
+                    <td><button data-pan-no="\${performerinfo.pancard_no}" class="btn btn-outline-primary feedback-btn">Feedback</button></td>
+                    <td>\${performerinfo.aol_obe}</td>
+                    <td><button data-skill="\${maxpoints.skill}" data-experience="\${maxpoints.experience}" data-achievement="\${maxpoints.achievement}" data-qualification="\${maxpoints.qualification}" data-totalP="\${maxpoints.total_points}" data-toggle="modal" type="button" class="point-distribution btn btn-outline-primary text-dark">\${maxpoints.total_points}</button></td>
+                    <td><button data-id = "\${performerinfo.proforma_id}" data-toggle="modal" type="button" class="comments-btn btn btn-outline-primary text-dark">Comments</button></td>
+                    <td data-id ="\${performerinfo.proforma_id}">\${performerinfo.status_lid == '4'?  '<a class="fa fa-solid fa-download text-dark fa-2x file-download-btn"></a>' : 'N.A'}</td>
+                `
+                if(performerinfo.level > 6 || (performerinfo.level == 3 && performerinfo.status_lid == 4)) {
+
+                    view += `<td> <a class="text-success" href="${pageContext.request.contextPath}/offer-letter?prof_id=\${performerinfo.proforma_id}" > Offer letter </a> </td>
+                    </tr>`
+
+                    } else {
+
+                        view += `<td>\${performerinfo.status} By \${performerinfo.modified_by}</td>
+                    </tr>`
+
+                    }
                             }
                             document.querySelector('.proforma-view').innerHTML = view;
                         }
@@ -748,13 +756,23 @@
                                         <td>\${performerinfo.student_count_per_division}</td>
                                         <td>\${performerinfo.rate_per_hours * performerinfo.total_no_of_hrs_alloted}</td>
                                         <td><button data-pan-no="\${performerinfo.pancard_no}" class="btn btn-outline-primary feedback-btn">Feedback</button></td>
-                                        <td>1</td>
                                         <td>\${performerinfo.aol_obe}</td>
                                         <td><button data-skill="\${maxpoints.skill}" data-experience="\${maxpoints.experience}" data-achievement="\${maxpoints.achievement}" data-qualification="\${maxpoints.qualification}" data-totalP="\${maxpoints.total_points}" data-toggle="modal" type="button" class="point-distribution btn btn-outline-primary text-dark">\${maxpoints.total_points}</button></td>
                                         <td><button data-id = "\${performerinfo.proforma_id}" data-toggle="modal" type="button" class="comments-btn btn btn-outline-primary text-dark">Comments</button></td>
                                         <td data-id ="\${performerinfo.proforma_id}">\${performerinfo.status_lid == '4'?  '<a class="fa fa-solid fa-download text-dark fa-2x file-download-btn"></a>' : 'N.A'}</td>
-                                        <td>\${performerinfo.status} By \${performerinfo.modified_by}</td>
-                                    <tr>`
+                                        
+                                        `
+                                        if(performerinfo.level > 6 || (performerinfo.level == 3 && performerinfo.status_lid == 4)) {
+
+                                            view += `<td> <a class="text-success" href="${pageContext.request.contextPath}/offer-letter?prof_id=\${performerinfo.proforma_id}" > Offer letter </a> </td>
+                                            </tr>`
+
+                                            } else {
+
+                                                view += `<td>\${performerinfo.status} By \${performerinfo.modified_by}</td>
+                                            </tr>`
+
+                                            }
                                     }
                                     document.querySelector('.proforma-view').innerHTML =
                                         view;
@@ -1013,21 +1031,22 @@
 
                 }
 
-                if (e.target.classList.contains('school-select')) {
-                    let organization_lid = document.querySelector('.school-select').value;
-                    if (organization_lid != null) {
-                        let selectProgramList = '<option value="0" data-value="0">--SELECT--</option>';
-                        $.ajax({
-                            url: 'https://dev-portal.svkm.ac.in:8080/vfApi/getProgramName?characters=&programId=0&schoolObjId=' +
-                                organization_lid,
-                            type: 'GET',
-                            async: false,
-                            success: function (response) {
-                                let resResult = JSON.parse(response).results;
-
-                                for (let desig of resResult) {
-                                    selectProgramList +=
-                                        `<option data-programid = "\${desig.id}" value="\${desig.id}">     
+            if(e.target.classList.contains('school-select'))
+            {
+               let organization_lid = document.querySelector('.school-select').value;
+               if(organization_lid != null)
+               {
+                 let selectProgramList = '<option value="0" data-value="0">--SELECT--</option>';
+                 $.ajax({   
+                         url: 'https://dev-portal.svkm.ac.in:8080/vfApi/getProgramName?characters=&programId=0&schoolObjId=' + organization_lid ,
+                         type: 'GET',
+                         async: false,
+                         success: function (response) {
+                             let resResult = JSON.parse(response);
+                 
+                             for (let desig of resResult) {
+                                     selectProgramList +=
+                                 `<option data-programid = "\${desig.id}" value="\${desig.id}">     
                                      \${desig.programName}
                                  </option>`
                                     document.querySelector('.program-select').innerHTML =
@@ -1162,14 +1181,23 @@
                                         <td>\${performerinfo.student_count_per_division}</td>
                                         <td>\${performerinfo.rate_per_hours * performerinfo.total_no_of_hrs_alloted}</td>
                                         <td><button data-pan-no="\${performerinfo.pancard_no}" class="btn btn-outline-primary feedback-btn">Feedback</button></td>
-                                        <td>1</td>
                                         <td>\${performerinfo.aol_obe}</td>
                                         <td><button data-skill="\${maxpoints.skill}" data-experience="\${maxpoints.experience}" data-achievement="\${maxpoints.achievement}" data-qualification="\${maxpoints.qualification}" data-totalP="\${maxpoints.total_points}" data-toggle="modal" type="button" class="point-distribution btn btn-outline-primary text-dark">\${maxpoints.total_points}</button></td>
                                         <td><button data-id = "\${performerinfo.proforma_id}" data-toggle="modal" type="button" class="comments-btn btn btn-outline-primary text-dark">Comments</button></td>
                                         <td data-id ="\${performerinfo.proforma_id}">\${performerinfo.status_lid == '4'?  '<a class="fa fa-solid fa-download text-dark fa-2x file-download-btn"></a>' : 'N.A'}</td>
-                                        <td>\${performerinfo.status} By \${performerinfo.modified_by}</td>
-                                    <tr>
-                `
+                                        
+                                        `
+                                    if(performerinfo.level > 6 || (performerinfo.level == 3 && performerinfo.status_lid == 4)) {
+
+                                        view += `<td> <a class="text-success" href="${pageContext.request.contextPath}/offer-letter?prof_id=\${performerinfo.proforma_id}" > Offer letter </a> </td>
+                                        </tr>`
+
+                                        } else {
+
+                                            view += `<td>\${performerinfo.status} By \${performerinfo.modified_by}</td>
+                                        </tr>`
+
+                                        }
                                     }
                                     document.querySelector('.proforma-view').innerHTML = ""
                                     document.querySelector('.proforma-view').innerHTML =

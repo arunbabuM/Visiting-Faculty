@@ -1,17 +1,20 @@
 package com.visitingfaculty.controller;
 
 import java.util.Map;
-
 import javax.servlet.http.HttpSession;
-
+import org.json.JSONObject;
+import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.visitingfaculty.dao.UserDaoInterface;
 import com.visitingfaculty.model.User;
+import com.visitingfaculty.service.JavaCrypto;
 
 @Controller
 public class UserController {
@@ -22,8 +25,12 @@ public class UserController {
     @Autowired
     HttpSession httpSession;
 
+    @Value("${publicKeyLocation}")
+	private String publicKeyLocation;
+
     @GetMapping("/login")
-    public String getLoginPage() {
+    public String getLoginPage(Model m) {
+        m.addAttribute("publicKey", JavaCrypto.getPublicKeyFromFile(publicKeyLocation));
         return "login";
     }
 
@@ -63,6 +70,8 @@ public class UserController {
                 m.addAttribute("role" , role);
                 return "dashboard";
             } else if (role.equals("User")) {
+                int count = userDaoInterface.isResumeCreated(user_id);
+                m.addAttribute("resumeCount", count);
                 m.addAttribute("user_id", httpSession.getAttribute("user_id"));
                 m.addAttribute("role" , role);
                 return "faculty/dashboard";
@@ -85,7 +94,7 @@ public class UserController {
     }
 
     @GetMapping("/visiting-faculty-applications")
-    public String getFacultyApplcation() {
+    public String getFacultyApplcation(Model m) {
         String user_id = (String) httpSession.getAttribute("user_id");
         if (user_id != null) {
             return "resume-search";
@@ -225,6 +234,32 @@ public class UserController {
             return "manual-approval-page";
         }
         return "redirect:/login#session-timeout";
+    }
+
+    @GetMapping("/offer-letter")
+    public String generateOfferLetter(@RequestParam(value = "prof_id") String prof_id, Model model) {
+        String user_id = (String) httpSession.getAttribute("user_id");
+        if (user_id != null) {
+            Object offerLetter = userDaoInterface.generateOfferLetter(prof_id);
+            model.addAttribute("offerLetter", offerLetter);
+            // JSONObject jsonObject =  new JSONObject(offerLetter);  
+            // JSONArray resetData = jsonObject.getJSONArray("offer_letter_details");
+            // String name = resetData.getJSONObject(0).getString("name");
+            return "offer-letter";
+        }
+        return "redirect:/login#session-timeout";
+       
+    }
+    @GetMapping("/offer-accept-reject")
+    public String offerAcceptReject(Model m){
+        String user_id = (String) httpSession.getAttribute("user_id");
+        m.addAttribute("user_id", user_id);
+        return "faculty/offerAcceptReject";
+    }
+
+    @GetMapping("/created-offer-letter-admin")
+    public String createdOfferLetterAdmin(Model m){
+        return "createdOfferLetterAdmin";
     }
 
 

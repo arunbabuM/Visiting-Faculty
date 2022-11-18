@@ -721,4 +721,43 @@ public class userDao implements UserDaoInterface {
         return filePath;
     }
 
+    @Override
+    public Object getFacultyApplicationStatus(String prof_id) {
+        SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate).withFunctionName("get_faculty_application_status");
+        return jdbcCall.executeFunction(Object.class, Integer.parseInt(prof_id));
+   }
+        
+    @Override
+    public int isResumeCreated(String username){
+        String sql = "select count(*) from public.user u inner join resume r on u.id = r.user_lid where u.user_id = ?;";
+        int count = (int) jdbcTemplate.queryForObject(sql, Integer.class, username);
+        return count;
+    }
+
+
+    @Override
+    public Object generateOfferLetter(String prof_id) {
+        SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate).withFunctionName("get_detail_for_offer_letter");
+        return jdbcCall.executeFunction(Object.class, Integer.parseInt(prof_id));
+    }
+
+    @Override
+    public Object GetCreatedOfferLetter(String user_id) {
+        SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate).withFunctionName("get_created_offer_letter");
+        return jdbcCall.executeFunction(Object.class, (user_id));
+    }
+
+    @Override
+    public int updateOfferLetter(String status, String comment, String prof_id) {
+        String SQL = "UPDATE offer_letter_details SET status = ? , reason = ? WHERE proforma_id = ?";
+        return jdbcTemplate.update(SQL, Integer.parseInt(status), comment, Integer.parseInt(prof_id));
+    }
+
+    @Override
+    public Object getCreatedOfferLetterAdminSide(String user_id) {
+        SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
+                .withFunctionName("get_created_offer_letter_admin_side");
+        return jdbcCall.executeFunction(Object.class, user_id);
+    }
+
 }

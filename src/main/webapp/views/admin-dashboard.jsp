@@ -30,5 +30,10 @@
             class="card_school_vf text-center d-flex flex-column justify-content-center align-items-center ">
             <img src="${pageContext.request.contextPath}/icons/admin.png" height="55" alt="">ADD FACULTY</a>
     </div>
+    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 p-4">
+        <a href="${pageContext.request.contextPath}/created-offer-letter-admin"
+            class="card_school_vf text-center d-flex flex-column justify-content-center align-items-center ">
+            <img src="${pageContext.request.contextPath}/icons/offerLetter.png" height="55" alt="">Generated Offer Letter</a>
+    </div>
 
 </div>
