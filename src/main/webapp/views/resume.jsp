@@ -2627,7 +2627,7 @@
         let qualificationCertificate = qualificationRow[i].querySelector('.qualification-certificate').value;
         // let qualificationCertificateImage = qualificationRow[i].querySelector('#qualification-certificate-preview').src;
 
-        let checkSubject = tabledatacheck(qualificationSubject);
+        let checkSubject = variableName(qualificationSubject);
         let checkUniversity = tabledatacheck(qualificationUniversity);
         let checkCollege = tabledatacheck(qualificationCollege);
         let checkYearOfPassing = qualificationDetailYearOfPassingValidation(qualificationYear);
@@ -2639,9 +2639,8 @@
           .src
         //  to add the red border according to validations
         if (checkSubject == false) {
-
           qualificationInput.classList.add('input-border');
-          qualificationInput.setCustomValidity("Custom Error")
+          qualificationInput.setCustomValidity("Only '(' , ')' , '-' are Accepted" )
           qualificationInput.reportValidity();
           return;
         } else if (checkUniversity == false) {
@@ -2927,7 +2926,7 @@
         let awardCertificateSRC = vjstableelement[i].querySelector('.award-certificate-preview').src;
 
         let checktitle = tabledatacheck(title);
-        let checkorganization_name = tabledatacheck(organization_name);
+        let checkorganization_name = variableName(organization_name);
         let checkdescription = tabledatacheck(description);
         let checkachievement_date = checkdate(achievement_date);
         let checkorganization_type_lid = checknotnull(organization_type_lid)
@@ -2938,6 +2937,8 @@
           return;
         } else if (checkorganization_name == false) {
           vjstableelement[i].querySelector('.awardOrganization').classList.add('input-border');
+          vjstableelement[i].querySelector('.awardOrganization').setCustomValidity("Only '(' , ')' , '-' are Accepted" );
+          vjstableelement[i].querySelector('.awardOrganization').reportValidity();
           return;
         } else if (checkdescription == false) {
           vjstableelement[i].querySelector('.awardPlace').classList.add('input-border');
@@ -3692,7 +3693,7 @@
           '.certificate-photo-preview').src;
 
 
-        let checkCertificateName = tabledatacheck(professionalCertificateName);
+        let checkCertificateName = variableName(professionalCertificateName);
         let checkInstitution = tabledatacheck(professionalInstitution);
         let checkYOP = yearcheck(professionalYOP);
         //let checkCertification = tabledatacheck(professionalCertification);
@@ -3700,6 +3701,8 @@
         //  to add the red border according to validations
         if (checkCertificateName == false) {
           certificationRow[i].querySelector('.certification-certificate').classList.add('input-border');
+          certificationRow[i].querySelector('.certification-certificate').setCustomValidity("Only '(' , ')' , '-' are Accepted" )
+          certificationRow[i].querySelector('.certification-certificate').reportValidity();
           return;
         } else if (checkInstitution == false) {
           certificationRow[i].querySelector('.certification-institution').classList.add('input-border');
@@ -5129,7 +5132,7 @@
         let qualificationCertificate = qualificationRow[i].querySelector('.qualification-certificate').value;
         // let qualificationCertificateImage = qualificationRow[i].querySelector('#qualification-certificate-preview').src;
 
-        let checkSubject = tabledatacheck(qualificationSubject);
+        let checkSubject = variableName(qualificationSubject);
         let checkUniversity = tabledatacheck(qualificationUniversity);
         let checkCollege = tabledatacheck(qualificationCollege);
         let checkYearOfPassing = qualificationDetailYearOfPassingValidation(qualificationYear);
@@ -5143,6 +5146,8 @@
         if (checkSubject == false) {
 
           qualificationRow[i].querySelector('.qualification-subject').classList.add('input-border');
+          qualificationRow[i].querySelector('.qualification-subject').setCustomValidity("Only '(' , ')' , '-' are Accepted" );
+          qualificationRow[i].querySelector('.qualification-subject').reportValidity();
           document.getElementById('main-loader').classList.add('d-none');
 
           return;
@@ -5420,7 +5425,7 @@
         let awardCertificateSRC = vjstableelement[i].querySelector('.award-certificate-preview').src;
 
         let checktitle = tabledatacheck(title);
-        let checkorganization_name = tabledatacheck(organization_name);
+        let checkorganization_name = variableName(organization_name);
         let checkdescription = tabledatacheck(description);
         let checkachievement_date = checkdate(achievement_date);
         let checkurl_path = tabledatacheck(url_path);
@@ -5432,6 +5437,8 @@
           return;
         } else if (checkorganization_name == false) {
           vjstableelement[i].querySelector('.awardOrganization').classList.add('input-border');
+          vjstableelement[i].querySelector('.awardOrganization').setCustomValidity("Only '(' , ')' , '-' are Accepted" );
+          vjstableelement[i].querySelector('.awardOrganization').reportValidity();
           return;
         } else if (checkdescription == false) {
           vjstableelement[i].querySelector('.awardPlace').classList.add('input-border');
@@ -5914,7 +5921,7 @@
           '.certificate-photo-preview').src;
 
 
-        let checkCertificateName = tabledatacheck(professionalCertificateName);
+        let checkCertificateName = variableName(professionalCertificateName);
         let checkInstitution = tabledatacheck(professionalInstitution);
         let checkYOP = yearcheck(professionalYOP);
         let checkCertification = tabledatacheck(professionalCertification);
@@ -5922,6 +5929,8 @@
         //  to add the red border according to validations
         if (checkCertificateName == false) {
           certificationRow[i].querySelector('.certification-certificate').classList.add('input-border');
+          certificationRow[i].querySelector('.certification-certificate').setCustomValidity("Only '(' , ')' , '-' are Accepted" );
+          certificationRow[i].querySelector('.certification-certificate').reportValidity();
           return;
         } else if (checkInstitution == false) {
           certificationRow[i].querySelector('.certification-institution').classList.add('input-border');
@@ -6635,7 +6644,7 @@
         let workexperienceEndDate = workexperienceRow[i].querySelector('.end-date').value;
 
         let checkWorkExp = tabledatacheck(workexperienceType);
-        let checkUniversity = tabledatacheck(workexperienceUniversity);
+        let checkUniversity = variableName(workexperienceUniversity);
         let checkSubjetTaught = tabledatacheck(workexperienceSubjectTaught);
         let checkWorkExpStart = tabledatacheck(workexperienceStartDate);
         let checkWorkExpEnd = tabledatacheck(workexperienceEndDate);
@@ -6646,6 +6655,8 @@
           return;
         } else if (checkUniversity == false) {
           workexperienceRow[i].querySelector('.employeer-name').classList.add('input-border');
+          workexperienceRow[i].querySelector('.employeer-name').setCustomValidity("Only '(' , ')' , '-' are Accepted" );
+          workexperienceRow[i].querySelector('.employeer-name').reportValidity();
           return;
         } else if (checkSubjetTaught == false) {
           workexperienceRow[i].querySelector('.responsibility').classList.add('input-border');
@@ -6760,7 +6771,7 @@
         let workexperienceEndDate = workexperienceRow[i].querySelector('.end-date').value;
 
         let checkWorkExp = tabledatacheck(workexperienceType);
-        let checkUniversity = tabledatacheck(workexperienceUniversity);
+        let checkUniversity = variableName(workexperienceUniversity);
         let checkSubjetTaught = tabledatacheck(workexperienceSubjectTaught);
         let checkWorkExpStart = tabledatacheck(workexperienceStartDate);
         let checkWorkExpEnd = tabledatacheck(workexperienceEndDate);
@@ -6771,6 +6782,8 @@
           return;
         } else if (checkUniversity == false) {
           workexperienceRow[i].querySelector('.employeer-name').classList.add('input-border');
+          workexperienceRow[i].querySelector('.employeer-name').setCustomValidity("Only '(' , ')' , '-' are Accepted" );
+          workexperienceRow[i].querySelector('.employeer-name').reportValidity();
           return;
         } else if (checkSubjetTaught == false) {
           workexperienceRow[i].querySelector('.responsibility').classList.add('input-border');
