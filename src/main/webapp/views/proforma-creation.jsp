@@ -89,7 +89,7 @@
                         <td><input class="form-control job-division" type="number"> </td>
                         <td><input class="form-control job-count" type="number"> </td>
                         <td><select class="form-control job-process">
-                                <option value="0">-Select-</option>
+                                <option value="0" disabled selected>-Select-</option>
                                 <option value="AOL">AOL</option>
                                 <option value="OBE">OBE</option>
                             </select> 
@@ -477,7 +477,7 @@ document.addEventListener('click', function(e) {
                         <td><input class="form-control job-division" type="number"> </td>
                         <td><input class="form-control job-count" type="number"> </td>
                         <td><select class="form-control job-process">
-                                <option value="0">-Select-</option>
+                                <option value="0" selected disabled>-Select-</option>
                                 <option value="AOL">AOL</option>
                                 <option value="OBE">OBE</option>
                             </select> 
@@ -591,7 +591,7 @@ document.addEventListener('click', function(e) {
             let checkTotalHours = tabledatacheck(totalhours);
             let checkDivision = tabledatacheck(division);
             let checkCount = tabledatacheck(count);
-            let checkProcess = tabledatacheck(process);
+            // let checkProcess = tabledatacheck(process);
             let checkSubject = tabledatacheck(moduleName);
 
             if (checkProgramInput == false) {
@@ -647,7 +647,7 @@ document.addEventListener('click', function(e) {
                   return;
 
             
-            } else if(checkProcess == false) {
+            } else if(process == 0) {
 
                 jobApllicationData[i].querySelector('.job-process').classList.add('input-border');;
                 document.getElementById('main-loader').classList.add('d-none');

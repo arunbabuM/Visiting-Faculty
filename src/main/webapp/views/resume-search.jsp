@@ -120,7 +120,7 @@
                             <input type="text" disabled id="user-id" class=" form-control">
                         </div>
                         <div class="form-group">
-                            <label for="user-id">Enter Resume name</label>
+                            <label for="user-id">Enter Resume name</label><span class="text-danger"> *</span>
                             <input minlength="3" type="text" id="resume-name" placeholder="Enter Resume Name"
                                 class="form-control">
                         </div>
@@ -210,7 +210,7 @@
                                 } else {
                                     tableToAppend += `
                                     <tr data-userlid = "\${obj.user_lid}">
-                                        <td>\${obj.f_name}</td>
+                                        <td>\${obj.f_name} \${obj.l_name != null ? obj.l_name : ""}</td>
                                         <td class="user_id">\${obj.user_id}</td>
                                         <td>
                                                 <a class="application-preview" style="border:none; outline:none" >
@@ -275,7 +275,7 @@
                             for (let obj of data.resume_details) {
                                 tableToAppend +=
                                     ` <tr data-userlid = "\${obj.user_lid}">
-                                            <td>\${obj.f_name}</td>
+                                            <td>\${obj.f_name} \${obj.l_name != null ? obj.l_name : ""}</td>
                                             <td class="user_id">\${obj.user_id}</td>
                                             <td>
                                                 <a class="application-preview" style="border:none; outline:none" >
@@ -316,7 +316,7 @@
 
                     clearTimeout(timeout)
                     const value = this.value
-                    timeout = setTimeout(() => searchFunction(value.trim().toUpperCase()), 2000)
+                    timeout = setTimeout(() => searchFunction(value.replaceAll(" ", "").toUpperCase()), 2000)
 
             })
 
@@ -324,7 +324,7 @@
 
                 clearTimeout(timeout)
                 const value = this.value.toUpperCase()
-                timeout = setTimeout(() => searchFunctionByName(value.trim().toUpperCase()), 2000)
+                timeout = setTimeout(() => searchFunctionByName(value.replaceAll(" ", "").toUpperCase()), 2000)
 
             })
 
@@ -418,7 +418,7 @@
                                                 <i class="fa-solid fa-eye get-resume-icon" data-toggle="tooltip" title="View Resume"></i></a>
                                                 <a  class="" style="border:none; outline:none" >
                                                 <a href="${pageContext.request.contextPath}/resume?resume_lid=\${obj.id}" class="application-preview" style="border:none; outline:none" >
-                                                <i class="fa-solid fa-edit get-resume-icon" data-toggle="tooltip" title="View Resume"></i></a>
+                                                <i class="fa-solid fa-edit get-resume-icon" data-toggle="tooltip" title="Edit Resume"></i></a>
                                                 <a  class="" style="border:none; outline:none" >
                                             </td>
                                         </tr>`

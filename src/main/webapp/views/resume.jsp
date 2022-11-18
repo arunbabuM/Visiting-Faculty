@@ -3262,7 +3262,7 @@
 
         let checkPublicationPublisher = tabledatacheck(publicationPublisher);
         //let checkPublicationNumberOfAuthors = tabledatacheck(publicationNumberOfAuthors);
-        let checkPublicationYearOfPublication = tabledatacheck(publicationYearOfPublication);
+        let checkPublicationYearOfPublication = yearcheck(publicationYearOfPublication);
         let checkPublicationBookTitle = tabledatacheck(publicationBookTitle);
         let checkPublicationCertificate = tabledatacheck(publicationCertificate1);
 
@@ -6548,7 +6548,11 @@
     addCustomSoftSkill.addEventListener('click', function () {
 
       let customSoftSkillValue = document.getElementById('custom-soft-skill-value').innerText
-
+      let res = /^[a-zA-Z]+$/.test(customSoftSkillValue.replaceAll(" ", ""));
+      if(!res) {
+        alert("Only Alphabets are allowed")
+        return;
+      }
       $.ajax({
         url: '${pageContext.request.contextPath}/insert-custom-skill',
         type: 'POST',
@@ -6581,7 +6585,11 @@
     addCustomHardSkill.addEventListener('click', function () {
 
       let customHardSkillValue = document.getElementById('custom-hard-skill-value').innerText
-
+      let res = /^[a-zA-Z]+$/.test(customSoftSkillValue.replaceAll(" ", ""));
+      if(!res) {
+        alert("Only Alphabets are allowed")
+        return;
+      }
       $.ajax({
         url: '${pageContext.request.contextPath}/insert-custom-skill',
         type: 'POST',

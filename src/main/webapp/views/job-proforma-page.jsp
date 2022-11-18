@@ -211,7 +211,7 @@
                                         <td >\${obj.name}</td>
                                         <td>
                                                 <a class="application-preview" href="${pageContext.request.contextPath}/proforma-creation?application_lid=\${obj.appln_id}" style="border:none; outline:none" >
-                                                <i class="fa-solid fa-eye view-resume-icon" data-toggle="tooltip" title="View"></i></a>
+                                                <i class="fa-solid fa-eye view-resume-icon" data-toggle="tooltip" title="View Application"></i></a>
                                                 
                                             </td>
                                     </tr>` 
@@ -277,7 +277,7 @@
                                         <td >\${obj.name}</td>
                                         <td>
                                                 <a class="application-preview" href="${pageContext.request.contextPath}/proforma-creation?application_lid=\${obj.appln_id}" style="border:none; outline:none" >
-                                                <i class="fa-solid fa-eye view-resume-icon" data-toggle="tooltip" title="View"></i></a>
+                                                <i class="fa-solid fa-eye view-resume-icon" data-toggle="tooltip" title="View Application"></i></a>
                                                 
                                             </td>
                                     </tr>` 
