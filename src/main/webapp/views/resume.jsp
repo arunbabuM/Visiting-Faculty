@@ -2613,9 +2613,12 @@
         qualificationRow[i].querySelector('.qualification-year').classList.remove('input-border');
         qualificationRow[i].querySelector('.qualification-certificate').classList.remove('input-border');
 
+        
+        let qualificationInput = qualificationRow[i].querySelector('.qualification-subject');
+
         let resume_qualification_lid = qualificationRow[i].dataset.lid
+        let qualificationSubject = qualificationInput.value;
         let qualificationTitle = qualificationRow[i].querySelector('.qualification-title').value;
-        let qualificationSubject = qualificationRow[i].querySelector('.qualification-subject').value;
         let qualificationUniversity = qualificationRow[i].querySelector('.qualification-university').value;
         let qualificationCollege = qualificationRow[i].querySelector('.qualification-college').value;
         let qualificationStatus = qualificationRow[i].querySelector('.qualification-status').value;
@@ -2636,7 +2639,10 @@
           .src
         //  to add the red border according to validations
         if (checkSubject == false) {
-          qualificationRow[i].querySelector('.qualification-subject').classList.add('input-border');
+
+          qualificationInput.classList.add('input-border');
+          qualificationInput.setCustomValidity("Custom Error")
+          qualificationInput.reportValidity();
           return;
         } else if (checkUniversity == false) {
           qualificationRow[i].querySelector('.qualification-university').classList.add('input-border');
