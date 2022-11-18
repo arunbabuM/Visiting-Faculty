@@ -1360,7 +1360,7 @@
         `
         }
 
-        
+        console.log("${level}" )
         if("${level}" > 0) {
                 resume += `
                 <!------------------------------------------------ Feedback Section ------------------------------------------------>
@@ -1371,25 +1371,12 @@
                     </div>
                       <div class="card">
                           <div id="feedback-list">
-                                        <table class="table table-responsive">
-                                            <thead>
-                                                <th>School</th>
-                                                <th>Institute</th>
-                                                <th>Program Name</th>
-                                                <th>Course Name</th>
-                                                <th>Acad year</th>
-                                                <th>Acad Session</th>
-                                                <th>Average</th>
-                                            </thead>
-                                            <tbody id="feedback-table">
-                                          
-                                            </tbody>
-                                      </table>
+                                <h4 align="center">--- No Feedback Available ---</h4>
                               </div>
                           </div>
                         </div>
                       <hr />`
-                        }
+                        } 
 
         resume += `
         <!------------------------------------------------ Qualification Section ------------------------------------------------>
@@ -3530,10 +3517,6 @@
           }
         })
       }, 1000)
-
-
-
-
 
     });
 
@@ -7818,9 +7801,21 @@ if("${level}" > 0) {
                     console.log("Value of the feedback from ajax>>>>>>>>>>>>>>>>>>",response.value)
 
                     if(response != ''){
-                      let feedbackData
+                      let feedbackData = ` <table class="table table-responsive">
+                                            <thead>
+                                                <th>School</th>
+                                                <th>Institute</th>
+                                                <th>Program Name</th>
+                                                <th>Course Name</th>
+                                                <th>Acad year</th>
+                                                <th>Acad Session</th>
+                                                <th>Average</th>
+                                            </thead>
+                                            <tbody id="feedback-table">`
+                                          
+                                          
                       for(data of response){
-                       feedbackData = `<tr>
+                       feedbackData += `<tr>
                                                 <td>\${data.school}</td>
                                                 <td>\${data.inst}</td>
                                                 <td>\${data.programName}</td>
@@ -7830,8 +7825,11 @@ if("${level}" > 0) {
                                                 <td>\${data.avg}</td>
                                             </tr>`
                                                }
+
+                       feedbackData +=  `</tbody>
+                                      </table>`
                    
-                    document.querySelector("#feedback-table").innerHTML = feedbackData
+                       document.querySelector("#feedback-list").innerHTML = feedbackData
 
                     } else {
 
