@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
+
 import com.visitingfaculty.dao.UserDaoInterface;
 import com.visitingfaculty.dto.UserDto;
 import com.visitingfaculty.model.ResetPassword;
@@ -32,6 +35,9 @@ public class UserRestController {
     UserService userService;
 
     @Autowired
+    RestTemplate restTemplate;
+
+    @Autowired
     jsoncheck jsonchk;
 
     @Autowired
@@ -42,6 +48,9 @@ public class UserRestController {
 
     @Autowired
     UserDaoInterface userDaoInterface;
+
+    @Value("${notification.url}")
+    String EmailUrl;
 
     String password;
 
@@ -121,7 +130,15 @@ public class UserRestController {
 
         String message = "Please Enter this code to verify your email: " + tokenGenerated;
 
-        if (userService.sendEmail(message, userDto.getEmail(),1)) {
+        JSONObject json = new JSONObject();
+        json.put("message", message);
+        json.put("toEmail", userDto.getEmail());
+        json.put("subject", "Verify Your Email Adddress");
+        json.put("cc", "null");
+        String newJsonString = json.toString();
+
+        Boolean isEmailSent = restTemplate.postForObject(EmailUrl, newJsonString, Boolean.class);
+        if (isEmailSent || isEmailSent != null) {
 
             return ResponseEntity.status(HttpStatus.OK).build();
 
