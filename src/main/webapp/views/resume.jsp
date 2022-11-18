@@ -7118,7 +7118,7 @@
       }
 
       if ((startDateInput.value).length != 0 && (endDateInput.value).length != 0) {
-        durationValue.value = diffyears
+        durationValue.value = diffyears + "Years";
       }
 
     });
