@@ -202,7 +202,7 @@
                                 <tr>
                                     <th>Name</th>
                                     <th>Pan Card No</th>
-                                    <th>Status</th>
+                                    <th>Resume name</th>
                                     <th>Organization/School Name</th>
                                     <th>Actions</th>
                                 </tr>
