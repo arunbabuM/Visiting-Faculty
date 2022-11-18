@@ -2,8 +2,6 @@ package com.visitingfaculty.controller;
 
 import java.util.Map;
 import javax.servlet.http.HttpSession;
-import org.json.JSONObject;
-import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -11,7 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.visitingfaculty.dao.UserDaoInterface;
 import com.visitingfaculty.model.User;
 import com.visitingfaculty.service.JavaCrypto;

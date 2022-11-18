@@ -65,6 +65,8 @@
                             <table class="table table-bordered">
                             <thead>
                             <tr>
+                                <th>Full Name</th>
+                                <th>Pan Card No.</th>
                                 <th>Program</th>
                                 <th>School</th>
                                 <th>Session</th>
@@ -77,6 +79,8 @@
                         for (let obj of data.offer_letter_details_admin) {
                                 tableToAppend += `
                                 <tr data-userlid = "\${obj.organization_lid}">
+                                    <td>\${obj.full_name}</td>
+                                    <td>\${obj.pancard_no}</td>
                                     <td>\${obj.program_name}</td>
                                     <td>\${obj.school_name}</td>
                                     <td>\${obj.acad_session}</td>

@@ -690,7 +690,8 @@
                     document.getElementById('main-loader').classList.remove('d-none')
                     document.getElementById("approval-file").classList.remove('border-danger')
                     document.querySelector('.status-select').classList.remove('border-danger');
-
+                    const fileInput = document.getElementById("approval-file");
+                    console.log("APPROVAL FILE" , fileInput.length);
                     let objectData = {}
                     objectData.proforma_lid = document.querySelector('.proforma-comment').dataset.id
                     objectData.level = '${level}'
@@ -712,6 +713,12 @@
                     if(objectData.status_lid == 4 && objectData.comment.length < 1 ) {
                         document.querySelector('.proforma-comment').classList.add('border-danger');
                         document.querySelector('.proforma-comment').outerHTML += "<p class='text-danger'style='width:auto'>Please Enter Reason</p>"
+                        document.getElementById('main-loader').classList.add('d-none')
+                        return;
+                    }
+                    if(objectData.status_lid == 4 && (fileInput.value.length < 1 || !fileInput)) {
+                        fileInput.classList.add('border-danger');
+                        fileInput.outerHTML += "<p class='text-danger'style='width:auto'>Please Upload File</p>"
                         document.getElementById('main-loader').classList.add('d-none')
                         return;
                     }

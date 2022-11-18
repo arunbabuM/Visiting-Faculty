@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
@@ -19,6 +20,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 
 import com.visitingfaculty.dto.UserDto;
 import com.visitingfaculty.model.Resume;
@@ -42,6 +44,13 @@ public class userDao implements UserDaoInterface {
     JdbcTemplate jdbcTemplate;
 
     @Autowired
+    RestTemplate restTemplate;
+
+    @Value("${notification.url}")
+    String EmailUrl;
+
+
+    @Autowired
     PasswordService passwordService;
 
     @Autowired
@@ -60,8 +69,17 @@ public class userDao implements UserDaoInterface {
             int tokenGenerated = (int) Math.floor(100000 + Math.random() * 900000);
             httpSession.setAttribute("token", tokenGenerated);
             httpSession.setAttribute("email", emailValue);
-            userService.sendEmail("Please Enter This Token to Reset Password : " + tokenGenerated, emailValue, 3);
-            return true;
+            JSONObject json = new JSONObject();
+            json.put("message", "Please Enter This Token to Reset Password : " + tokenGenerated);
+            json.put("toEmail", emailValue);
+            json.put("subject", "Password Reset Verification");
+            json.put("otp", tokenGenerated);
+            json.put("cc", "[sameer.shaikh.EXT@nmims.edu]");
+            String jsonString = json.toString();
+    
+            Boolean isEmailSent = restTemplate.postForObject(EmailUrl, jsonString, Boolean.class);
+            boolean isEmailSentSuccessFUlly = isEmailSent == null ? false : true;
+            return isEmailSentSuccessFUlly;
         }
         return false;
 
@@ -510,11 +528,21 @@ public class userDao implements UserDaoInterface {
 
         if (rows == 1) {
             String sql2 = "	SELECT ui.email FROM user_application ua INNER JOIN user_info ui ON ua.resume_lid = ui.resume_lid AND ua.resume_lid = ?  LIMIT 1";
-            String email = jdbcTemplate.queryForObject(sql2, String.class, resume_lid);
+            String emailValue = jdbcTemplate.queryForObject(sql2, String.class, resume_lid);
+            String email = emailValue.equals(null) ? "" : emailValue ;
             System.out.println(email);
-            String message = "Please confirm the application created by Admin through your pancard ";
-            boolean bool = userService.sendEmail(message, email, 2);
-            return bool;
+
+            JSONObject json = new JSONObject();
+            json.put("message", "Please confirm the application created by Admin through your pancard ");
+            json.put("toEmail", email);
+            json.put("subject", "Application Creation Confirmation");
+            json.put("cc", "null");
+            String newJsonString = json.toString();
+    
+            Boolean isEmailSent = restTemplate.postForObject(EmailUrl, newJsonString, Boolean.class);
+            boolean isEmailSentSuccessFUlly = isEmailSent == null ? false : true;
+            return isEmailSentSuccessFUlly;
+
         }
         return false;
 
