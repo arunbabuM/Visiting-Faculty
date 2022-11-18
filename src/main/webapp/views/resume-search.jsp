@@ -203,11 +203,10 @@
                                             <i class="fa-solid fa-eye view-resume-icon" data-toggle="tooltip" title="View Resume"></i></a>
                                             <a  class="" style="border:none; outline:none" >`
                         //Added to Hide Create Resume After Once Created 
-                                        if(obj.f_name == null){
-                        tableToAppend += ` <i style="color: green;" class="fa-solid fa-plus create-resume-button" data-toggle="tooltip" title="Create Resume"></i></a>`
-                                        }
-                        tableToAppend +=  `</td>
-                                    </tr>`
+                                        if(!obj.resume_name){
+                                        tableToAppend += ` <i style="color: green;" class="fa-solid fa-plus create-resume-button" data-toggle="tooltip" title="Create Resume"></i></a>`
+                                                        }
+                                        tableToAppend +=  `</td> </tr>`
                                 } else {
                                     tableToAppend += `
                                     <tr data-userlid = "\${obj.user_lid}">
@@ -218,11 +217,10 @@
                                                 <i class="fa-solid fa-eye view-resume-icon" data-toggle="tooltip" title="View Resume"></i></a>
                                                 <a  class="" style="border:none; outline:none" >`
                         //Added to Hide Create Resume After Once Created 
-                                if(obj.f_name == null){
+                                if(!obj.resume_name){
                                     tableToAppend +=`<i style="color: green;" class="fa-solid fa-plus create-resume-button" data-toggle="tooltip" title="Create Resume"></i></a>`
                                 }      
-                                    tableToAppend +=  `</td>
-                                    </tr>`
+                                    tableToAppend +=  `</td> </tr>`
                                 }
 
                             }
@@ -281,11 +279,12 @@
                                             <td>
                                                 <a class="application-preview" style="border:none; outline:none" >
                                                 <i class="fa-solid fa-eye view-resume-icon" data-toggle="tooltip" title="View Resume"></i></a>
-                                                <a  class="" style="border:none; outline:none" >
-                                            <i class="fa-solid fa-plus create-resume-button" data-toggle="tooltip" title="Create Resume"></i></a>
-                                            
-                                            </td>
-                                        </tr>`
+                                                <a  class="" style="border:none; outline:none" >`
+                            if(!obj.resume_name){
+                                    tableToAppend +=`<i style="color: green;" class="fa-solid fa-plus create-resume-button" data-toggle="tooltip" title="Create Resume"></i></a>`
+                                   }      
+                                    tableToAppend +=  `</td> </tr>`
+                                           
                             }
 
                             tableToAppend += `  </tbody>
@@ -346,13 +345,20 @@
             })
 
             $('.modal-create-resume-button').on('click', function (e) {
+                let resumeName = document.getElementById('resume-name')
+                if(!resumeName.value){
+                    resumeName.setCustomValidity("Name is required");
+                    resumeName.reportValidity();
+                    return;
+
+                }
                 console.log("clicked create resume")
                 e.preventDefault();
                 let myForm = document.getElementById('create-resume-form');
                 let formData = new FormData()
 
                 formData.append("user_lid", document.getElementById('user-lid').value)
-                formData.append("name", document.getElementById('resume-name').value)
+                formData.append("name", resumeName.value)
                 formData.append("description", document.getElementById('resume-description').value)
 
                 $.ajax({
