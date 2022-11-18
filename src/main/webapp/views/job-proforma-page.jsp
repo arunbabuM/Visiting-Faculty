@@ -61,10 +61,10 @@
             </div>
 
 
-            <div class="row px-lg-5 mx-lg-5 container">
+            <div class="row px-lg-5 mx-lg-5 mx-auto">
                 <div class="col-md-12">
                     <h3 class="text-center">Search Applications</h3>
-                    <div class="row px-lg-5 mx-lg-5">
+                    <div class="row">
                         <div class="col-md-6">
                             <div class="input-group ">
                                 <input type="search" class="form-control rounded" placeholder="Enter Pancard no."
