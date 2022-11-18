@@ -3617,6 +3617,7 @@
                           <div class="col-md-2 ">
                             <p class="h6">Certification Name: <span class="required">*</span></p>
                           </div>
+
                           <div class="col-md-10 "><input class="form-control certification-certificate" type="text"></div>
                         </div>
 
@@ -3685,8 +3686,8 @@
           '.certificate-photo-preview').src;
 
 
-        let checkCertificateName = namecheck(professionalCertificateName);
-        let checkInstitution = namecheck(professionalInstitution);
+        let checkCertificateName = tabledatacheck(professionalCertificateName);
+        let checkInstitution = tabledatacheck(professionalInstitution);
         let checkYOP = yearcheck(professionalYOP);
         //let checkCertification = tabledatacheck(professionalCertification);
 
@@ -3829,9 +3830,9 @@
       submitBankDetailsForm.append('cancelledCheckPhoto', document.getElementById('cancelled_cheque_Photo-insert')
         .value)
 
-      let facultyBankNameValid = dynamicLengthCheck(submitBankDetailsForm.get('bankName'),
+      let facultyBankNameValid = dynamiVariableName(submitBankDetailsForm.get('bankName'),
         'bank-name-message-insert');
-      let facultyBankBranchValid = dynamicLengthCheck(submitBankDetailsForm.get('branchName'),
+      let facultyBankBranchValid = dynamiVariableName(submitBankDetailsForm.get('branchName'),
         'bank-branch-message-insert');
       let facultyAccountNumberValid = dynamicBankAcountNumber(submitBankDetailsForm.get('accountNumber'),
         'bank-account-number-message-insert');
@@ -5907,8 +5908,8 @@
           '.certificate-photo-preview').src;
 
 
-        let checkCertificateName = namecheck(professionalCertificateName);
-        let checkInstitution = namecheck(professionalInstitution);
+        let checkCertificateName = tabledatacheck(professionalCertificateName);
+        let checkInstitution = tabledatacheck(professionalInstitution);
         let checkYOP = yearcheck(professionalYOP);
         let checkCertification = tabledatacheck(professionalCertification);
 
@@ -6071,6 +6072,7 @@
                                           <div class="col-md-2 ">
                                             <p class="h6">Certification Name: <span class="required">*</span></p>
                                           </div>
+                                          
                                           <div class="col-md-10 "><input value="\${cert.topic_of_study}" class="form-control certification-certificate" type="text"></div>
                                         </div>
 
@@ -6160,8 +6162,8 @@
 
       clearError();
       let facultyIfscCode1 = dynamicLengthCheck(submitBankDetailsForm.get('ifscCode'), 'bank-ifsc-code-message');
-      let facultyBankName1 = dynamicLengthCheck(submitBankDetailsForm.get('bankName'), 'bank-name-message');
-      let facultyBankBranch1 = dynamicLengthCheck(submitBankDetailsForm.get('branchName'), 'bank-branch-message');
+      let facultyBankName1 = dynamiVariableName(submitBankDetailsForm.get('bankName'), 'bank-name-message');
+      let facultyBankBranch1 = dynamiVariableName(submitBankDetailsForm.get('branchName'), 'bank-branch-message');
       let facultyAccountNumber1 = dynamicBankAcountNumber(submitBankDetailsForm.get('accountNumber'),
         'bank-account-number-message');
 
