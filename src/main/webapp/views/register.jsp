@@ -391,7 +391,7 @@
       for (let entry of formData.entries()) {
         result[entry[0]] = entry[1];
       }
-
+      let mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
       let panValidation = RegistrationPanValidation(result.user_id)
       let emailValidation = RegistrationEmailValidation(result.email)
       let passwordvalidation = RegistrationPasswordValidation(result.password, 'password-error-message')

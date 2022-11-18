@@ -299,15 +299,22 @@
       document.querySelector('.pancard-error-message').classList.add('d-none')
       document.querySelector('.email-error-message').classList.add('d-none')
       document.querySelector('.password-error-message').classList.add('d-none')
+      let mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
       let panCard = document.querySelector('#pannumber').value;
       let email = document.querySelector('#email').value;
       let password = document.querySelector('#password').value;
 
       let panValidation = RegistrationPanValidation(panCard)
-      let emailValidation = RegistrationEmailValidation(email)
+      let isEmailValid = email.match(mailformat);
       let passwordvalidation = RegistrationPasswordValidation(password, "password-error-message")
-      if (!panValidation || !emailValidation || !passwordvalidation) {
+
+      if (!panValidation || !passwordvalidation) {
+        return;
+      }
+      if(!isEmailValid) {
+
+        document.querySelector('.email-error-message').classList.remove('d-none')
         return;
       }
       let regObj = {
