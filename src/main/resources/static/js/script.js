@@ -1158,3 +1158,46 @@ function ClearRegistrationError() {
   document.querySelector('.password-2-error-message').classList.add('d-none')
 
 }
+
+function dynamiVariableName(value, message) {
+  document.getElementById(message).innerHTML = '';
+  let check = false;
+  if (value.length > 1) {
+    for (let i = 0; i < value.length; i++) {
+      value = value.replaceAll('(','');
+      value = value.replaceAll(')','');
+      value = value.replaceAll('-','');
+      if ((value[i] >= '!' && value[i] <= '/') || (value[i] >= ':' && value[i] <= '@')) {
+        document.getElementById(message).innerHTML = "Only '( ) -' are Allowed";
+        check = false;
+        break;
+      } else {
+        check = true;
+      }
+    }
+  } else {
+    document.getElementById(message).innerHTML = 'Provide Input';
+    check = false;
+  }
+  return check;
+}
+
+function variableName(value){
+  let check = false;
+  if (value.length > 1) {
+    for (let i = 0; i < value.length; i++) {
+      value = value.replaceAll('(','');
+      value = value.replaceAll(')','');
+      value = value.replaceAll('-','');
+      if ((value[i] >= '!' && value[i] <= '/') || (value[i] >= ':' && value[i] <= '@')) {
+        check = false;
+        break;
+      } else {
+        check = true;
+      }
+    }
+  } else {
+    check = false;
+  }
+  return check;
+}
