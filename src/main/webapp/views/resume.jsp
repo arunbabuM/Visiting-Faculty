@@ -1223,7 +1223,7 @@
                           <h6>Aadhar card </h6>
                         </div>
                         <div class="col-md-7 col-sm-9">
-                          <p id="aadhar-card-value">\${personal_details[0].aadhar_card_no == "" ? "N.A" : personal_details[0].aadhar_card_no}</p>
+                          <p id="aadhar-card-value">\${personal_details[0].aadhar_card_no == "" ? "N.A" : personal_details[0].aadhar_card_no == null ? "N.A" : personal_details[0].aadhar_card_no}</p>
                         </div>
                       </div>
                       <div class="row py-1">
@@ -2198,7 +2198,7 @@
       let is = document.querySelector("#gender-row-insert input[type='radio']:checked");
       if (is != null) {
         document.getElementById('gender-message-insert').innerHTML = '';
-        result.gender = document.querySelector("#gender-row-insert input[type='radio']").value;
+        result.gender = document.querySelector("#gender-row-insert input[type='radio']:checked").value;
       } else {
         document.getElementById('gender-message-insert').innerHTML = 'Select';
         return;

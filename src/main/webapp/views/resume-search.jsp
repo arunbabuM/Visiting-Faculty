@@ -163,7 +163,7 @@
             let timeout = null;
 
             function searchFunction(value) {
-                
+                $('.table-appending-div').html('')
                 $.ajax({
                     type: 'POST',
                     url: '${pageContext.request.contextPath}/get-faculty-application',
@@ -245,6 +245,7 @@
             }
 
             function searchFunctionByName(value) {
+                $('.table-appending-div').html('')
                 $.ajax({
                     type: 'POST',
                     url: '${pageContext.request.contextPath}/get-faculty-by-name',
@@ -315,7 +316,7 @@
 
                     clearTimeout(timeout)
                     const value = this.value
-                    timeout = setTimeout(() => searchFunction(value.toUpperCase()), 2000)
+                    timeout = setTimeout(() => searchFunction(value.trim().toUpperCase()), 2000)
 
             })
 
@@ -323,7 +324,7 @@
 
                 clearTimeout(timeout)
                 const value = this.value.toUpperCase()
-                timeout = setTimeout(() => searchFunctionByName(value), 2000)
+                timeout = setTimeout(() => searchFunctionByName(value.trim().toUpperCase()), 2000)
 
             })
 
