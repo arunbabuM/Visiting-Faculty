@@ -439,6 +439,7 @@
 
                 if(e.target.classList.contains('comment-view-btn'))
                 {
+                    console.log("HELLO <><><<><")
                     let comment_id = e.target.dataset.commentid;
                     $.ajax({
                         url: '${pageContext.request.contextPath}/get_discontinue_comments',
@@ -446,7 +447,6 @@
                         data: comment_id,
                         contentType: false,
                         success: function (response){
-                            
                             let divToAppend = ``
                             let commentData = JSON.parse(response.value);
                             if (commentData.comments != null) {
@@ -458,8 +458,8 @@
                                             <h6>\${data.created_by}</h6>
                                             <span>- \${data.created_date}</span>
                                             <br>
-                                            <p><b>Comment :</b>\${data.comment}</p>
-                                            <p><b>Status :</b>\${data.is_discontinued ? "Discontinued" : "Continued"}</p>
+                                            <p><b>Comment : </b>\${data.comment}</p>
+                                            <p><b>Status : </b>\${data.is_discontinued ? "Discontinued" : "Continued"}</p>
                                         </div>
                                     </div>`
                                 }                                
@@ -478,6 +478,8 @@
                         $('#comments-modal').modal('toggle');
                         },
                         error: function (error){
+                            console.log("ENTERED error")
+
                             let divToAppend = ``
                             divToAppend += `
                                    <div class="pb-4">

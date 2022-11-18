@@ -56,7 +56,7 @@
     <section class="page" size="A4" id="offer-letter">
         <nav>
             <ul class="d-flex justify-content-between header-list align-items-end mb-0">
-                <li > <img src="${pageContext.request.contextPath}/image/logo-nmims.png" alt="" class="offer-logo" > </li>
+                <li > <img src="${pageContext.request.contextPath}/image/logo-nmims.png" alt="Nmims Logo" class="offer-logo" > </li>
                 <li> <h3 class="mb-0">SVKM NMIMS (Deemed-to-be-University)</h3> </li>
             </ul>
             <hr class="purple-line mt-1">
@@ -101,7 +101,6 @@
                 <li>Program Time Table / Faculty Time Table</li>
             </ol>
             <br>
-            <br>
             <footer class="d-flex justify-space-between">
                 <div class="footer__left">
                     <small class="footer__top">SVKM'S</small>
@@ -110,7 +109,6 @@
                     <p class="mb-0 mt-1">Plot No. 2, Sector 33, Kharghar, Navi Mumbai - 410210, India</p>
                     <p class="mb-0">Tel: (91-22) 35476550</p>
                     <p class="mb-0">Email: enquiry@nmims.edu | Web: <strong> www.nmimsnavimumbai.org</strong></p>
-
                 </div>
                 <!-- <img src="" alt="" class="category-uni"> -->
             </footer>
