@@ -1201,3 +1201,30 @@ function variableName(value){
   }
   return check;
 }
+
+function reqPhotoCheck(value , input){
+  const allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
+  if(value.length > 1)  {
+    if (!allowedExtensions.exec(value)) {
+      input.setCustomValidity(".jpg, .png and .jpeg Accepted");
+      input.reportValidity();
+      return false;
+    }else{
+      return true;
+    }
+ }else{
+   return true;
+ }
+}
+
+function photoCheck(value,input){
+  const allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
+    if (!allowedExtensions.exec(value)) {
+      input.setCustomValidity(".jpg, .png and .jpeg Accepted");
+      input.reportValidity();
+      return false;
+ }
+ else{
+  return true;
+ }
+}

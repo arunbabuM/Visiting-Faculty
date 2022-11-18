@@ -2190,6 +2190,9 @@
 
       let arrayresult = [];
       let result = {};
+      document.getElementById('photo-message-insert').innerHTML = '';
+      document.getElementById('pan-photo-message-insert').innerHTML = '';
+      document.getElementById('aadhar-photo-message-insert').innerHTML = 'Invalid Format';
 
       result.firstName = document.querySelector('#first-name-insert').value;
       result.lastName = document.querySelector('#last-name-insert').value;
@@ -2232,6 +2235,37 @@
         'temporary-contact-number-message-insert');
       let tempemailvalid = dynamicTempEmail(result.tempemail, 'temp-email-message-insert');
       let pinvalid = dynamicPin(result.pincode, 'pincode-message-insert');
+      let profilePhotoInput =  document.getElementById("photo-insert");
+      let aadharPhotoInput = document.getElementById("aadhar-photo-insert")
+      let panPhotoInput = document.getElementById("pan-photo-insert")
+      const  photoValue = profilePhotoInput.value;
+      const aadharValue = aadharPhotoInput.value;
+      const panValue = panPhotoInput.value;
+      console.log("PHOTO VALUE <><><><" , photoValue)
+      console.log("PHOTO Length <><><><" , photoValue.length);
+
+
+         if (!allowedExtensions.exec(photoValue)) {
+             document.getElementById('photo-message-insert').innerHTML = '.jpg, .png and .jpeg accepted ';
+             photoValue.value = '';
+             return;
+         }     
+
+      if(aadharValue.length > 1)  {
+
+        if (!allowedExtensions.exec(aadharValue)) {
+          document.getElementById('pan-photo-message-insert').innerHTML = 'Invalid Format';
+          aadharValue.value = '';
+          return;
+        }
+      }
+
+
+        if (!allowedExtensions.exec(panValue)) {
+          document.getElementById('aadhar-photo-message-insert').innerHTML = 'Invalid Format';
+          panValue.value = '';
+          return;
+        }
 
       if (!firstnamevalid || !lastnamevalid || !addressvalid || !emailvalid || !cityvalid || !countryvalid || !
         contactvalid || !tempContactNumberValid || !tempemailvalid || !pinvalid || !dobvalid) {
@@ -2248,7 +2282,7 @@
 
       let photoArray = []
 
-      let profilePhoto = document.getElementById("photo-insert").files[0]
+      let profilePhoto = profilePhotoInput.files[0]
       if (profilePhoto) {
         let filereader = new FileReader();
         filereader.readAsDataURL(profilePhoto);
@@ -2258,7 +2292,7 @@
         }
       }
 
-      let aadharPhoto = document.getElementById("aadhar-photo-insert").files[0]
+      let aadharPhoto = aadharPhotoInput.files[0]
       if (aadharPhoto) {
         let filereader = new FileReader();
         filereader.readAsDataURL(aadharPhoto);
@@ -2268,7 +2302,7 @@
         }
       }
 
-      let panPhoto = document.getElementById("pan-photo-insert").files[0]
+      let panPhoto = panPhotoInput.files[0]
       if (panPhoto) {
         let filereader = new FileReader();
         filereader.readAsDataURL(panPhoto);
@@ -2611,8 +2645,17 @@
         let qualificationStatus = qualificationRow[i].querySelector('.qualification-status').value;
         let qualificationPercentile = qualificationRow[i].querySelector('.qualification-percentile').value;
         let qualificationYear = qualificationRow[i].querySelector('.qualification-year').value;
-        let qualificationCertificate = qualificationRow[i].querySelector('.qualification-certificate').value;
+        let certificate = qualificationRow[i].querySelector('.qualification-certificate');
+        let qualificationCertificate = certificate.value;
         // let qualificationCertificateImage = qualificationRow[i].querySelector('#qualification-certificate-preview').src;
+        if(qualificationCertificate.length > 1)  {
+          if (!allowedExtensions.exec(qualificationCertificate)) {
+            certificate.classList.add('input-border');
+            certificate.setCustomValidity(" .jpg, .png and .jpeg Accepted " )
+            certificate.reportValidity();
+            return false;
+          }
+       }
 
         let checkSubject = variableName(qualificationSubject);
         let checkUniversity = tabledatacheck(qualificationUniversity);
@@ -2621,6 +2664,7 @@
         let checkCertificate = tabledatacheck(qualificationCertificate);
         let checkPercentile = qualificationDetailPercentageValidation(qualificationPercentile);
         // let checkCancelledCheque = qualificationDetailCertificateValidation(qualificationCertificate);
+
 
         let qualificationCertificateSRC = qualificationRow[i].querySelector('.qualification-certificate-preview')
           .src
@@ -2910,13 +2954,23 @@
         let description = vjstableelement[i].querySelector('.awardPlace').value;
         let achievement_date = vjstableelement[i].querySelector('.awardRecieveDate').value;
         let url_path = vjstableelement[i].querySelector('.awardCertificationImage').value;
+        let awardcertificateinput = vjstableelement[i].querySelector('.awardCertificationImage')
+        let awardCertificatevalue = vjstableelement[i].querySelector('.awardCertificationImage').value;
         let awardCertificateSRC = vjstableelement[i].querySelector('.award-certificate-preview').src;
+
+        if(awardCertificatevalue.length > 1)  {
+          if (!allowedExtensions.exec(awardCertificatevalue)) {
+            awardcertificateinput.setCustomValidity(".jpg, .png and .jpeg Accepted")
+            awardcertificateinput.reportValidity();
+            return false;
+          }
+        } 
 
         let checktitle = tabledatacheck(title);
         let checkorganization_name = variableName(organization_name);
         let checkdescription = tabledatacheck(description);
         let checkachievement_date = checkdate(achievement_date);
-        let checkorganization_type_lid = checknotnull(organization_type_lid)
+        let checkorganization_type_lid = checknotnull(organization_type_lid);
 
         //to add the red border according to validations
         if (checktitle == false) {
@@ -3196,6 +3250,15 @@
         let publicationBookTitle = publicationRow[i].querySelector('.book-title').value;
         let publicationCertificate1 = publicationRow[i].querySelector('.publication-certification').value;
         let publicationCertificateSRC = publicationRow[i].querySelector('.publication-certificate-preview').src;
+        let certificateInput = publicationRow[i].querySelector('.publication-certification')
+
+        if(publicationCertificate1.length > 1)  {
+          if (!allowedExtensions.exec(publicationCertificate1)) {
+            certificateInput.setCustomValidity(".jpg, .png and .jpeg Accepted")
+            certificateInput.reportValidity();
+            return false;
+          }
+        }
 
         let checkPublicationPublisher = tabledatacheck(publicationPublisher);
         //let checkPublicationNumberOfAuthors = tabledatacheck(publicationNumberOfAuthors);
@@ -3433,14 +3496,19 @@
 
         let research__lid = researchTableElem[j].dataset.researchlid
         let researchCertificateSRC = researchTableElem[j].querySelector('.research-certificate-preview').src;
-
+        let certificateInput = researchTableElem[j].querySelector('.research_photo')
+        let certificateValue = researchTableElem[j].querySelector('.research_photo').value;
 
         let check_journal_name = tabledatacheck(Journal_name);
         let check_volume_year = yearcheck(volume_year);
         let check_description = tabledatacheck(description);
         let check_category = tabledatacheck(category);
+        let check_photo = reqPhotoCheck(certificateValue,certificateInput);
 
-
+        if (check_photo == false) {
+          researchTableElem[j].querySelector('.research_photo').classList.add('input-border');
+          return;
+        }
         if (check_journal_name == false) {
           researchTableElem[j].querySelector('.research_Journal_name').classList.add('input-border');
           return;
@@ -3671,6 +3739,7 @@
         let professionalInstitution = certificationRow[i].querySelector('.certification-institution').value;
         let professionalYOP = certificationRow[i].querySelector('.certification-YOP').value;
         let professionalCertification = certificationRow[i].querySelector('.certificate-photo').value;
+        let CertificationInput = certificationRow[i].querySelector('.certificate-photo');
 
         let professionalCertificationCertificateSRC = certificationRow[i].querySelector(
           '.certificate-photo-preview').src;
@@ -3679,9 +3748,13 @@
         let checkCertificateName = variableName(professionalCertificateName);
         let checkInstitution = tabledatacheck(professionalInstitution);
         let checkYOP = yearcheck(professionalYOP);
-        //let checkCertification = tabledatacheck(professionalCertification);
+        let checkPhoto = reqPhotoCheck(professionalCertification,CertificationInput);
 
         //  to add the red border according to validations
+        if(!checkPhoto){
+          certificationRow[i].querySelector('.certificate-photo').classList.add('input-border');
+          return;
+        }
         if (checkCertificateName == false) {
           certificationRow[i].querySelector('.certification-certificate').classList.add('input-border');
           certificationRow[i].querySelector('.certification-certificate').setCustomValidity("Only '(' , ')' , '-' are Accepted" )
@@ -3829,14 +3902,11 @@
       let facultyAccountNumberValid = dynamicBankAcountNumber(submitBankDetailsForm.get('accountNumber'),
         'bank-account-number-message-insert');
       let facultyifscValid = dynamicLengthCheck(document.querySelector('#bank-ifsc-code-insert').value,
-        'bank-ifsc-code-message-insert')
-      let cancelledChequeValidation = dynamicLengthCheck(document.querySelector('#cancelled_cheque_Photo-insert')
-        .value, 'cheque-photo1')
+        'bank-ifsc-code-message-insert');
+      let canceledCheck = document.getElementById('cancelled_cheque_Photo-insert')
+      let cancelledcheckphoto = photoCheck(submitBankDetailsForm.get('cancelledCheckPhoto'),canceledCheck);
 
-      console.log(cancelledChequeValidation)
-
-      if (!facultyBankNameValid || !facultyBankBranchValid || !facultyAccountNumberValid || !
-        cancelledChequeValidation) {
+      if (!facultyBankNameValid || !facultyBankBranchValid || !facultyAccountNumberValid || !cancelledcheckphoto) {
         return;
       }
 
@@ -5112,8 +5182,16 @@
         let qualificationStatus = qualificationRow[i].querySelector('.qualification-status').value;
         let qualificationPercentile = qualificationRow[i].querySelector('.qualification-percentile').value;
         let qualificationYear = qualificationRow[i].querySelector('.qualification-year').value;
-        let qualificationCertificate = qualificationRow[i].querySelector('.qualification-certificate').value;
+        let CertificateInput = qualificationRow[i].querySelector('.qualification-certificate');
+        let qualificationCertificate = CertificateInput.value;
         // let qualificationCertificateImage = qualificationRow[i].querySelector('#qualification-certificate-preview').src;
+        if(qualificationCertificate.length > 1)  {
+          if (!allowedExtensions.exec(qualificationCertificate)) {
+             CertificateInput.setCustomValidity(".jpg, .png and .jpeg Accepted")
+             CertificateInput.reportValidity();
+              return false;
+          }
+       } 
 
         let checkSubject = variableName(qualificationSubject);
         let checkUniversity = tabledatacheck(qualificationUniversity);
@@ -5406,6 +5484,16 @@
         let achievement_date = vjstableelement[i].querySelector('.awardRecieveDate').value;
         let url_path = vjstableelement[i].querySelector('.awardCertificationImage').value;
         let awardCertificateSRC = vjstableelement[i].querySelector('.award-certificate-preview').src;
+        let awardcertificateinput = vjstableelement[i].querySelector('.awardCertificationImage')
+        let awardCertificatevalue = vjstableelement[i].querySelector('.awardCertificationImage').value;
+
+        if(awardCertificatevalue.length > 1)  {
+          if (!allowedExtensions.exec(awardCertificatevalue)) {
+            awardcertificateinput.setCustomValidity(".jpg, .png and .jpeg Accepted")
+            awardcertificateinput.reportValidity();
+            return false;
+          }
+        } 
 
         let checktitle = tabledatacheck(title);
         let checkorganization_name = variableName(organization_name);
@@ -5556,6 +5644,15 @@
         let publicationBookTitle = publicationRow[i].querySelector('.book-title').value;
         let publicationCertificate1 = publicationRow[i].querySelector('.publication-certification').value;
         let publicationCertificateSRC = publicationRow[i].querySelector('.publication-certificate-preview').src;
+        let certificateInput = publicationRow[i].querySelector('.publication-certification')
+
+        if(publicationCertificate1.length > 1)  {
+          if (!allowedExtensions.exec(publicationCertificate1)) {
+            certificateInput.setCustomValidity(".jpg, .png and .jpeg Accepted")
+            certificateInput.reportValidity();
+            return false;
+          }
+        }
 
         let checkPublicationPublisher = tabledatacheck(publicationPublisher);
         //let checkPublicationNumberOfAuthors = tabledatacheck(publicationNumberOfAuthors);
@@ -5726,14 +5823,22 @@
 
         let research__lid = researchTableElem[j].dataset.researchlid
         let researchCertificateSRC = researchTableElem[j].querySelector('.research-certificate-preview').src;
+        let certificateInput = researchTableElem[j].querySelector('.research_photo')
+        let certificateValue = researchTableElem[j].querySelector('.research_photo').value;
+
+        
 
 
         let check_journal_name = tabledatacheck(Journal_name);
         let check_volume_year = yearcheck(volume_year);
         let check_description = tabledatacheck(description);
         let check_category = tabledatacheck(category);
+        let check_photo = reqPhotoCheck(certificateValue,certificateInput);
 
-
+        if (check_photo == false) {
+          researchTableElem[j].querySelector('.research_photo').classList.add('input-border');
+          return;
+        }
         if (check_journal_name == false) {
           researchTableElem[j].querySelector('.research_Journal_name').classList.add('input-border');
           return;
@@ -5899,7 +6004,7 @@
         let professionalInstitution = certificationRow[i].querySelector('.certification-institution').value;
         let professionalYOP = certificationRow[i].querySelector('.certification-YOP').value;
         let professionalCertification = certificationRow[i].querySelector('.certificate-photo').value;
-
+        let CertificationInput = certificationRow[i].querySelector('.certificate-photo');
         let professionalCertificationCertificateSRC = certificationRow[i].querySelector(
           '.certificate-photo-preview').src;
 
@@ -5908,8 +6013,13 @@
         let checkInstitution = tabledatacheck(professionalInstitution);
         let checkYOP = yearcheck(professionalYOP);
         let checkCertification = tabledatacheck(professionalCertification);
+        let checkPhoto = reqPhotoCheck(professionalCertification,CertificationInput);
 
         //  to add the red border according to validations
+        if(!checkPhoto){
+          certificationRow[i].querySelector('.certificate-photo').classList.add('input-border');
+          return;
+        }
         if (checkCertificateName == false) {
           certificationRow[i].querySelector('.certification-certificate').classList.add('input-border');
           certificationRow[i].querySelector('.certification-certificate').setCustomValidity("Only '(' , ')' , '-' are Accepted" );
@@ -6164,8 +6274,10 @@
       let facultyBankBranch1 = dynamiVariableName(submitBankDetailsForm.get('branchName'), 'bank-branch-message');
       let facultyAccountNumber1 = dynamicBankAcountNumber(submitBankDetailsForm.get('accountNumber'),
         'bank-account-number-message');
+      let canceledCheck = document.getElementById('cancelled_cheque_Photo-insert')
+      let cancelledcheckphoto = photoCheck(submitBankDetailsForm.get('cancelledCheckPhoto'),canceledCheck);
 
-      if (!facultyBankName1 || !facultyBankBranch1 || !facultyAccountNumber1) {
+      if (!facultyBankName1 || !facultyBankBranch1 || !facultyAccountNumber1 || !cancelledcheckphoto) {
         return;
       }
 
