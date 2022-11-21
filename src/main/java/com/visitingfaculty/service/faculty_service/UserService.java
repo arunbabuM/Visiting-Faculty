@@ -12,8 +12,8 @@ import com.visitingfaculty.service.PasswordService;
 @Service
 public class UserService {
 
-    public static String uploadDirectory = "/data/tomcat/webapps/vf/imagedata";
-    //System.getProperty("user.dir") + "/src/main/webapp/imagedata";  
+    // public final String uploadDirectory = "/data/tomcat/webapps/vf/imagedata";
+    public final String uploadDirectory = System.getProperty("user.dir") + "/src/main/webapp/imagedata";
 
 
     @Autowired
@@ -23,7 +23,6 @@ public class UserService {
 
         String initialFilename = UUID.randomUUID().toString();
         String type = base64String.split(";")[0].split("/")[1];
-        System.out.println(type);
         String filename = initialFilename + "." + type;
         String base64Image = base64String.split(",")[1];
         byte[] imageBytes = javax.xml.bind.DatatypeConverter.parseBase64Binary(base64Image);

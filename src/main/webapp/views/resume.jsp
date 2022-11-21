@@ -2192,7 +2192,7 @@
       let result = {};
       document.getElementById('photo-message-insert').innerHTML = '';
       document.getElementById('pan-photo-message-insert').innerHTML = '';
-      document.getElementById('aadhar-photo-message-insert').innerHTML = 'Invalid Format';
+      document.getElementById('aadhar-photo-message-insert').innerHTML = '';
 
       result.firstName = document.querySelector('#first-name-insert').value;
       result.lastName = document.querySelector('#last-name-insert').value;
@@ -2246,7 +2246,7 @@
 
 
          if (!allowedExtensions.exec(photoValue)) {
-             document.getElementById('photo-message-insert').innerHTML = '.jpg, .png and .jpeg accepted ';
+             document.getElementById('photo-message-insert').innerHTML = '.jpg, .png and .jpeg accepted';
              photoValue.value = '';
              return;
          }     
@@ -2254,7 +2254,7 @@
       if(aadharValue.length > 1)  {
 
         if (!allowedExtensions.exec(aadharValue)) {
-          document.getElementById('pan-photo-message-insert').innerHTML = 'Invalid Format';
+          document.getElementById('aadhar-photo-message-insert').innerHTML = '.jpg, .png and .jpeg accepted';
           aadharValue.value = '';
           return;
         }
@@ -2262,7 +2262,7 @@
 
 
         if (!allowedExtensions.exec(panValue)) {
-          document.getElementById('aadhar-photo-message-insert').innerHTML = 'Invalid Format';
+          document.getElementById('pan-photo-message-insert').innerHTML = '.jpg, .png and .jpeg accepted';
           panValue.value = '';
           return;
         }
@@ -4971,8 +4971,7 @@
        if(photoValue.length > 1)  {
 
          if (!allowedExtensions.exec(photoValue)) {
-             alert('Invalid file type has uploaded for passport photo');
-             photoValue.value = '';
+             document.getElementById('photo-message').innerHTML = '.jpg, .png and .jpeg accepted';
              return false;
          }
        }     
@@ -4980,8 +4979,7 @@
       if(aadharValue.length > 1)  {
 
         if (!allowedExtensions.exec(aadharValue)) {
-          alert('Invalid file type has uploaded for Aadhar photo');
-          aadharValue.value = '';
+          document.getElementById('aadhar-photo-message').innerHTML = '.jpg, .png and .jpeg accepted';
           return false;
         }
       }
@@ -4989,8 +4987,7 @@
       if(panValue.length > 1)  {
 
         if (!allowedExtensions.exec(panValue)) {
-          alert('Invalid file type has uploaded for Pancard photo');
-          panValue.value = '';
+          document.getElementById('pan-photo-message').innerHTML = '.jpg, .png and .jpeg accepted';
           return false;
         }
       }
@@ -6585,7 +6582,7 @@
     addCustomHardSkill.addEventListener('click', function () {
 
       let customHardSkillValue = document.getElementById('custom-hard-skill-value').innerText
-      let res = /^[a-zA-Z]+$/.test(customSoftSkillValue.replaceAll(" ", ""));
+      let res = /^[a-zA-Z]+$/.test(customHardSkillValue.replaceAll(" ", ""));
       if(!res) {
         alert("Only Alphabets are allowed")
         return;

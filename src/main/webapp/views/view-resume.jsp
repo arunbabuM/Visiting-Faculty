@@ -104,7 +104,7 @@
         let resume = `
       <div class="d-flex justify-content-end">
 
-        <i id="download-btn" class="h1 fa-solid fa-download"></i>
+        <i id="download-btn" class="d-none h1 fa-solid fa-download"></i>
       </div>
 
       <div class="shadow-lg">
