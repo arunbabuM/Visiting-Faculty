@@ -409,7 +409,7 @@
                     <td>\${performerinfo.aol_obe}</td>
                     <td><button data-skill="\${maxpoints.skill}" data-experience="\${maxpoints.experience}" data-achievement="\${maxpoints.achievement}" data-qualification="\${maxpoints.qualification}" data-totalP="\${maxpoints.total_points}" data-toggle="modal" type="button" class="point-distribution btn btn-outline-primary text-dark">\${maxpoints.total_points}</button></td>
                     <td><button data-id = "\${performerinfo.proforma_id}" data-toggle="modal" type="button" class="comments-btn btn btn-outline-primary text-dark">Comments</button></td>
-                    <td>Waiting for ${role.split("_")[1]} Approval</td>
+                    <td>\${performerinfo.status_lid == 3 ? "Sent for Revision by Central" : "Waiting for ${role.split("_")[1]} Approval"}</td>
                     <td><i data-id="\${performerinfo.proforma_id}" class="fa-solid fa-fast-forward approval-btn" title="Send for Approval"></i></td>
                 <tr>
                 `
@@ -984,10 +984,10 @@
 
                                 for (performerinfo of performerinfoobj.proforma_details) {
                                     let maxpoints = JSON.parse(performerinfo.max_points_2)
-                                             console.log(maxpoints)
+                                             console.log("STATUS LID <><><><><><" ,performerinfo.status_lid)
                                     view += `
                                     <tr>
-                                        <td>\${performerinfo.created_date}</td>
+                                        <td>\${performerinfo.created_date} </td>
                                         <td>\${performerinfo.full_name}</td>
                                         <td>\${performerinfo.pancard_no}</td>
                                         <td><button data-qual="\${performerinfo.application_lid}" data-id = "1" data-toggle="modal" data-target=".bd-example-modal-lg" type="button" class="qual-btn btn btn-outline-primary text-dark">Graduate</button> </td>
@@ -1009,7 +1009,7 @@
                                         <td>\${performerinfo.aol_obe}</td>
                                         <td><button data-skill="\${maxpoints.skill}" data-experience="\${maxpoints.experience}" data-achievement="\${maxpoints.achievement}" data-qualification="\${maxpoints.qualification}" data-totalP="\${maxpoints.total_points}" data-toggle="modal" type="button" class="point-distribution btn btn-outline-primary text-dark">\${maxpoints.total_points}</button></td>
                                         <td><button data-id = "\${performerinfo.proforma_id}" data-toggle="modal" type="button" class="comments-btn btn btn-outline-primary text-dark">Comments</button></td>
-                                        <td>\${}Waiting for ${role.split("_")[1]} Approval</td>
+                                        <td>\${performerinfo.status_lid == 3 ? "Sent for Revision by Central" : "Waiting for ${role.split("_")[1]} Approval"}</td>
                                         <td><i data-id="\${performerinfo.proforma_id}" class="fa-solid fa-fast-forward approval-btn" title="Send for Approval"></i></td>
                                     <tr>
                 `
@@ -1187,7 +1187,7 @@
                                         <td>\${performerinfo.aol_obe}</td>
                                         <td><button data-skill="\${maxpoints.skill}" data-experience="\${maxpoints.experience}" data-achievement="\${maxpoints.achievement}" data-qualification="\${maxpoints.qualification}" data-totalP="\${maxpoints.total_points}" data-toggle="modal" type="button" class="point-distribution btn btn-outline-primary text-dark">\${maxpoints.total_points}</button></td>
                                         <td><button data-id = "\${performerinfo.proforma_id}" data-toggle="modal" type="button" class="comments-btn btn btn-outline-primary text-dark">Comments</button></td>
-                                        <td>Waiting for ${role.split("_")[1]} Approval</td>
+                                        <td>\${performerinfo.status_lid == 3 ? "Sent for Revision by Central" : "Waiting for ${role.split("_")[1]} Approval"}</td>
                                         <td><i data-id="\${performerinfo.proforma_id}" class="fa-solid fa-fast-forward approval-btn" title="Send for Approval"></i></td>
                                     <tr>
                 `

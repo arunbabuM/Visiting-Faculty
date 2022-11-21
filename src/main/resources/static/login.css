@@ -1419,4 +1419,7 @@ width: 12.5%;
     white-space: pre-line;
   }
 
+  a {
+    cursor: pointer;
+  }
   

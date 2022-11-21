@@ -143,14 +143,10 @@ public class UserRestController {
         json.put("cc", "null");
         String newJsonString = json.toString();
 
-        Boolean isEmailSent = restTemplate.postForObject(EmailUrl, newJsonString, Boolean.class);
-        if (isEmailSent || isEmailSent != null) {
+        restTemplate.postForObject(EmailUrl, newJsonString, Boolean.class);
 
-            return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.status(HttpStatus.OK).build();
 
-        }
-
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 
     }
 

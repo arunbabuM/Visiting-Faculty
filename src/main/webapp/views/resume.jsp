@@ -7198,7 +7198,7 @@
         dateFormatCalculation(startDateInput.value))))
       let diffDays = Math.ceil(difference / (1000 * 60 * 60 * 24));
       let diffmonths = Math.floor(diffDays / 31);
-      let diffyears = Math.floor(diffmonths / 12);
+      let diffyears = Math.round(diffmonths / 12);
 
       if (target.classList.contains('workexperience-status')) {
         let closestParent = findClosest(e.target, 'workexperience-row').querySelector(
@@ -7419,7 +7419,7 @@
         dateFormatCalculation(startDateInput.value))))
       let diffDays = Math.ceil(difference / (1000 * 60 * 60 * 24));
       let diffmonths = Math.floor(diffDays / 31);
-      let diffyears = Math.floor(diffmonths / 12);
+      let diffyears = Math.round(diffmonths / 12);
 
       if (target.classList.contains('workexperience-status')) {
         let closestParent = findClosest(e.target, 'workexperience-row').querySelector(

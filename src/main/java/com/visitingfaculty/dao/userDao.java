@@ -77,9 +77,8 @@ public class userDao implements UserDaoInterface {
             json.put("cc", "[sameer.shaikh.EXT@nmims.edu]");
             String jsonString = json.toString();
     
-            Boolean isEmailSent = restTemplate.postForObject(EmailUrl, jsonString, Boolean.class);
-            boolean isEmailSentSuccessFUlly = isEmailSent == null ? false : true;
-            return isEmailSentSuccessFUlly;
+            restTemplate.postForObject(EmailUrl, jsonString, Boolean.class);
+            return true;
         }
         return false;
 
@@ -539,9 +538,8 @@ public class userDao implements UserDaoInterface {
             json.put("cc", "null");
             String newJsonString = json.toString();
     
-            Boolean isEmailSent = restTemplate.postForObject(EmailUrl, newJsonString, Boolean.class);
-            boolean isEmailSentSuccessFUlly = isEmailSent == null ? false : true;
-            return isEmailSentSuccessFUlly;
+            restTemplate.postForObject(EmailUrl, newJsonString, Boolean.class);
+            return true;
 
         }
         return false;

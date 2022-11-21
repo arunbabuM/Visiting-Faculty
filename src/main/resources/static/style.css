@@ -1122,3 +1122,7 @@ button {
   margin-top: 10%;
   padding: 10%;
 }
+
+a {
+  cursor: pointer;
+}
