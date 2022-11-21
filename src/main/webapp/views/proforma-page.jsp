@@ -871,7 +871,7 @@
                                 let industryTable = `<div class="card">
                                         <table class="table table-display table-bordered">
                                             <thead>
-                                                <th>Organizatione</th>
+                                                <th>Organization</th>
                                                 <th>Responsibility</th>
                                                 <th>Designation</th>
                                                 <th>Start Date</th>
@@ -1009,7 +1009,7 @@
                                         <td>\${performerinfo.aol_obe}</td>
                                         <td><button data-skill="\${maxpoints.skill}" data-experience="\${maxpoints.experience}" data-achievement="\${maxpoints.achievement}" data-qualification="\${maxpoints.qualification}" data-totalP="\${maxpoints.total_points}" data-toggle="modal" type="button" class="point-distribution btn btn-outline-primary text-dark">\${maxpoints.total_points}</button></td>
                                         <td><button data-id = "\${performerinfo.proforma_id}" data-toggle="modal" type="button" class="comments-btn btn btn-outline-primary text-dark">Comments</button></td>
-                                        <td>Waiting for ${role.split("_")[1]} Approval</td>
+                                        <td>\${}Waiting for ${role.split("_")[1]} Approval</td>
                                         <td><i data-id="\${performerinfo.proforma_id}" class="fa-solid fa-fast-forward approval-btn" title="Send for Approval"></i></td>
                                     <tr>
                 `
